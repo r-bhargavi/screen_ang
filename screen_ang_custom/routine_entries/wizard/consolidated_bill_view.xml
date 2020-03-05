@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+        
+        <record id="view_bill_update_form" model="ir.ui.view">
+            <field name="name">update.bill.form</field>
+            <field name="model">update.bill</field>
+            <field name="arch" type="xml">
+                <form string="Update Particulars">
+                    <field name="bill_id" invisible="1"/>
+                    <separator string="Particulars"/>
+                    <field name="particular_ids">
+                        <tree editable="bottom" string="Particulars">
+                            <field name="name"/>
+                            <field name="amount"  sum="Total Amount"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="update_particulars" string="Update" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_view_bill_update_form" model="ir.actions.act_window">
+            <field name="name">Update Particulars</field>
+            <field name="res_model">update.bill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        
+     	<menuitem id="menu_consolidated_bill_main" name="Consolidated Bill" parent="account.menu_finance" sequence="2"/>
+     	
+        <record id="view_consolidated_bill_filter" model="ir.ui.view">
+            <field name="name">consolidated.bill.select</field>
+            <field name="model">consolidated.bill</field>
+            <field name="arch" type="xml">
+                <search string="Search Consolidated Bill">
+                    <field name="name" string="Bill Number"/>
+                    <field name="client_id" string="Client/Company"/>
+                    <field name="work_type" string="Type of Work"/>
+                    <field name="casetype_id" string="Case Type"/> 
+                    <field name="branch_id" string="Office"/>
+                    <field name="client_service_manager_id" string="Client Relationship Manager"/>
+                    
+                    <filter string="Partially Paid" domain="[('partially_paid','=',True),('state', '=', 'invoice')]" icon="terp-camera_test"/>
+                    
+                    <group expand="0" string="Group By...">
+                        <filter string="Client" icon="terp-partner" domain="[]" context="{'group_by':'client_id'}"/>
+                        <filter string="Client Relationship Manager" icon="terp-partner" domain="[]" context="{'group_by':'client_service_manager_id'}"/>
+                        <filter string="Office" icon="terp-partner" domain="[]" context="{'group_by':'branch_id'}"/>
+                        <filter string="Type of Work" icon="terp-partner" domain="[]" context="{'group_by':'work_type'}"/>
+                        <filter string="Case Type" icon="terp-partner" domain="[]" context="{'group_by':'casetype_id'}"/>
+                        <filter string="Status" icon="terp-partner" domain="[]" context="{'group_by':'state'}"/>
+                    
+                    </group>
+                    
+                    
+               </search>
+            </field>
+        </record>
+        
+        <record id="view_consolidated_bill_tree" model="ir.ui.view">
+            <field name="name">consolidated.bill.tree</field>
+            <field name="model">consolidated.bill</field>
+            <field name="arch" type="xml">
+                <tree string="Consolidated Bill" colors="blue:state == 'draft';gray:state == 'cancel';red:due_date_red == True;green:due_date_over == True">
+                    <field name="client_id" string="Client Name"/>
+                    <field name="invoice_date"/>
+                    <field name="name" string="Invoice Number"/>
+                    <field name="branch_id"/>
+                    <field name="division_id"/>
+                    <field name="assignee_id"/>
+                    <field name="client_service_manager_id"/>
+                    <field name="client_service_executive_id"/>
+                    <field name="next_followup_date"/>
+                    <field name="total_proffee"/>
+                    <field name="total_expense"/>
+                    <field name="residual"/>
+                    <field name="amount_total" sum="Total"/>
+                    <field name="bad_debts" sum="Bad Debts"/>
+                    <field name="state"/>
+                    <field name="partially_paid"/>
+                    <field name="due_days_string"/>
+                    <field name="due_date_over" invisible="1"/> 
+                    <field name="due_date_red" invisible="1"/> 
+                </tree>
+            </field>
+        </record>
+
+ 	<record id='view_consolidated_bill_form' model="ir.ui.view">
+            <field name="name">consolidated.bill.form</field>
+            <field name="model">consolidated.bill</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Consolidated Bill" context="{'active_id':id}">
+                <header>
+                	<button name="invoice_bill" string="Create Invoice" type="object" context="{'invoice_date':invoice_date}" states="confirm" class="oe_button oe_form_button_save oe_highlight"/>
+                	<button name="confirm_bill" string="Confirm" type="object" context="{}" states="draft" class="oe_button oe_form_button_save oe_highlight"/>
+                	<button name="cancel_bill" string="Cancel Bill" type="object" context="{}" confirm="Are you sure you want to Cancel the Consolidated Bill?" states="confirm" class="oe_button"/>
+                	<button name="cancel_bill_invoice" string="Cancel Invoice" type="object" context="{}" confirm="Are you sure you want to Cancel the Consolidated Bill Invoices?" states="invoice" class="oe_button"/>
+                	<button name="reset_to_draft" string="Reset to Draft" type="object" context="{}" states="cancel" class="oe_button"/>
+                	<button name="print_bill" string="Print Bill" type="object" states="invoice" class="oe_highlight"/>
+                	<button name="print_annexure" string="Print Annexure" type="object" states="invoice" class="oe_highlight"/>
+                	<field name="state" widget="statusbar" statusbar_visible="draft,confirm,invoice,paid" statusbar_colors='{"confirm":"blue"}'/>
+                </header>
+                <sheet>
+                <div class="oe_title">
+                        <h1>
+                            <label string="BILL NUMBER"/>
+                            <field name="name" class="oe_inline" readonly="1" attrs="{'invisible':[('id','=',False)]}"/>
+                        </h1>
+                    </div>
+                <group>
+                    <group col="4" colspan="2">
+                        <field name="client_id" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}'  attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="partner_shipping_id"/>
+                        <field name="work_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="casetype_id" domain="[('parent','=',work_type)]"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='id' invisible="1"/>
+                        <field name="total_proffee" colspan="2"/>
+                        <field name="client_service_manager_id" invisible="1" />
+                        <field name="total_expense" colspan="2" />
+                    </group>
+                 </group>
+                     <notebook>
+                            <page string="Bills">
+                                <group string="Billing Stages to Bill" col="4">
+                        <h3><i><label string="Fixed Price Billing" colspan="2" class="blue_label"/></i></h3>
+                        <label string="" colspan="2"/>
+                        <label string="" colspan="1"/>
+                            <field name="flg_fixed_fixed_price_stage" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="flg_fixed_other_exp_billable" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <h3><i><label string="Assignment Wise Billing" colspan="2" class="blue_label"/></i></h3>
+                        <label string="" colspan="2"/>
+                        <label string="" colspan="1"/>
+                            <field name="flg_assign_hourly_stage" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="flg_assign_fixed_price_stage" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="flg_assign_other_exp_billable" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="flg_assign_court_proceed_billable" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <h3><i><label string="Import Case Sheets" colspan="2" class="blue_label" attrs="{'invisible':[('state','!=','draft')]}"/></i></h3>
+                        <label string="" colspan="2"/>
+                        <label string="" colspan="1"/>
+                        <b><label string="Select Case Sheets for Billing" colspan="1" attrs="{'invisible':[('state','!=','draft')]}"/></b>
+                        <button name="import_cases_consolidated" string="Import" class="oe_link" type="object" help="To Import the Case Sheets for Consolidated Bill" attrs="{'invisible':[('state','!=','draft')]}" style="width:20%%" context="{'client_id':client_id, 'work_type':work_type, 'casetype_id':casetype_id}"/>
+                        </group>
+                        <group col="4" colspan="4" string="Case Sheets for Billing">
+                            <field name="case_sheet_ids" attrs="{'readonly':[('state','!=','draft')]}" nolabel="1" widget="many2many_tags" domain="[('client_id','=',client_id),(work_type and ('work_type','=',work_type) or ('work_type','=',work_type)),(casetype_id and ('casetype_id','=',casetype_id) or ('casetype_id','=',casetype_id)),('state','=','inprogress')]" options="{'create_edit': false,'create': false}"/>
+                        </group>
+                        <group col="4" colspan="2">
+                        <label string="" invisible="0" colspan="3"/>
+                            <button name="update_total_amount" string="Update" icon="gtk-ok" type="object" context="{}" states="confirm" class="oe_button" colspan="1"/>
+                        </group>
+                        <group col="4" colspan="4" string="Case Sheets with Billing Amount Details" attrs="{'invisible':[('state','=','draft')]}">
+                            <field name="case_invoice_lines" attrs="{'readonly':[('state','=','invoice')]}" nolabel="1" options="{'create': false}">
+                                <form string="Case Sheets with Billing Amount Details">
+                                <h1><field name="name" readonly="1"/></h1>
+                        <field name="invoice_id" readonly="1" attrs="{'invisible':[('invoice_id','=',False)]}"/>
+                        <group>
+                              <group col="4" colspan="2">
+                                    <field name="bill_type" required="0" invisible="1"/>
+                                    <notebook>
+                                      <page string="Fixed Price Stagres" attrs="{'invisible':[('bill_type','=','assignment_wise')]}">
+                                        <group col="4" colspan="2">
+                                         <field name="invoice_lines_fixed" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                          <tree string="Fixed Price Stagres" create="false" delete="true">
+                                          <field name="name" string="Task Related"/>
+                                          <field name="amount" sum="Total Amount"/>
+                                          <field name="out_of_pocket_amount" sum="Total Out of Pocket Expenses"/>
+                                          <field name="inv_id_fixed" invisible="1"/>
+                                          </tree>
+                                         </field>
+                                        </group>
+                                    </page>
+                                    <page string="Hourly Stagres" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                        <group col="4" colspan="2">
+                                          <field name="invoice_lines_assignment_hourly" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                          <tree string="Hourly Stagres" readonly="0" create="false" delete="true">
+                                          <field name="name" string="Description"/>
+                                          <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                          <field name="inv_id_assignment_hourly" invisible="1"/>
+                                        </tree>
+                                        </field>
+                                        </group>
+                                    </page>
+                                    <page string="Fixed Price Stagres" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                        <group col="4" colspan="2">
+                                        <field name="invoice_lines_assignment_fixed" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                        <tree string="Fixed Price Stagres" readonly="0" create="false" delete="true">
+                                        <field name="name" string="Task Related"/>
+                                        <field name="amount" sum="Total Amount"/>
+                                        <field name="out_of_pocket_amount" sum="Total Out of Pocket Expenses"/>
+                                        <field name="inv_id_assignment_fixed" invisible="1"/>
+                                        </tree>
+                                        </field>
+                                        </group>
+                                    </page>
+                                    <page string="Other expenses Billable">
+                                        <group col="4" colspan="2">
+                                        <field name="invoice_lines_other_expenses" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                        <tree string="Other Expenses" readonly="0" create="false" delete="true">
+                                        <field name="name" string="Description"/>
+                                        <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                        <field name="inv_id_other_expense" invisible="1"/>
+                                        </tree>
+                                        </field>
+                                        </group>
+                                    </page>
+                                    <page string="Out of Pocket Expenses" invisible="1">
+                                        <group col="4" colspan="2">
+                                        <field name="invoice_lines_out_of_pocket" readonly="0" nolabel="1" create="false">
+                                        <tree string="Out of Pocket Expenses" readonly="0" create="false" delete="true">
+                                        <field name="name" string="Description"/>
+                                        <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                        <field name="inv_id_out_of_pocket" invisible="1"/>
+                                        </tree>
+                                        </field>
+                                        </group>
+                                    </page>
+                                    <page string="Court Proceedings Billable" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                        <group col="4" colspan="2">
+                                        <field name="invoice_lines_court_proceedings_assignment" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                        <tree string="Court Proceedings" create="false" delete="true">
+                                        <field name="effective"/>
+                                        <field name="name" string="Proceed Date(s)"/>
+                                        <field name="amount" sum="Total Amount" string="Amount"/>
+                                        <field name="inv_id_court_proceed_assignment" invisible="1"/>
+                                        </tree>
+                                        </field>
+                                        </group>
+                                    </page>
+                                      </notebook>
+                              </group>
+                                <group colspan="2" col="6">
+                                <label string=""/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="amount_total_1" />
+                                        <button name="dummy" string="(update)" type="object" class="oe_link" invisible="1"/>
+                                    </div>
+                                <field name="amount_total_1" nolabel="1"/>
+                                </group>
+                            </group>
+                            </form>
+                            <tree string="Case Sheets with Billing Amount Details" create="0" delete="0">
+                                <field name="case_id"/>
+                                <field name="amount_total_1"/>
+                                <field name="department_ids" widget="many2many_tags" options="{'create_edit': false,'create': false}" />
+                            </tree>
+                            </field>
+                        </group>
+                <group attrs="{'invisible':[('state','=','draft')]}" class="oe_subtotal_footer oe_right">
+                    <div>
+                         <label for="amount_total" />
+                         <button name="dummy" string="(update)" type="object" class="oe_link" invisible="1"/>
+                     </div>
+                    <field name="amount_total" nolabel="1" />
+                    <field name="residual"/>
+                </group>
+                <group col="2" colspan="2" string="Billing Particulars" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','confirm')]}">
+                            <group>
+                            <field name="invoice_date" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="subject" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="receivable_account_id" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="sale_account_id" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="expense_account_id" attrs="{'readonly':[('state','!=','confirm')]}"/>
+                            <field name="flg_tds_note"/>
+                            <field name="flg_pan_no" attrs="{'invisible':[('invoice_template','!=','general')]}"/>
+                            <field name="invoice_template" attrs="{'required':[('state','in',('confirm','invoice'))]}"/>
+                            </group>
+                            <field name="invoice_lines" nolabel="1" colspan="4" attrs="{'readonly':[('state','!=','confirm')]}">
+                            <tree string="Invoice Details" editable="bottom">
+                                <field name="name" string="Particulars" required="1"/>
+                                <field name="amount" sum="Total Amount" required="1" string="Amount"/>
+                            </tree>
+                            </field>
+                            <button name="%(legal_e.action_view_bill_update_form)d" attrs="{'invisible':[('state','in',('draft', 'confirm'))]}"  colspan="4" icon="gtk-justify-fill" type="action" string="Update Particulars"/>
+
+                            <newline/>
+                            <separator string="Bill Followup" />
+                            <newline/>
+                            <group>
+                                <field name="next_followup_date"/>
+                            </group>
+                            <newline/>
+
+                            <field name="bill_followup_ids" nolabel="1" colspan="4">
+                                <form string="Bill Follow-up">
+                                    <group>
+                                        <group>
+                                            <field name="date" required="1"/>
+                                            <field name="bill_id" invisible="1"/>
+                                            <field name="state" required="1" string="Status"/>
+                                        </group>
+                                        <group>
+                                            <field name="next_date" required="1"/>
+                                            <field name="communicate_via"/>
+                                            <field name="remark_id"/>
+                                        </group>
+                                    </group>
+                                    <div>
+                                        <label for="name"/>
+                                        <field name="name"  required="1" />
+                                    </div>
+                                </form>
+                                <tree string="Bill Follow-up">
+                                    <field name="create_date"/>
+                                    <field name="date"/>
+                                    <field name="client_service_manager_id"/>
+                                    <field name="name"/>
+                                    <field name="remark_id"/>
+                                    <field name="next_date"/>
+                                    <field name="state" required="1" string="Status"/>
+                                    <field name="communicate_via"/>
+                                    <field name="bill_id" invisible="1"/>
+                                </tree>
+                            </field>
+
+
+                            </group>
+                            </page>
+                            <page string="Payments">
+	                            <field name="payment_ids">
+	                                <tree string="Payments">
+	                                    <field name="date" string="Payment Date"/>
+	                                    <field name="move_id"/>
+	                                    <field name="ref"/>
+	                                    <field name="name"/>
+	                                    <field name="journal_id"/>
+	                                    <field name="debit" sum="Total Debit"/>
+	                                    <field name="credit" sum="Total Credit"/>
+	                                    <field name="amount_currency"/>
+	                                    <field name="currency_id" groups="base.group_multi_currency"/>
+	                                </tree>
+	                            </field>
+                            </page>
+                     </notebook>
+
+
+
+
+                </sheet> 
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>       
+                </form>
+            </field>
+        </record>        
+
+               
+        <record id="action_consolidated_bill" model="ir.actions.act_window">
+            <field name="name">Consolidated Bill</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">consolidated.bill</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_consolidated_bill_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Consolidated Bill.
+              </p><p>
+                You can create and update Consolidated Bills.
+              </p>
+            </field>
+        </record>
+        <menuitem parent="menu_consolidated_bill_main" id="menu_consolidated_bill" icon="STOCK_PRINT" name="Consolidated Bill" action="action_consolidated_bill" sequence="9" groups="account.group_account_invoice,legal_e.group_case_entries_officer"/>
+        
+        <record id="legale_bill_followup_tree" model="ir.ui.view">
+            <field name="name">consolidated.bill.followup.tree</field>
+            <field name="model">consolidated.bill.followup</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Follow-up(Consolidated Bill)" create="false" colors="red:due_next_date_over == True" >
+                    <field name="client_service_manager_id"/>
+                    <field name="invoice_date"/>
+                    <field name="bill_id" invisible="0" string="Invoice"/>
+                    <field name="branch_id"/>
+                    <field name="division_id"/>
+                    <field name="partner_id"/>
+                    <field name="contact_partner1_id"/>
+                    <field name="due_days_string"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="remark_id"/>
+                    <field name="next_date"/>
+                    <field name="state"/>
+                    <field name="communicate_via"/>
+                    <field name="due_next_date_over" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record id="legale_bill_followup_form" model="ir.ui.view">
+            <field name="name">consolidated.bill.followup.form</field>
+            <field name="model">consolidated.bill.followup</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Follow-up(Consolidated Bill)">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date" required="1" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="bill_id" invisible="0" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="next_date" required="1" readonly="1"/>
+                                <field name="communicate_via"/>
+                                <field name="due_next_date_over" invisible="1"/>
+                                <field name="remark_id"/>
+                            </group>
+                        </group>
+                        <div>
+                            <label for="name"/>
+                            <field name="name"  required="1"  readonly="1"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="legale_bill_followup_filter" model="ir.ui.view">
+            <field name="name">consolidated.bill.followup.list.select</field>
+            <field name="model">consolidated.bill.followup</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice Follow-up(Consolidated Bill)">
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="client_service_manager_id"/>
+                    <field name="name"/>
+                    <field name="next_date"/>
+                    <field name="bill_id"/>
+                    <field name="state"/>
+                    <field name="remark_id"/>
+                    <separator/>
+                    <filter icon="terp-document-new" string="Missing Followup" name="missing_followup" domain="[('name','ilike', 'Missing Followup')]"/>
+                    
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Client" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Followup Remarks" icon="terp-personal" domain="[]" context="{'group_by':'remark_id'}"/>
+                        <filter string="Status" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Invoice" icon="terp-personal" domain="[]" context="{'group_by':'invoice_id'}"/>
+                        <filter string="Next Follow-up Date" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'next_date'}"/>
+                    </group>
+                    
+                </search>
+            </field>
+        </record>
+        
+        
+        <record id="action_legale_bill_followup" model="ir.actions.act_window">
+            <field name="name">Account Follow-up History(Consolidated Bill)</field>
+            <field name="res_model">consolidated.bill.followup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('client_service_manager_id.user_id', '=', uid),('bill_id.state', '=', 'invoice')]</field>
+            <field name="search_view_id" ref="legale_bill_followup_filter"/>
+        </record>
+        
+        
+        
+        
+        
+        <record id="action_legale_bill_followup_see_all" model="ir.actions.act_window">
+            <field name="name">Account Follow-up History All(Consolidated Bill)</field>
+            <field name="res_model">consolidated.bill.followup</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('bill_id.state', '=', 'invoice')]</field>
+            <field name="search_view_id" ref="legale_bill_followup_filter"/>
+        </record>
+        
+        
+    </data>
+        
+    <data noupdate="1">
+        <record model="ir.cron" id="ir_cron_consolidated_bill_duedate_over_update">
+		<field name="name">Update Consolidated Bill Due Date Remainder</field>
+		<field name="model_id" ref="model_consolidated_bill"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.bill_due_date_scheduler()</field>
+	    </record>
+    </data>
+     <data noupdate="1">
+        <record model="ir.cron" id="ir_cron_remaind_bill_followup_update">
+		<field name="name">Update Bill Follow-up Follow-up Date Remainder</field>
+		<field name="model_id" ref="model_consolidated_bill_followup"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.bill_next_date_scheduler()</field>
+	</record>
+
+
+    </data>
+</odoo>

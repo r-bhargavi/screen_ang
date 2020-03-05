@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_for_case_closure_request" model="mail.template">
+		    <field name="name">Case Closure Request for Assignee</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Case closure request for ${ctx.get('case_id')} to assignee</field>
+		    <field name="email_to">${ctx.get('assignee_id')|safe}</field>
+            <field name="model_id" ref="legal_e.model_case_close"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Date: ${object.close_date}</p>
+				<p>Remarks: ${object.name}</p>
+				<p>Closure Type: ${object.closure_type}</p>
+				<p>Time Duration: ${object.time_duration}</p>
+				<p>Case Sheet Id: ${ctx.get('case_id')}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+ 	    <record id='wizard_case_close_id' model="ir.ui.view">
+            <field name="name">case.close.wizard</field>
+            <field name="model">case.close</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Case Close Details">
+                    <group>
+                        <field name="close_date" required="1"/>
+                        <field name="name" required="1"/>
+                        <field name="closure_type" required="1"/>
+                        <field name="time_duration" required="1"/>
+                    </group>
+
+                   <footer>
+                        <button name="case_sheet_closure_request" string="Case Closure Request" type="object" context="{'comments':name,'close_date':close_date}" class="oe_button oe_form_button_save oe_highlight" />
+                        or
+                        <button special="cancel" class="oe_link" string="Cancel" />
+                   </footer>
+                </form>
+            </field>
+        </record>        
+
+        <record id="action_case_close" model="ir.actions.act_window">
+             <field name="name">Close Case</field>
+             <field name="res_model">case.close</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

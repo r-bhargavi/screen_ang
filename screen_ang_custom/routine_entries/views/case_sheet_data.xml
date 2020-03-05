@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+    	<!--Email template - invoice validate-->
+        <record id="email_template_validate_invoice" model="mail.template">
+            <field name="name">Invoice validate Email</field>
+            <field name="email_from">${(object.user_id.email or object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">${object.company_id.name|safe} Invoice (Ref ${object.number or 'n/a'})</field>
+            <field name="email_to">${object.case_id.client_service_manager_id.work_email}</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_template" ref="account.account_invoices"/>
+            <field name="report_name">Invoice_${(object.number or '').replace('/','_')}_${object.state == 'draft' and 'draft' or ''}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Hello ${object.case_id.client_service_manager_id.name},</p>
+
+    <p>Please find the attached invoice. </p>
+    
+    <br/>
+    <br/>
+    <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+        <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+            <strong style="text-transform:uppercase;">${object.company_id.name}</strong></h3>
+    </div>
+    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+        <span style="color: #222; margin-bottom: 5px; display: block; ">
+        % if object.company_id.street:
+            ${object.company_id.street}<br/>
+        % endif
+        % if object.company_id.street2:
+            ${object.company_id.street2}<br/>
+        % endif
+        % if object.company_id.city or object.company_id.zip:
+            ${object.company_id.zip} ${object.company_id.city}<br/>
+        % endif
+        % if object.company_id.country_id:
+            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+        % endif
+        </span>
+        % if object.company_id.phone:
+            <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+                Phone:&nbsp; ${object.company_id.phone}
+            </div>
+        % endif
+        % if object.company_id.website:
+            <div>
+                Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+            </div>
+        %endif
+        <p></p>
+    </div>
+</div>
+    
+            ]]></field>
+        </record>
+        
+        
+
+        <!-- notify all employees of module installation -->
+        <!--<record model="mail.message" id="module_install_notification">-->
+            <!--<field name="model">mail.group</field>-->
+            <!--<field name="res_id" ref="mail.group_all_employees"/>-->
+            <!--<field name="type">notification</field>-->
+            <!--<field name="subtype_id" ref="mail.mt_comment"/>-->
+            <!--<field name="subject">Sales Management application installed!</field>-->
+            <!--<field name="body"><![CDATA[<p>This application lets you create and send quotations and process your sales orders; from delivery to invoicing.</p>-->
+<!--<p>If you need to manage your sales pipeline (leads, opportunities, phonecalls), the <i>CRM</i> application may be useful. Use the Settings menu to install it.</p>]]></field>-->
+        <!--</record>-->
+        
+        <!-- Sale-related subtypes for messaging / Chatter -->
+        <record id="mt_casesheet_new" model="mail.message.subtype">
+            <field name="name">Case Sheet Created</field>
+            <field name="res_model">case.sheet</field>
+            <field name="default" eval="False"/>
+            <field name="description">Case Sheet Created</field>
+        </record>
+
+    
+        <!-- Task Stages -->
+
+        <record id="project.project_tt_analysis" model="project.task.type">
+            <field name="sequence">1</field>
+            <field name="name">New</field>
+            <field name="state">draft</field>
+            <!--<field name="case_default" eval="False"/>-->
+        </record>
+      
+        <record id="project.project_tt_deployment" model="project.task.type">
+            <field name="sequence">100</field>
+            <field name="name">Done</field>
+            <field name="state">done</field>
+            <!--<field name="case_default" eval="True"/>-->
+            <field name="fold" eval="True"/>
+        </record>
+        <record id="project.project_tt_cancel" model="project.task.type">
+            <field name="sequence">200</field>
+            <field name="name">Cancelled</field>
+            <field name="state">cancelled</field>
+            <!--<field name="case_default" eval="True"/>-->
+            <field name="fold" eval="True"/>
+        </record>
+        
+        
+        <record id="taskact_1" model="task.master">
+            <field name="name">AWARD</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_2" model="task.master">
+            <field name="name">CIRCULATION FOR HEARING</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_3" model="task.master">
+            <field name="name">DATE OF AWARD FOR ARBITRATION</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_4" model="task.master">
+            <field name="name">DATE OF FILING OF CLAIM FOR ARBITRATION</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_5" model="task.master">
+            <field name="name">DATE OF REFERENCE FOR ARBITRATION</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_6" model="task.master">
+            <field name="name">FILE CLAIM</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_7" model="task.master">
+            <field name="name">FILE COMPLAINT</field>
+            <field name="task_type">standard</field>
+        </record>        
+        <record id="taskact_8" model="task.master">
+            <field name="name">FILE EXECUTION ALLPLICATION</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_9" model="task.master">
+            <field name="name">FILE PETITION</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_10" model="task.master">
+            <field name="name">FURTHER ACTION</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_11" model="task.master">
+            <field name="name">FURTHER DETAILS</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_12" model="task.master">
+            <field name="name">ISSUE NOTICE</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_13" model="task.master">
+            <field name="name">OFFICE COMPLIANCE</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_14" model="task.master">
+            <field name="name">REFERENCE TO ARBITRATOR</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_15" model="task.master">
+            <field name="name">RETURN FILE</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_16" model="task.master">
+            <field name="name">SERVICE OF SUMMONS/NOTICE</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_17" model="task.master">
+            <field name="name">TARGET DATE FOR RETURNING FILE FOR ARBITRATION</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_18" model="task.master">
+            <field name="name">TO RECEIVE FILE</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_19" model="task.master">
+            <field name="name">DATE OF ASSIGNMENT/CASE</field>
+            <field name="task_type">standard</field>
+        </record>
+        <record id="taskact_20" model="task.master">
+            <field name="name">ACCEPTENCE BY ARBITRATOR</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_21" model="task.master">
+            <field name="name">SOC FILING</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_22" model="task.master">
+            <field name="name">1st HEARING</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_23" model="task.master">
+            <field name="name">2nd HEARING</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_24" model="task.master">
+            <field name="name">3rd HEARING</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_25" model="task.master">
+            <field name="name">COLLECTING RECORDS FROM ARBITRATOR'S OFFICE</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_26" model="task.master">
+            <field name="name">RETURN OF FILE TO THE CLIENT</field>
+            <field name="task_type">regular</field>
+        </record>
+        <record id="taskact_27" model="task.master">
+            <field name="name">COLLECTING COURT FEE</field>
+            <field name="task_type">regular</field>
+        </record>
+        
+                    
+        <!-- Phases data -->                        
+        <record id="proj_phase_1" model="phase.master">
+            <field name="name">FILING</field>
+        </record>         
+        <record id="proj_phase_2" model="phase.master">
+            <field name="name">HEARING</field>
+        </record>         
+        <record id="proj_phase_3" model="phase.master">
+            <field name="name">BILLING</field>
+        </record>         
+        <record id="proj_phase_4" model="phase.master">
+            <field name="name">JUDGEMENT</field>
+        </record>         
+    </data>
+</odoo>

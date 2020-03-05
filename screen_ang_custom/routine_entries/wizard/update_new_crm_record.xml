@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+            <record id="update_new_crm_form" model="ir.ui.view">
+            <field name="name">Update New CRM In Client</field>
+            <field name="model">update.new.crm</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Update New CRM In Client">
+                    <group>
+                        <field name="old_crm_manager_id" required="1"/>
+                        <field name="new_crm_manager_id" required="1"/>
+                    </group>
+                    
+                    <footer>
+                        <button name="update_add_remove_crm" string="OK"  class="oe_highlight" icon="gtk-ok" type="object" colspan="1"/>
+                         or
+                         <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>                                                       
+                </form>
+            </field>
+        </record>        
+        <record id="action_update_new_crm_form" model="ir.actions.act_window">
+             <field name="name">Update New Client Relationship Manager In Client</field>
+             <field name="res_model">update.new.crm</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="view_id" ref="update_new_crm_form"/>
+             <field name="target">new</field>
+            <field name="multi">True</field>    
+        </record>
+        
+        <menuitem id="sub_menu__update_new_crm" action="action_update_new_crm_form" name="Update New CRM In Client" parent="sub_menu_masters" sequence="30"/>            
+               
+    </data>
+</odoo>

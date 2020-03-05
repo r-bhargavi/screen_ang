@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="litigation_template_filter" model="ir.ui.view">
+        <field name="name">litigation.template.select</field>
+        <field name="model">litigation.nonlitigation.template</field>
+        <field name="arch" type="xml">
+            <search string="Search Litigation/Nonlitigation Templates">
+                <field name="name"/>
+                <field name="litigation_type"/>
+                <group expand="0" string="Group By...">
+                    <filter string="Type of Work" context="{'group_by': 'name'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
+    <record id="litigation_template_tree" model="ir.ui.view">
+        <field name="name">litigation.template.tree</field>
+        <field name="model">litigation.nonlitigation.template</field>
+        <field name="arch" type="xml">
+            <tree string="Litigation/Nonlitigation Templates">
+                <field name="name"/>
+                <field name="litigation_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="litigation_template_form" model="ir.ui.view">
+        <field name="name">litigation.template.form</field>
+        <field name="model">litigation.nonlitigation.template</field>
+        <field name="arch" type="xml">
+            <form string="Litigation/Nonlitigation Templates">
+                <sheet>
+                    <group col='4'>
+                        <field name="name"/>
+                        <field name="litigation_type"/>
+                    </group>
+                    <separator string="Tasks/Activities"/>
+                    <field name="litigation_lines" nolabel="1">
+                        <form string="Litigation/Nonlitigation Template Lines">
+                            <group>
+                                <field name="slno"/>
+                                <field name="name"/>
+                                <field name="litigation_id" invisible="1"/>
+                           </group>
+                        </form>
+                        <tree string="Litigation/Nonlitigation Template Lines"  editable="top">
+                            <field name="slno"/>
+                            <field name="name"/>
+                            <field name="litigation_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_litigation_template_form" model="ir.actions.act_window">
+        <field name="name">Litigation/Nonlitigation Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">litigation.nonlitigation.template</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="litigation_template_tree"/>
+    </record>
+
+    <menuitem id="sub_menu_litigation_template" action="action_litigation_template_form" name="Litigation/Nonlitigation Templates" parent="base_sub_menu_case_entries_Configuration" sequence="2"/>
+</odoo>

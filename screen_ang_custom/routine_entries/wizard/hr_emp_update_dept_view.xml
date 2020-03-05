@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_update_emp_dept_id' model="ir.ui.view">
+            <field name="name">hr.emp.dept.update.wizard</field>
+            <field name="model">hr.employee.update.dept</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form string="Update Employee Department">
+                	<group colspan="4">
+                          <field name="name" required="1"/>
+                          <field name="new_dept_id" domain="[('type','=',context.get('department_type'))]" attrs="{'required':[('name','=','transfer')], 'invisible':[('name','!=','transfer')]}"/>
+                          <field name="sub_emp_id" required="1"/>
+                     </group>
+					 <footer>
+						<button name="update_emp_dept" string="OK" icon="gtk-ok" type="object" confirm="Are you Sure, Do you want to Substitute in Case Sheet, Assignee Tasks and Project Details with this Substitute Employee instead of this Employee? " context="{'new_dept_id':new_dept_id, 'sub_emp_id':sub_emp_id, 'type':name}" class="oe_button oe_form_button_save oe_highlight" colspan="1"/>
+                         or
+                        <button special="cancel" icon="gtk-cancel" string="Cancel" colspan="1"/>
+                    </footer>  
+                </form>
+            </field>
+        </record>        
+
+        <record id="action_update_emp_dept" model="ir.actions.act_window">
+             <field name="name">Update Employee Department</field>
+             <field name="res_model">hr.employee.update.dept</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

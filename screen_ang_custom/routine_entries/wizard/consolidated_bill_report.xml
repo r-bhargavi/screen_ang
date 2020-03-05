@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report auto="False" id="report_consolidated_bill" model="consolidated.bill" name="consolidated.bill"
+                rml="legal_e/routine_entries/wizard/consolidated_bill_report.rml" string="Consolidated Bill"
+                usage="default"/>
+    
+        <report auto="False" id="report_consolidated_bill_annexure" model="consolidated.bill" name="consolidated.annexure.bill"
+                rml="legal_e/report/consolidated_annexure_report.rml" string="Consolidated Bill(Annexure)"
+                usage="default"/>
+    </data>
+</odoo>

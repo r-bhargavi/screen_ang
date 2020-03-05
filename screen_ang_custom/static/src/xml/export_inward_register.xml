@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<!-- Inward Register -->
+<templates id="template" xml:space="preserve">
+
+<t t-extend="ViewPager">
+    <t t-jquery=".oe_pager_value" t-operation="prepend">
+                   
+       <!-- <a t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'  &amp;&amp; widget.ViewManager.process_model === 'inward.register'" 
+                    class="oe_bold oe_list_button_import_excel oe_form_button"
+                    id="button_export_excel"
+                    href="#">Export as Excel</a>
+        <a t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'  &amp;&amp; widget.ViewManager.process_model === 'outward.register'" 
+                    class="oe_bold oe_list_button_import_excel_outward oe_form_button"
+                    id="button_export_excel_outward"
+                    href="#">Export as Excel</a>
+        <a t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'  &amp;&amp; widget.ViewManager.process_model === 'case.sheet'" 
+                    class="oe_bold oe_list_button_import_excel_casesheet oe_form_button"
+                    id="button_export_excel_casesheet"
+                    href="#">Export as Excel</a>
+       -->
+    </t>
+</t>
+</templates>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_area_master_filter" model="ir.ui.view">
+            <field name="name">area.master.select</field>
+            <field name="model">area.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Area Master">
+               </search>
+            </field>
+        </record>
+        <record id="area_master_tree" model="ir.ui.view">
+            <field name="name">area.master.tree</field>
+            <field name="model">area.master</field>
+            <field name="arch" type="xml">
+                <tree string="Area Master">
+                    <field name="city_code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="area_master_form" model="ir.ui.view">
+            <field name="name">area.master.form</field>
+            <field name="model">area.master</field>
+            <field name="arch" type="xml">
+                <form string="Area Details">
+	                <sheet>
+                        <group col='4' string='City Details'>
+                        <field name="name" colspan="4"/>
+                        <field name="city_code" colspan="4"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_area_master_form" model="ir.actions.act_window">
+            <field name="name">Area/City Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">area.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="area_master_tree"/>
+        </record>
+        <!--<menuitem id="sub_menu_area_master" action="action_area_master_form" name="Area/City Master" parent="sub_menu_masters" sequence="4"/>-->
+               
+	</data>
+</odoo>

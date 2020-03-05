@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_casesheet_quotation_id"
+            model="case.sheet"
+            string="Fee Quotation"
+            report_type="qweb-pdf"
+            name="legal_e.action_report_casesheet_quotation"
+            file="legal_e.action_report_casesheet_quotation"
+        />
+    </data>
+</odoo>

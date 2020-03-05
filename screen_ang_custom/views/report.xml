@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+            
+       <report
+            auto="False"
+            id="report_consolidated_bill_followup"
+            model="consolidated.bill"
+            name="bill.followup"
+            rml="legal_e/report/bill_followup.rml"
+            string="Bill Followup"
+            usage="default"
+            />
+    </data>
+</odoo>

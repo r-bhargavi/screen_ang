@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record id="wizard_update_import_cases_for_consolidated_bill_id" model="ir.ui.view">
+            <field name="name">consolidated.bulk.case.sheet.form</field>
+            <field name="model">consolidated.bulk.case.sheet</field>
+            <field name="arch" type="xml">            
+                <form string="Consolidated Bulk Case Sheet">
+					<header>
+					</header>
+	         		<sheet>
+	                	<group >
+	                	<group col='4' string="Import Case Sheets">
+				    <field name="name" class="oe_inline" required="0" colspan="4" invisible="1"/>
+				    <field name="flg_first_row" colspan="4"/>
+				    <field name="field_delimiter" required="1" colspan="4" style="width:20%%"/>
+				    <field name="text_delimiter" required="1" colspan="4" style="width:20%%"/>
+							<field name="datas" filename="datas_fname" colspan="4"/>
+							<label string="File Content should be in CSV format and the 1st column should contain the Case Sheet File Numbers" colspan="4"/>
+								<field name="datas_fname" invisible="1" class="oe_inline oe_right"/>
+
+		                </group>	                	
+		                </group>
+	                </sheet>
+					<footer>
+						<button special="cancel" string="Cancel" colspan="1"/>
+						<button name="update_consolidated_bill_casesheet"
+									string="Import" class="oe_button oe_form_button_save oe_highlight"
+								type="object" help="Import Case Sheets" colspan="1" accesskey="I"/>
+					</footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</odoo>

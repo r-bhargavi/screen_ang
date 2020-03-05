@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_case_transfer_id' model="ir.ui.view">
+            <field name="name">case.transfer.wizard</field>
+            <field name="model">case.transfer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Case transfer Details">
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="division_id" required="1" domain="[('office_id', '=', name),('office_id', '!=', False)]"/>
+                        </group>
+                     </group>
+                    <footer>
+                        <!--<button name="transfer_case_sheet" string="Transfer" icon="fa-check" type="object" context="{'transfer_location':name, 'division_id': division_id}" class="oe_button oe_form_button_save oe_highlight"/>-->
+                        <button name="transfer_case_sheet" string="Transfer" type="object" context="{'transfer_location':name, 'division_id': division_id}" class="oe_button oe_form_button_save oe_highlight"/>
+                        or
+                        <button special="cancel" class="oe_link" string="Cancel" />
+                   </footer>
+			                      
+                </form>
+            </field>
+        </record>        
+
+        <record id="action_case_transfer" model="ir.actions.act_window">
+             <field name="name">Transfer Case</field>
+             <field name="res_model">case.transfer</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+        <!--menuitem parent="account.menu_finance_reporting" id="success_msg_menu" icon="STOCK_PRINT" name="Success Msg" action="action_success_msg" sequence="9998"/-->
+
+    </data>
+</odoo>

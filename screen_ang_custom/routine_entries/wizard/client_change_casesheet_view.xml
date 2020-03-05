@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='view_client_change_casesheet_form' model="ir.ui.view">
+            <field name="name">view.client.change.casesheet.form</field>
+            <field name="model">client.change.casesheet</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Change Case sheets Client" >
+                    <sheet>
+                     <group>
+                        <group>
+                            <field name="filter" required="1" attrs="{'readonly':[('flg_change','=',True)]}"/>
+                        </group>
+                        <group >
+                            <field name="name"  colspan="2" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' attrs="{'readonly':[('flg_change','=',True)], 'invisible':[('filter','!=','client')], 'required': [('filter','!=','office')]}"/>
+                            <field name="office_id" attrs="{'readonly':[('flg_change','=',True)], 'invisible':[('filter','!=','office')], 'required': [('filter','!=','client')]}"/>  
+                        </group>
+		                        <group string="Change To">
+		                        	<field name="change_client_id" required="0" colspan="2" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="date" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="ho_branch_id" string="Office" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                	<field name="company_ref_no" attrs="{'readonly':[('flg_change','=',True)]}"/>		                    
+				                    <field name="contact_partner1_id" attrs="{'readonly':[('flg_change','=',True)]}" domain="[('parent_id','=',change_client_id),('parent_id','!=',False)]" context="{'search_default_customer':1}" />
+				                    <field name="contact_partner2_id" attrs="{'readonly':[('flg_change','=',True)]}" domain="[('parent_id','=',change_client_id),('parent_id','!=',False)]" context="{'search_default_customer':1}" />
+				                    <field name="our_client" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="client_service_executive_id"  attrs="{'readonly':[('flg_change','=',True)]}" domain="[('ho_branch_id','=', ho_branch_id),('client_service_admin','=',True)]"/>
+				                	<field name="client_service_manager_id"   attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="state_id" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="district_id" attrs="{'readonly':[('flg_change','=',True)]}" string="District" domain="[('state_id','=',state_id)]" context="{'state_id':state_id}"/>
+				                    <field name="lot_name" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                </group>		                
+				                <group string="Case Details">
+				                    <field name="group_val" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="division_id" attrs="{'readonly':[('flg_change','=',True)]}" domain="[('office_id','=',ho_branch_id)]"  options="{'create_edit': false,'create': false}"  />
+				                    <field name="work_type" attrs="{'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="casetype_id" attrs="{'readonly':[('flg_change','=',True)]}"  domain="[('parent','=',work_type)]"  />
+				                    
+				                    <field name="court_district_id" attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')], 'readonly':[('flg_change','=',True)]}" />
+				                    <field name="court_location_id" attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')], 'readonly':[('flg_change','=',True)]}" />
+				                    <field name="court_id" attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')], 'readonly':[('flg_change','=',True)]}" />
+				                    
+				                    <field name="arbitrator_id" attrs="{'invisible':[('work_type','!=','arbitration')], 'readonly':[('flg_change','=',True)]}" />
+				                    <field name="mediator_id" attrs="{'invisible':[('work_type','!=','mediation')], 'readonly':[('flg_change','=',True)]}" />
+				                    <field name="lodging_number"  attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')], 'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="lodging_date"  attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')], 'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="reg_number"  attrs="{'invisible':[('work_type','=','non_litigation')], 'readonly':[('flg_change','=',True)]}"/>
+				                    <field name="reg_date" attrs="{'invisible':[('work_type','=','non_litigation')], 'readonly':[('flg_change','=',True)]}"/>
+				                </group>		 
+                        
+                        
+                        <group col="4" colspan="4" string="Add Case Sheet's to Change Client">
+                            <field name="change_case_sheet_ids" colspan="2" nolabel="1"  domain="[('client_id','=',name), ('state','in', ('inprogress', 'hold'))]" attrs="{'readonly':[('flg_change','=',True)], 'invisible':[('filter','!=','client')]}"/>
+                            <field name="change_case_sheet_office_ids" colspan="2" nolabel="1"  domain="[('ho_branch_id','=',office_id), ('state','in', ('inprogress', 'hold'))]" attrs="{'readonly':[('flg_change','=',True)], 'invisible':[('filter','!=','office')]}"/>
+                        </group>
+                        <group col="4" colspan="4">
+                            <button name="change_casesheet_client" string="Change" type="object" confirm="Are you Sure, Do you want to Change in Case Sheet and Client Tasks with this Change To Client instead of this Client? " context="{}" class="oe_button oe_form_button_save oe_highlight" colspan="2" attrs="{'invisible':[('flg_change','=',True)]}"/>
+                            <field name="id" invisible="1"/>
+                            <field name="flg_change" invisible="1"/>
+                        </group>
+                       </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>        
+        
+         <record id="view_client_change_casesheet_tree" model="ir.ui.view">
+            <field name="name">view.client.change.casesheet.tree</field>
+            <field name="model">client.change.casesheet</field>
+            <field name="arch" type="xml">
+                <tree string="Change Case sheets Client">
+                    <field name="name"/>
+                    <field name="change_client_id"/>
+                    <field name="contact_partner1_id"/>
+                    <field name="contact_partner2_id"/>
+                </tree>               
+            </field>
+        </record>        
+
+        <record id="action_client_change_casesheet" model="ir.actions.act_window">
+             <field name="name">Change Case sheets Client</field>
+             <field name="res_model">client.change.casesheet</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>            
+            <field name="view_id" ref="view_client_change_casesheet_tree"/>
+            <field name="context">{}</field>
+        </record>
+        <menuitem parent="base_sub_menu_routine_entries" id="menu_client_change_casesheet" name="Change Case sheets Client" action="action_client_change_casesheet" sequence="14" groups="legal_e.group_case_entries_manager"/>
+
+    </data>
+</odoo>

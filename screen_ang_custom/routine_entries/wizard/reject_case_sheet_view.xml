@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='wizard_reject_case_sheet' model="ir.ui.view">
+        <field name="name">reject.case.sheet.wizard</field>
+        <field name="model">reject.case.sheet</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reject Case Sheet">
+                <group>
+                    <field name="name" required="1"/>
+                </group>
+
+               <footer>
+                    <button name="reject_case_sheet" string="Reject" type="object" class="oe_button oe_form_button_save oe_highlight" />
+                    or
+                    <button special="cancel" class="oe_link" string="Cancel" />
+               </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reject_case_sheet" model="ir.actions.act_window">
+         <field name="name">Reject Case Sheet</field>
+         <field name="res_model">reject.case.sheet</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">form</field>
+         <field name="target">new</field>
+    </record>
+</odoo>

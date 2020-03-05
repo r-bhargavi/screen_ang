@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+         <record id="view_legal_e_partner_tree_inherit" model="ir.ui.view">
+            <field name="name">view.legal_e.partner.tree.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="client_manager_id"/>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="view_partner_form_legale_inherit" model="ir.ui.view">
+            <field name="name">view.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="before">
+                        <group string="Bank Details" attrs="{'invisible': [('supplier', '=', False)], 'required': [('supplier', '=', True)]}">
+                            <group>
+                                <field name="ven_bank_name"/>
+                                <field name="ven_bank_branch"/>
+                                <field name="ven_bank_ac_no"/>
+                                <field name="ven_bank_ifsc"/>
+                                <field name="ven_pan_card"/>
+                            </group>
+                        </group>
+                    </xpath>
+                	<!-- Starting // Set Child (contracts) NOT as customer // Sanal Davis // 01-06-15 -->
+                	<xpath expr="//form/sheet/notebook//field[@name='child_ids']" position="attributes">
+                    	<attribute name="context">{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': False, 'default_use_parent_address': True}</attribute>
+                    </xpath>
+                    <!-- Ending -->
+                    <xpath expr="//field[@name='customer']" position="after">
+					    <field name="associate" invisible="0"/>
+				    </xpath>
+                    <xpath expr="//form/sheet/group/group[1]/label" position="before">
+                        <field name="client_data_id" attrs="{'invisible': [('is_company','=',False)],'required': [('is_company','=',True)]}"/>
+                        <field name="client_branch" attrs="{'invisible': [('is_company','=',False)]}"/>
+                        <field name="supplier_code" readonly="1" attrs="{'invisible': [('supplier','=',False)]}" />
+                    </xpath>
+                    <xpath expr="//form/sheet/notebook/page[1]/field[@name='child_ids']/form/sheet/group[1]/group[2]/field[@name='name']" position="replace">
+				        <field name="name" default_focus="1" placeholder="Name"/>
+                    </xpath>
+                    <xpath expr="//form/sheet/notebook/page[3]/group[1]/group[1]/field[@name='user_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//form/sheet/notebook/page[3]/group[1]/group[3]/field[@name='ref']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='state_id']" position="before">
+				        <field name="district_id" class="oe_no_button" placeholder="District"  options='{"no_open": True}' required="0"/>
+                    </xpath>
+				    <xpath expr="//form/sheet/notebook/page[1]/field[@name='child_ids']/form/sheet/group[1]/group[2]/field[@name='phone']" position="after">
+					    <field name="extension"/>
+					    <field name="customer" invisible="1"/>
+					    <field name="supplier" invisible="1"/>
+					    <field name="associate" invisible="1"/>
+				    </xpath>
+		            <xpath expr="//field[@name='category_id']" position="before">
+				        <field name="company_parent_id" placeholder="Parent Company" domain="[('is_company', '=', True)]"
+                               context="{'default_is_company': True, 'default_supplier': supplier}" attrs="{'invisible': [('is_company','!=',True)]}" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='parent_id']" position="replace">
+                        <field name="parent_id" placeholder="Company"
+                            domain="[('is_company', '=', True)]" context="{'default_is_company': True}" />
+                    </xpath>
+                    <xpath expr="//field[@name='phone']" position="replace">
+				        <field name="phone" placeholder="e.g. +91 80 12345678" required="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='email']" position="replace">
+				        <field name="email" widget="email" attrs="{'required':[('is_company','!=',True)]}"/>
+                    </xpath>
+				    <xpath expr="//form/sheet/notebook/page[1]/field[@name='child_ids']/form/sheet/group[1]/group[2]/field[@name='phone']" position="replace">
+				        <field name="phone" required="1"/>
+				    </xpath>
+				    <xpath expr="//form/sheet/notebook/page[1]/field[@name='child_ids']/form/sheet/group[1]/group[2]/field[@name='email']" position="replace">
+				        <field name="email" required="1"/>
+				    </xpath>
+                    <xpath expr="//field[@name='title']" position="after">
+				    	<field name="create_date" />
+                    </xpath>
+                    <xpath expr="//field[@name='user_id']" position="after">
+				    	<field name="client_manager_id" />
+                    </xpath>
+                    <xpath expr="//page[@name='sales_purchases']/group/group[@name='purchase']/field[@name='supplier']" position="after">
+				    	<field name="vendor_type_option" attrs="{'invisible': [('supplier', '=', False)], 'required': [('supplier', '=', True)]}" />
+                    </xpath>
+                    <xpath expr="//page[@name='sales_purchases']" position="after">
+                        <page name='referral_process' string="Referral Process" attrs="{'invisible': [('customer', '!=', True)]}">
+                            <group name="container_row_2">
+                                <group string="Referral Process" name="referral_process1">
+                                    <field name="referral_specification"/>
+                                    <field name="referral_type" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')]}"/>
+                                    <!--<field name="response_person" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')], 'required' : [('referral_type', '=', 'ref_emp')]}"/>-->
+                                    <field name="response_person" invisible="1"/>
+                                    <field name="response_person_emp" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')], 'required' : [('referral_type', '=', 'ref_emp')]}"/>
+                                    <field name="division_id" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')], 'required' : [('referral_type', '=', 'ref_part')]}"/>
+                                    <field name="assignee_id" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')], 'required' : [('referral_type', '=', 'ref_part')]}"/>
+                                    <field name="ref" string="External Reference" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')], 'required' : [('referral_type', '=', 'ref_ext')]}"/>
+                                    <field name="referral_percentage" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')]}"/>
+                                    <field name="referral_amount" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')]}"/>
+                                    <field name="referral_validity" attrs="{'invisible' : [('referral_specification', '!=', 'client_specific')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+		<!-- View Suppliers only in supplier form -->
+		<record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+			<field name="domain">[('supplier','=',True),('associate','=',True)]</field>
+		</record>
+
+        <record id="action_client_masters_form1" model="ir.actions.act_window">
+            <field name="name">Client Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_type_company': True}</field>
+            <field name="domain">[('customer','=',True),('is_company','=',True)]</field>
+            <field name="filter" eval="True"/>
+            <field name="view_id" eval="False"/>
+        </record>
+
+
+        <record id="action_client_masters_form_view1" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="base.res_partner_kanban_view"/>
+            <field name="act_window_id" ref="action_client_masters_form1"/>
+        </record>
+        <record id="action_client_masters_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_partner_form_legale_inherit"/>
+            <field name="act_window_id" ref="action_client_masters_form1"/>
+        </record>
+        <record id="action_client_masters_tree_view3" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="base.view_partner_tree"/>
+            <field name="act_window_id" ref="action_client_masters_form1"/>
+        </record>
+
+		<record id="view_partner_tree_legale_associate" model="ir.ui.view">
+            <field name="name">view.partner.tree.associate</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="External Associates">
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="district_id"/>
+                        <field name="state_id"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="case_sheet_view_partner_form_legale_associate" model="ir.ui.view">
+            <field name="name">view.partner.form.associate</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="External Associates">
+                    <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="associate" invisible="1"/>
+                    </group>
+                        <group>
+                        <group col="4" string="Address" colspan="2">
+                            <field name="street" placeholder="Street..." readonly="1"/>
+                            <field name="street2" placeholder="Street2..." readonly="1"/>
+                            <field name="city" placeholder="City..." readonly="1"/>
+                            <field name="country_id" placeholder="Country..." required="1" readonly="1"/>
+                            <field name="state_id" placeholder="State..." readonly="1" required="1" domain="[('country_id','=',country_id)]" />
+                            <field name="district_id" placeholder="District..." readonly="1" required="1" domain="[('state_id','=',state_id)]" context="{'state_id':state_id}"/>
+                            <field name="zip" placeholder="Pin..." readonly="1"/>
+                        </group>
+						<group col="4" colspan="2">
+                            <field name="function" readonly="1"/>
+                            <field name="phone" required="1" readonly="1"/>
+                            <field name="email" required="1" readonly="1"/>
+                            <field name="pan" readonly="1"/>
+                        </group>
+                        </group>
+                        <group string="Bank Accounts">
+                        <field name="bank_ids" colspan="4" nolabel="1" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="case_sheet_open_view_associate_list_my_legale_inherit" model="ir.actions.act_window">
+            <field name="name">External Associates</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('associate','=',True)]</field>
+            <field name="context">{'default_associate':True, 'default_supplier':True}</field>
+            <field name="filter" eval="True"/>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new assignee.
+              </p><p>
+                With just a quick glance on the Odoo assignee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="case_sheet_action_partner_associate_form">
+           <field name="sequence" eval="10"/>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="case_sheet_view_partner_form_legale_associate"/>
+          <field name="act_window_id" ref="case_sheet_open_view_associate_list_my_legale_inherit"/>
+      </record>
+
+      <record model="ir.actions.act_window.view" id="case_sheet_action_partner_associate_tree">
+           <field name="sequence" eval="5"/>
+          <field name="view_mode">tree</field>
+          <field name="view_id" ref="view_partner_tree_legale_associate"/>
+          <field name="act_window_id" ref="case_sheet_open_view_associate_list_my_legale_inherit"/>
+      </record>
+
+
+        <menuitem action="case_sheet_open_view_associate_list_my_legale_inherit" id="case_sheet_menu_open_view_assignee_list_my_inh" sequence="2" parent="base_sub_menu_routine_entries"/>
+
+
+
+        <record id="view_partner_form_legale_associate" model="ir.ui.view">
+            <field name="name">view.partner.form.associate</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Associate">
+                    <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="associate" invisible="1"/>
+                        <field name="supplier_code" readonly="1" attrs="{'invisible': [('associate','=',False)]}"/>
+                    </group>
+                        <group>
+                        <group col="4" string="Address" colspan="2">
+                            <field name="street" placeholder="Street..."/>
+                            <field name="street2" placeholder="Street2..."/>
+                            <field name="city" placeholder="City..."/>
+                            <field name="country_id" placeholder="Country..." required="1"/>
+                            <field name="state_id" placeholder="State..." required="1" domain="[('country_id','=',country_id)]"/>
+                            <field name="district_id" placeholder="District..." required="1" domain="[('state_id','=',state_id)]" context="{'state_id':state_id}"/>
+                            <field name="zip" placeholder="Pin..."/>
+                        </group>
+                        <group col="4" colspan="2">
+                            <field name="function"/>
+                            <field name="phone" required="1"/>
+                            <field name="email" required="1"/>
+                            <field name="pan"/>
+                        </group>
+                        </group>
+                        <group string="Bank Accounts">
+                        <field name="bank_ids" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_view_associate_list_my_legale_inherit" model="ir.actions.act_window">
+            <field name="name">Associate Master</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('associate','=',True)]</field>
+            <field name="context">{'default_associate':True, 'default_supplier':True}</field>
+            <field name="filter" eval="True"/>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new assignee.
+              </p><p>
+                With just a quick glance on the Odoo assignee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_partner_associate_form">
+           <field name="sequence" eval="10"/>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="view_partner_form_legale_associate"/>
+          <field name="act_window_id" ref="open_view_associate_list_my_legale_inherit"/>
+      </record>
+
+      <record model="ir.actions.act_window.view" id="action_partner_associate_tree">
+           <field name="sequence" eval="5"/>
+          <field name="view_mode">tree</field>
+          <field name="view_id" ref="view_partner_tree_legale_associate"/>
+          <field name="act_window_id" ref="open_view_associate_list_my_legale_inherit"/>
+      </record>
+
+
+        <menuitem action="open_view_associate_list_my_legale_inherit" id="menu_open_view_assignee_list_my_inh" sequence="2" parent="sub_menu_masters"/>
+
+
+
+
+        <menuitem id="sub_menu_client_masters" action="action_client_masters_form1" name="Client Master" parent="sub_menu_masters" sequence="2"/>
+
+
+
+		 <!--  Partners inherited form
+        <record id="view_task_partner_info_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.task.info.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="project.view_task_partner_info_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='page_history']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+       </record>
+		-->
+
+
+    <record id="legale_view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">legale.res.partner.search.inherit.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="replace">
+            </field>
+        </field>
+    </record>
+		
+		
+	</data>
+</odoo>

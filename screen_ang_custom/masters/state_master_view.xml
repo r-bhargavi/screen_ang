@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+                
+        <record id="view_country_state_form_inhs" model="ir.ui.view">
+            <field name="name">res.country.state.form.inhs</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_form"/>
+            <field name="arch" type="xml">
+                <field name="country_id" position="after">
+                	<field name="region"/>
+                </field>
+            </field>
+        </record> 
+        
+        <record id="view_country_state_tree_inhs" model="ir.ui.view">
+            <field name="name">country.state.tree.inhs</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_tree"/>
+            <field name="arch" type="xml">
+                <field name="country_id" position="after">
+                	<field name="region"/>
+                </field>
+            </field>
+        </record> 
+        
+
+        <record id="action_country_states" model="ir.actions.act_window">
+            <field name="name">States</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.state</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_country_state_tree_inhs"/>            
+        </record>
+        
+         <menuitem id="sub_menu_state_master" action="action_country_states" name="State Master" parent="sub_menu_masters" sequence="14"/>  
+               
+	</data>
+</odoo>

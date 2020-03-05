@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 		<record id="add_timesheet_form" model="ir.ui.view">
+            <field name="name">Add Timesheet</field>
+            <field name="model">add.timesheet</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Add Timesheet">
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="date" required="1" />
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="unit_amount"/>
+                        <field name="task_id" readonly="1"/>
+                    </group>
+
+                    <footer>
+						<button name="action_create_timesheet" string="Create Timesheet"  class="oe_highlight"  type="object" />
+                         or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_add_timesheet_form" model="ir.actions.act_window">
+             <field name="name">Add Timesheet</field>
+             <field name="res_model">add.timesheet</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="view_id" ref="add_timesheet_form"/>
+             <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+
+    </data>
+</odoo>

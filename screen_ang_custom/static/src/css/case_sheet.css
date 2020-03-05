@@ -1,0 +1,45 @@
+ .tasks_lines_class [data-id="phase_name"]{width: 30%;}
+ 
+ .tasks_lines_class [data-id="slno"]{width: 8%;}
+ 
+ .tasks_lines_class [data-id="name"]{width: 41%;}
+  
+ .tasks_lines_class [data-id="date"]{width: 8%;} 
+ 
+ .tasks_lines_class [data-id="planned_completion_date"]{width: 10%;}
+ 
+ .oe_like_button {
+    text-decoration: none; font: menu;
+    display: inline; padding: 2px 8px;
+    background: ButtonFace; color: ButtonText;
+    border-style: solid; border-width: 1px;
+    border-color: #1C1C1C;
+    border-radius:5px;
+    background-color: #D3D3D3;
+    height:50px;
+    color:#000000;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.red_asso_pay_remind
+{
+color:red;
+}
+
+.green_label
+{ 
+font-weight: bold;
+color:rgb(3,156,37); 
+}
+.blue_label
+{
+color:rgb(124, 123, 173);
+}
+
+.oe_form_sheet.oe_form_sheet_width {
+  min-width: 20%;
+  max-width: 100%;
+  margin: 0 auto;
+}

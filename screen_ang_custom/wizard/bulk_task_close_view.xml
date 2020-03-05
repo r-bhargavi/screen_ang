@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record id="bulk_task_close_form" model="ir.ui.view">
+            <field name="name">bulk.task.close.form</field>
+            <field name="model">bulk.task.close</field>
+            <field name="arch" type="xml">            
+                <form string="Bulk Tasks Close">
+                    <sheet>
+                        <group col="2" string="Bulk Tasks Close">
+                            <field name="flg_first_row" colspan="4"/>
+                            <field name="field_delimiter" required="1" style="width:20%%"/>
+                            <field name="text_delimiter" required="0" style="width:20%%"/>
+                            <field name="datas" filename="datas_fname" widget="binary"/>
+                            <label string="File Content should be in CSV format and the 1st column should contain the Task Name and the 2nd column should contain Project Name" colspan="4"/>
+                        </group>
+                    
+                    <footer>
+                        <button name="generate_bulk_task_close" string="Close" type="object" icon="gtk-ok" class="oe_button oe_form_button_save oe_highlight" />
+                         or
+                        <button special="cancel" class="oe_link" string="Cancel" />
+                    </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <record id="action_bulk_task_close_form" model="ir.actions.act_window">
+            <field name="name">Bulk Tasks Close</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bulk.task.close</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="view_id" ref="bulk_task_close_form"/>
+             <field name="target">new</field>
+        </record>
+        <menuitem id="sub_menu_bulk_task_close_form" action="action_bulk_task_close_form" name="Bulk Tasks Close" parent="base_sub_menu_routine_entries" sequence="11"  groups="legal_e.group_case_entries_officer"/>
+        
+        
+         <record id="bulk_task_close_form_closed" model="ir.ui.view">
+            <field name="name">bulk.task.close.form</field>
+            <field name="model">bulk.task.close</field>
+            <field name="arch" type="xml">            
+                <form string="Bulk Tasks Close">
+                    <group string="The uploaded tasks has been closed successfully!">
+                    </group>
+                    
+                    <footer>
+                         <button special="cancel" string="OK" colspan="1" class="oe_button oe_form_button_save oe_highlight"/>
+                    </footer>
+                    
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

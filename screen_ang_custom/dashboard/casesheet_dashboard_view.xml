@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_case_sheet_tree" model="ir.ui.view">
+            <field name="name">case.sheet.tree.dashboard</field>
+            <field name="model">case.sheet</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Case Sheets" colors="blue:state=='new'; green:state=='inprogress'; black:state=='done'">
+                    <field name="name"/>
+                    <field name="client_id"/>
+                    <field name="date"/>
+                    <field name="casetype_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="my_open_case_sheet_action" model="ir.actions.act_window">
+            <field name="name">My Case Sheets</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'group_by':['date','state','work_type']}</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_case_sheet_tree"/>
+        </record>
+        
+        <record model="ir.ui.view" id="view_case_sheet_monthly_graph">
+            <field name="name">case.sheet.monthly.graph</field>
+            <field name="model">casesheet.report.board</field>
+            <field name="arch" type="xml">
+                <graph string="Monthly Case Sheets by Type of Work" type="pie" orientation="horizontal">
+                    <field name="date"/>
+                    <field name="state" group="True"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        
+        <record id="action_case_sheet_monthly_graph" model="ir.actions.act_window">
+            <field name="name">Monthly Case Sheets Graph</field>
+            <field name="res_model">casesheet.report.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_case_sheet_monthly_graph"></field>
+        </record>
+        
+        
+        
+        
+
+        <record id="casesheet_dashboard_form" model="ir.ui.view">
+            <field name="name">case.sheet.form.dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="My Board">
+                    <board style="2-1">
+                        <column>
+                            <action name="%(my_open_case_sheet_action)d" string="Case Sheets"/>
+                        </column>
+                        <column>
+                            <action name="%(action_case_sheet_monthly_graph)d" string="Case Sheets by Status in each Month"/>
+                        </column>
+                        <newline/>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_board_casesheet" model="ir.actions.act_window">
+            <field name="name">Case Sheets</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="casesheet_dashboard_form"/>
+        </record>
+
+        <menuitem id="menu_casesheet_dashboard"
+                  sequence="4"
+                  parent="base.menu_reporting_dashboard"
+                  action="open_board_casesheet" groups="legal_e.group_case_entries_manager,legal_e.group_case_entries_officer"/>
+
+       
+       <!-- Case Proceeding History -->
+        
+        
+        <record id="view_case_proceeding_tree" model="ir.ui.view">
+            <field name="name">court.proceedings.tree.dashboard</field>
+            <field name="model">court.proceedings</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Court Proceedings" colors="blue:not_fully_billed == True">
+                    <field name="case_id" string="File Number"/>
+                    <field name="proceed_date"/>
+                    <field name="next_proceed_date"/>
+                    <field name="parties_desc"/>
+                    <field name="court_id"/>
+                    <field name="stage_id"/>
+                    <field name="date_missing" invisible="1"/>
+                    <field name="checked" invisible="1"/>
+                    <field name="closed" invisible="1"/>
+                    <field name="not_fully_billed" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="my_case_proceeding_action" model="ir.actions.act_window">
+            <field name="name">Court Proceedings/History</field>
+            <field name="res_model">court.proceedings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'order_by_next_proceed_date': True}</field>
+            <field name="domain">[('date_missing','!=', True),('next_proceed_date','>=',(context_today()).strftime('%Y-%m-%d')),('case_id.state','not in',['new','done','cancel','transfer','hold'])] </field>
+            <field name="view_id" ref="view_case_proceeding_tree"/>
+        </record>
+
+
+
+         <!-- Missing Case Proceeding History -->
+
+
+        <record id="view_missing_case_proceeding_tree" model="ir.ui.view">
+            <field name="name">court.proceedings.tree.dashboard</field>
+            <field name="model">court.proceedings</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Missing Court Proceedings" colors="red:date_missing == True">
+                	<field name="case_id" string="File Number"/>
+                    <field name="proceed_date"/>
+                    <field name="next_proceed_date"/>
+                    <field name="parties_desc"/>
+                    <field name="court_id"/>
+                    <field name="stage_id"/>
+                    <field name="date_missing" invisible="1"/>
+                    <field name="checked" invisible="1"/>
+                    <field name="closed" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="my_missing_case_proceeding_action" model="ir.actions.act_window">
+            <field name="name">Missing Proceedings/History</field>
+            <field name="res_model">court.proceedings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'order_by_next_proceed_date': True}</field>
+            <field name="domain">[('name','!=', 'Missing Dates(System generated message)'),('date_missing','=', True),('case_id.state','not in',['new','done','cancel','transfer','hold'])] </field>
+            <field name="view_id" ref="view_missing_case_proceeding_tree"/>
+        </record>
+
+
+        <!-- Tasks History -->
+
+
+        <record id="view_my_project_task_board_tree" model="ir.ui.view">
+            <field name="name">project.task.tree.dashboard</field>
+            <field name="model">project.task</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Tasks" colors="red:date_deadline&lt;current_date;blue:date_deadline==current_date;black:date_deadline&gt;current_date" >
+                	<field name="name"/>
+                    <field name="project_id"/>
+                    <field name="assignee_id"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="date_deadline" invisible="1"/>
+                    <field name="stage_id" />
+                    <field name="date_start" />
+                    <field name="date_end" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="my_project_task_action_board" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'order_by_end_date': True}</field>
+            <field name="domain">[('state','=', 'pending'), ('date_end','&lt;', time.strftime('%Y-%m-%d %H:%M:%S'))]</field>
+            <field name="view_id" ref="view_my_project_task_board_tree"/>
+        </record>
+
+
+
+        <record id="case_proceeding_dashboard_form" model="ir.ui.view">
+            <field name="name">court.proceedings.form.dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="My Board">
+                    <board style="1">
+                    	<column>
+                    	    <action name="%(my_case_proceeding_action)d" string="Court Proceedings"/>
+                            <action name="%(my_project_task_action_board)d" string="Tasks"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_board_case_proceeding" model="ir.actions.act_window">
+            <field name="name">Court Proceedings / Tasks</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="case_proceeding_dashboard_form"/>
+        </record>
+
+        <menuitem id="menu_case_proceeding_dashboard"
+                  sequence="1"
+                  parent="base.menu_reporting_dashboard"
+                  action="open_board_case_proceeding" groups="legal_e.group_case_entries_manager,legal_e.group_case_entries_officer"/>
+
+
+
+
+        <!-- Missing Case Proceeding History(System Genarated Messages) -->
+
+
+        <record id="view_missing_case_proceeding_sys_tree" model="ir.ui.view">
+            <field name="name">court.proceedings.tree.dashboard</field>
+            <field name="model">court.proceedings</field>
+            <field eval="99" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Missing Court Proceedings(System Generated Messages)" colors="red:date_missing == True">
+                	<field name="case_id" string="File Number"/>
+                    <field name="proceed_date"/>
+                    <field name="next_proceed_date"/>
+                    <field name="parties_desc"/>
+                    <field name="court_id"/>
+                    <field name="stage_id"/>
+                    <field name="date_missing" invisible="1"/>
+                    <field name="checked" invisible="1"/>
+                    <field name="closed" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="my_missing_case_proceeding_sys_action" model="ir.actions.act_window">
+            <field name="name">Missing Proceedings(System Generated Messages)</field>
+            <field name="res_model">court.proceedings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'order_by_next_proceed_date': True}</field>
+            <field name="domain">[('name','=', 'Missing Dates(System generated message)'),('date_missing','=', True),('case_id.state','not in',['new','done','cancel','transfer','hold'])] </field>
+            <field name="view_id" ref="view_missing_case_proceeding_tree"/>
+        </record>
+
+
+
+
+
+       <record id="missing_case_proceeding_dashboard_form" model="ir.ui.view">
+            <field name="name">missing.court.proceedings.form.dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="My Board">
+                    <board style="1">
+                    	<column>
+                            <action name="%(my_missing_case_proceeding_sys_action)d" string="Missing Court Proceedings(System Generated Messages)"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="missing_open_board_case_proceeding" model="ir.actions.act_window">
+            <field name="name">Missing Court Proceedings</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="missing_case_proceeding_dashboard_form"/>
+        </record>
+
+        <menuitem id="menu_missing_case_proceeding_dashboard"
+                  sequence="2"
+                  parent="base.menu_reporting_dashboard"
+                  action="missing_open_board_case_proceeding" groups="legal_e.group_case_entries_manager,legal_e.group_case_entries_officer"/>
+
+    </data>
+</odoo>

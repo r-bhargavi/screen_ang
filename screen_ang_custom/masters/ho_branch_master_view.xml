@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_ho_branch_master_filter" model="ir.ui.view">
+            <field name="name">ho.branch.master.select</field>
+            <field name="model">ho.branch</field>
+            <field name="arch" type="xml">
+                <search string="Search HO Master">
+                    <field name="state_id" string="State" filter_domain="[('state_id','ilike',self)]"/>
+                    <field name="name" string="Head Office Name" filter_domain="[('name','ilike',self)]"/>
+                    <field name="code" string="HO Code" filter_domain="[('code','ilike',self)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" icon="terp-go-stock" name="state" domain="[]" context="{'group_by':'state_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="ho_branch_master_tree" model="ir.ui.view">
+            <field name="name">ho.branch.master.tree</field>
+            <field name="model">ho.branch</field>
+            <field name="arch" type="xml">
+                <tree string="Office Master">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                    <field name="district_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ho_branch_master_form" model="ir.ui.view">
+            <field name="name">ho.branch.master.form</field>
+            <field name="model">ho.branch</field>
+            <field name="arch" type="xml">
+                <form string="Office Details">
+	                <sheet>
+                        <group>
+                            <group string='Office Details'>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="client_service_executive_id" domain="[('client_service_admin','=',True)]"/>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                                <field name="zip"/>
+                                <field name="country_id"/>
+                                <field name="state_id" domain="[('country_id','=',country_id)]"/>
+                                <field name="district_id" placeholder="District..." domain="[('state_id','=',state_id)]" context="{'state_id':state_id}"/>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="active"/>
+                            </group>
+                            <group string='Leave Allocation'>
+                                <field name="no_yearly_leave"/>
+                                <field name="public_holiday_count"/>
+                                <field name="weekly_holiday_count"/>
+                                <field name="total_holiday_count"/>
+                            </group>
+                        </group>
+                        <group string='Leave Details'>
+                            <field name="calendar_year"/>
+                            <field name="public_line_ids">
+                                <tree string="Public Holiday Lines" editable="bottom">
+                                    <field name="name" />
+                                    <field name="date" />
+                                </tree>
+                            </field>
+                            <field name="weekly_line_ids">
+                                <tree string="Weekly Holiday Lines" editable="bottom">
+                                    <field name="name" />
+                                    <field name="date" />
+                                </tree>
+                            </field>
+                        </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_ho_branch_master_form" model="ir.actions.act_window">
+            <field name="name">Office Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ho.branch</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ho_branch_master_tree"/>
+        </record>
+        
+         <menuitem id="sub_menu_ho_branch_master" action="action_ho_branch_master_form" name="Office Master" parent="sub_menu_masters" sequence="23"/>  
+               
+	</data>
+</odoo>

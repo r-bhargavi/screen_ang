@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<odoo>
+    <data> 
+        <!--
+            Override the original action to set another help field and/or
+            another context field, more suited for portal members
+        -->
+        <record id="action_case_sheet_portal" model="ir.actions.act_window">
+            <field name="name">Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="legal_e.view_case_sheet_filter"/>            
+            <field name="view_id" ref="legal_e.case_sheet_tree"/>
+            <field name="help">No Case Sheets are Created for you.</field>
+        </record>
+        
+
+        <record id="open_view_project_tasks" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="project.view_task_kanban"/>
+            <field name="search_view_id" ref="legal_e.view_task_search_form_legale1"/>
+            <field name="context">{}</field>
+            <field name="domain">[('task_for','=','customer')]</field>
+            <field name="help">No Client Tasks are Created for you.</field>
+        </record>
+
+        <menuitem name="Quotations" id="portal_sale.portal_quotations" parent="portal.portal_orders"
+            action="portal_sale.action_quotations_portal" sequence="10" groups="base.group_no_one"/>x
+        <menuitem name="Sales Orders" id="portal_sale.portal_sales_orders" parent="portal.portal_orders"
+            action="portal_sale.action_orders_portal" sequence="20" groups="base.group_no_one"/>
+        <!-- menuitem name="Case Sheet" id="portal_casesheets" parent="portal.portal_orders"
+            action="action_case_sheet_portal" sequence="40"/-->
+        <menuitem name="Projects" id="portal_project.portal_services_projects" parent="portal.portal_projects"
+            action="portal_project.open_view_project" sequence="10" groups="base.group_no_one"/>
+        <menuitem name="Client Tasks" id="portal_services_project_tasks" parent="portal.portal_projects"
+            action="open_view_project_tasks" sequence="20"/>
+
+    </data>
+</odoo>

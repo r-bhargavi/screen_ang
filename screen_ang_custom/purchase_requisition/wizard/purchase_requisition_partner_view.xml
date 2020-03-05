@@ -1,0 +1,24 @@
+<odoo>
+      <data>
+
+        <!--<record id="view_purchase_requisition_partner_inherit" model="ir.ui.view">-->
+            <!--<field name="name">Purchase Requisition</field>-->
+            <!--<field name="model">purchase.requisition.partner</field>-->
+            <!--<field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_partner"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//form/group" position="after">-->
+                	 <!--<group string="Products">-->
+	                     <!--<field name="purchase_requisition_line_ids" nolabel="1">-->
+	                     	<!--<tree string="Products" editable="bottom">-->
+	                            <!--<field name="product_id"/>-->
+	                            <!--&lt;!&ndash; <field name="select" /> &ndash;&gt;-->
+	                            <!--<field name="wizard_id" invisible="1"/>-->
+	                        <!--</tree>-->
+	                      <!--</field> -->
+                      <!--</group> -->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+       </data>
+</odoo>

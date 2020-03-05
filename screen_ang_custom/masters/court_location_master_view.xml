@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         
+         <!--Court Location Master -->
+    		
+    	<record id="court_location_master_tree" model="ir.ui.view">
+            <field name="name">court.location.master.tree</field>
+            <field name="model">court.location</field>
+            <field name="arch" type="xml">
+                <tree string="Court Location">
+                    <field name="name"/>                    
+                </tree>
+            </field>
+        </record>
+        <record id="court_location_master_form" model="ir.ui.view">
+            <field name="name">court.location.master.form</field>
+            <field name="model">court.location</field>
+            <field name="arch" type="xml">
+                <form string="Court Location">
+	                <sheet>
+		                <group col='4' string='Court Location'>
+		                    <field name="name" colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_court_location_master_form" model="ir.actions.act_window">
+            <field name="name">Court Location Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">court.location</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="court_location_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_action_court_location_master_form" action="action_court_location_master_form" name="Court Location Master" parent="sub_menu_masters" sequence="9" groups="hr.group_hr_user"/>
+               
+         
+	</data>
+</odoo>

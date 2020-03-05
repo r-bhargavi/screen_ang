@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>                
+        <record id="view_users_form_inhs" model="ir.ui.view">
+            <field name="name">view.users.form.inhs</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']/group" position="before">
+                    <label for="work_email" class="oe_edit_only" string="Work Email Address"/>
+                    <h2><field name="work_email" required="1"/></h2>
+                    <label for="ho_branch_id" class="oe_edit_only" string="Office"/>
+                    <h2><field name="ho_branch_id" required="1"/></h2>
+                </xpath>
+                <xpath expr="//notebook/page[1]/group[1]" position="after">
+                    <group string="Allowed Locations" groups="base.group_user">
+                      <field name="location_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+	</data>
+</odoo>

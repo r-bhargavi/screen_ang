@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_case_cancel_id' model="ir.ui.view">
+            <field name="name">case.cancel.wizard</field>
+            <field name="model">case.cancel</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Case cancel Details">
+                    <group>
+                        <field name="cancel_date" required="1"/>
+                        <field name="name" required="1"/>
+                    </group>
+
+
+                     <footer>
+                        <!--<button name="cancel_case_sheet" string="OK" icon="fa-check" type="object" context="{'comments':name,'cancel_date':cancel_date}" class="oe_button oe_form_button_save oe_highlight" />-->
+                        <button name="cancel_case_sheet" string="OK" type="object" context="{'comments':name,'cancel_date':cancel_date}" class="oe_button oe_form_button_save oe_highlight" />
+                        or
+                        <button special="cancel" class="oe_link" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>        
+
+        <record id="action_case_cancel" model="ir.actions.act_window">
+             <field name="name">Cancel Case</field>
+             <field name="res_model">case.cancel</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+        <!--menuitem parent="account.menu_finance_reporting" id="success_msg_menu" icon="STOCK_PRINT" name="Success Msg" action="action_success_msg" sequence="9998"/-->
+
+    </data>
+</odoo>

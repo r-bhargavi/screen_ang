@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Manage Products" id="manage_products" parent="stock.menu_stock_root" sequence="4"/>
+
+    <record id="view_import_product_data_form" model="ir.ui.view">
+        <field name="name">import_product_data</field>
+        <field name="model">import.products</field>
+        <field name="arch" type="xml">
+            <form string="Import Products">
+               <group>
+                   <field name='file_path'/>
+               </group>
+               <footer>
+                    <button name="do_import_product_data" string="Import/Update" type="object" class="oe_highlight"/>
+                    <!-- <button name="update_default_code" string="Update Internal Ref (Product)" type="object" class="oe_highlight"/> -->
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+               </footer>
+           </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_import_products">
+        <field name="name">Import products</field>
+        <field name="res_model">import.products</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_import_product_data_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Import Products" id="import_products" parent="manage_products" action="action_import_products"/>
+
+    <record id="product_xls_output_view" model="ir.ui.view">
+        <field name="name">Excel Output</field>
+        <field name="model">output</field>
+        <field name="arch" type="xml">
+            <form string="Bounce File">
+                <h1>
+                    <field name="flag" invisible="1"/>
+                    <label string="All Products Data Imported Successfully" attrs="{'invisible':[('flag','=',True)]}"/>
+                </h1>
+                <group>
+                    <field name="file_path" widget="url" readonly="1" attrs="{'invisible':[('flag','=',False)]}"/>
+                    <field name="file_path2" widget="url" readonly="1" attrs="{'invisible':[('flag','=',False)]}"/>
+                </group>
+                <footer>
+                    <button special="cancel" string="_Close" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

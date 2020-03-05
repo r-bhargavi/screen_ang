@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id="casemaster_1" model="case.master">
+            <field name="name">Civil Litigation- Gen</field>
+            <field name="parent">civillitigation</field>
+            <field name="case_data_id">CLG</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_2" model="case.master">
+            <field name="name">Criminal Litigation</field>
+            <field name="parent">criminallitigation</field>
+            <field name="case_data_id">CL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_3" model="case.master">
+            <field name="name">Corporate Litigation</field>
+            <field name="parent">civillitigation</field>
+            <field name="case_data_id">COL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_4" model="case.master">
+            <field name="name">Commercial Litigation (Debt Recovery)</field>
+            <field name="parent">civillitigation</field>
+            <field name="case_data_id">CL(D)</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_5" model="case.master">
+            <field name="name">Consumer Litigation- HO</field>
+            <field name="parent">civillitigation</field>
+            <field name="case_data_id">CLHO</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_6" model="case.master">
+            <field name="name">Banking Litigation (DRT/DRAT)</field>
+            <field name="parent">civillitigation</field>
+            <field name="case_data_id">BNKL(D)</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_7" model="case.master">
+            <field name="name">Litigation under NI Act</field>
+            <field name="parent">criminallitigation</field>
+            <field name="case_data_id">LNI</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_8" model="case.master">
+            <field name="name">Execution</field>
+            <field name="parent">execution</field>
+            <field name="case_data_id">EXC</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_9" model="case.master">
+            <field name="name">Arbitration</field>
+            <field name="parent">arbitration</field>
+            <field name="case_data_id">ARB</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_10" model="case.master">
+            <field name="name">Arbitration (Commercial claims)</field>
+            <field name="parent">arbitration</field>
+            <field name="case_data_id">ARB(C)</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_11" model="case.master">
+            <field name="name">Arbitration (bulk)</field>
+            <field name="parent">arbitration</field>
+            <field name="case_data_id">ARB(B)</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_12" model="case.master">
+            <field name="name">Arbitration (LL)</field>
+            <field name="parent">arbitration</field>
+            <field name="case_data_id">ARB(L)</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_13" model="case.master">
+            <field name="name">Tax Laws –Indirect</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">TAXLI</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_14" model="case.master">
+            <field name="name">Tax Laws-Direct</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">TLD</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_15" model="case.master">
+            <field name="name">Corporate Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">CORL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_16" model="case.master">
+            <field name="name">Investment Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">INVL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_17" model="case.master">
+            <field name="name">Commercial Contracts</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">COMC</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_18" model="case.master">
+            <field name="name">Real Estate</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">RES</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_19" model="case.master">
+            <field name="name">Labour &#38; Employment</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">LEMP</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_20" model="case.master">
+            <field name="name">Environmental Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">ENVL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_21" model="case.master">
+            <field name="name">Food Safety Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">FSL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_22" model="case.master">
+            <field name="name">Infrastructure</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">INF</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_23" model="case.master">
+            <field name="name">Maritime laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">MAL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_24" model="case.master">
+            <field name="name">Aviation Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">AVL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_25" model="case.master">
+            <field name="name">Logistic Laws – surface transport</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">LOGS</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_26" model="case.master">
+            <field name="name">Insurance</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">INS</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_27" model="case.master">
+            <field name="name">Banking and Non-Banking</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">BNKNBNK</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_28" model="case.master">
+            <field name="name">Intellectual Property Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">INT</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_29" model="case.master">
+            <field name="name">Information Technology Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">ITL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_30" model="case.master">
+            <field name="name">Medico Legal Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">MLL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_31" model="case.master">
+            <field name="name">Clinical Trial Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">CLTL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_32" model="case.master">
+            <field name="name">Pharma Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">PHL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_33" model="case.master">
+            <field name="name">Mining Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">MINLW</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_34" model="case.master">
+            <field name="name">Supreme Court Litigation</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">MINL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_35" model="case.master">
+            <field name="name">Consumer Litigation – Pan India</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">CLPA</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_36" model="case.master">
+            <field name="name">Media Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">MEDL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_37" model="case.master">
+            <field name="name">Competition Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">COMPL</field>
+            <field name="remarks"></field>
+        </record>
+        <record id="casemaster_38" model="case.master">
+            <field name="name">Trade Laws</field>
+            <field name="parent">non_litigation</field>
+            <field name="case_data_id">TRDL</field>
+            <field name="remarks"></field>
+        </record>
+        
+               
+        <!-- Defaults Tasks for Arbitration Case  -->
+                        
+         <record id="case_template_line_1" model="task.template.line">
+            <field name="slno">1</field>
+            <field name="name" ref="taskact_19"></field>
+            <field name="days">1</field>
+        </record>
+        
+        <record id="case_template_line_2" model="task.template.line">
+            <field name="slno">2</field>
+            <field name="name" ref="taskact_12"></field>
+            <field name="days">7</field>
+        </record>        
+        
+        <record id="case_template_line_3" model="task.template.line">
+            <field name="slno">3</field>
+            <field name="name" ref="taskact_14"></field>
+            <field name="days">16</field>
+        </record>
+        
+        <record id="case_template_line_4" model="task.template.line">
+            <field name="slno">4</field>
+            <field name="name" ref="taskact_20"></field>
+            <field name="days">18</field>
+        </record>  
+        
+        <record id="case_template_line_5" model="task.template.line">
+            <field name="slno">5</field>
+            <field name="name" ref="taskact_21"></field>
+            <field name="days">25</field>
+        </record>
+        
+        <record id="case_template_line_6" model="task.template.line">
+            <field name="slno">6</field>
+            <field name="name" ref="taskact_22"></field>
+            <field name="days">50</field>
+        </record>        
+        
+        <record id="case_template_line_7" model="task.template.line">
+            <field name="slno">7</field>
+            <field name="name" ref="taskact_23"></field>
+            <field name="days">65</field>
+        </record>        
+        
+        <record id="case_template_line_8" model="task.template.line">
+            <field name="slno">8</field>
+            <field name="name" ref="taskact_24"></field>
+            <field name="days">80</field>
+        </record>        
+        
+        <record id="case_template_line_9" model="task.template.line">
+            <field name="slno">9</field>
+            <field name="name" ref="taskact_1"></field>
+            <field name="days">90</field>
+        </record>        
+        
+        <record id="case_template_line_10" model="task.template.line">
+            <field name="slno">10</field>
+            <field name="name" ref="taskact_25"></field>
+            <field name="days">145</field>
+        </record>        
+        
+        <record id="case_template_line_11" model="task.template.line">
+            <field name="slno">11</field>
+            <field name="name" ref="taskact_26"></field>
+            <field name="days">150</field>
+        </record>          
+                
+        <record id="case_template_1" model="task.template">
+            <field name="name">arbitration</field>
+            <field name="casetype_id" ref="casemaster_9"></field>
+            <field name="tasks_lines" eval="[(0,0,{'name':ref('taskact_12'),'slno':1,'days':2}),(0,0,{'name':ref('taskact_4'),'slno':2,'days':9}),(0,0,{'name':ref('taskact_1'),'slno':3,'days':90}),(0,0,{'name':ref('taskact_26'),'slno':4,'days':150})]"></field>
+        </record>
+        
+        <!-- Defaults Tasks for Criminal Litigation Case  -->
+        
+        <record id="case_template_line_12" model="task.template.line">
+            <field name="slno">1</field>
+            <field name="name" ref="taskact_19"></field>
+            <field name="days">1</field>
+        </record>
+        
+        <record id="case_template_line_13" model="task.template.line">
+            <field name="slno">2</field>
+            <field name="name" ref="taskact_12"></field>
+            <field name="days">7</field>
+        </record>        
+        
+        <record id="case_template_line_14" model="task.template.line">
+            <field name="slno">3</field>
+            <field name="name" ref="taskact_27"></field>
+            <field name="days">15</field>
+        </record>
+        
+        <record id="case_template_line_15" model="task.template.line">
+            <field name="slno">4</field>
+            <field name="name" ref="taskact_7"></field>
+            <field name="days">30</field>            
+        </record> 
+        
+        <record id="case_template_2" model="task.template">
+            <field name="name">criminallitigation</field>
+            <field name="casetype_id" ref="casemaster_2"></field>
+            <field name="tasks_lines" eval="[(0,0,{'name':ref('taskact_19'),'slno':1,'days':1}),(0,0,{'name':ref('taskact_12'),'slno':2,'days':7}),(0,0,{'name':ref('taskact_27'),'slno':3,'days':15}),(0,0,{'name':ref('taskact_7'),'slno':4,'days':30})]"></field>
+        </record>   
+        
+        <!--  Material Data  -->
+        <record id="material_master_1" model="material.master">
+            <field name="name">FILE OF PAST HIGHT COURT JUDGMENTS</field>
+            <field name="material_code">LEGA</field>
+        </record>
+        <record id="material_master_2" model="material.master">
+            <field name="name">FAX</field>
+            <field name="material_code">FAX</field>
+        </record>
+        <record id="material_master_3" model="material.master">
+            <field name="name">GENERAL CORRESPONDENCE</field>
+            <field name="material_code">LETT</field>
+        </record>
+        <record id="material_master_4" model="material.master">
+            <field name="name">MEMO OF FEES</field>
+            <field name="material_code">LET</field>
+        </record>
+        <record id="material_master_5" model="material.master">
+            <field name="name">TATA CAPITAL</field>
+            <field name="material_code">LET1</field>
+        </record>
+        <record id="material_master_6" model="material.master">
+            <field name="name">ADVOCATES NOTICE</field>
+            <field name="material_code">LET2</field>
+        </record>
+        <record id="material_master_8" model="material.master">
+            <field name="name">ARBITRATORS LETTERS</field>
+            <field name="material_code">LET3</field>
+        </record>
+        <record id="material_master_9" model="material.master">
+            <field name="name">AGGREMENT</field>                                         
+            <field name="material_code">LET4</field>
+        </record>
+        <record id="material_master_10" model="material.master">
+            <field name="name">STATEMENT</field>
+            <field name="material_code">LET5</field>
+        </record>
+        <record id="material_master_11" model="material.master">
+            <field name="name">FILE</field>
+            <field name="material_code">LET6</field>
+        </record>
+        <record id="material_master_12" model="material.master">
+            <field name="name">LEGAL NOTICE</field>
+            <field name="material_code">LET7</field>
+        </record>
+        <record id="material_master_13" model="material.master">
+            <field name="name">BILL</field>
+            <field name="material_code">LET8</field>
+        </record>
+        <record id="material_master_14" model="material.master">
+            <field name="name">LETTER</field>
+            <field name="material_code">LET9</field>
+        </record>
+        <record id="material_master_15" model="material.master">
+            <field name="name">DOCUMENTS</field>
+            <field name="material_code">LET10</field>
+        </record>
+        <record id="material_master_16" model="material.master">
+            <field name="name">AFFIDAVIT</field>
+            <field name="material_code">LET11</field>
+        </record>
+        <record id="material_master_17" model="material.master">
+            <field name="name">AWARD</field>
+            <field name="material_code">LET13</field>
+        </record>
+        <record id="material_master_18" model="material.master">
+            <field name="name">ORIGINAL DOCUMENTS</field>
+            <field name="material_code">LET14</field>
+        </record>
+        <record id="material_master_19" model="material.master">
+            <field name="name">CAOD</field>
+            <field name="material_code">LET15</field>
+        </record>
+        <record id="material_master_20" model="material.master">
+            <field name="name">CHQ</field>
+            <field name="material_code">LET12</field>
+        </record>
+        <record id="material_master_21" model="material.master">
+            <field name="name">BOOK</field>
+            <field name="material_code">LET16</field>
+        </record>
+        <record id="material_master_22" model="material.master">
+            <field name="name">NOTICE</field>
+            <field name="material_code">LET17</field>
+        </record>
+        <record id="material_master_23" model="material.master">
+            <field name="name">INVITATION</field>
+            <field name="material_code">LET18</field>
+        </record>
+        <record id="material_master_24" model="material.master">
+            <field name="name">ARBITRATION APPLICATION</field>
+            <field name="material_code">LET19</field>
+        </record>
+        <record id="material_master_25" model="material.master">
+            <field name="name">COVERING LETTER</field>
+            <field name="material_code">LET20</field>
+        </record>
+        <record id="material_master_26" model="material.master">
+            <field name="name">MINUTES</field>
+            <field name="material_code">LET21</field>
+        </record>
+        <record id="material_master_27" model="material.master">
+            <field name="name">A/C STATEMENT</field>
+            <field name="material_code">LET22</field>
+        </record>
+        <record id="material_master_28" model="material.master">
+            <field name="name">CD</field>
+            <field name="material_code">LET23</field>
+        </record>
+        <record id="material_master_29" model="material.master">
+            <field name="name">TDS</field>
+            <field name="material_code">LET24</field>
+        </record>
+        <record id="material_master_30" model="material.master">
+            <field name="name">FORWARDING LETTER</field>
+            <field name="material_code">LET25</field>
+        </record>
+        <record id="material_master_32" model="material.master">
+            <field name="name">BOUNCE CHQ</field>
+            <field name="material_code">LET26</field>
+        </record>
+        <record id="material_master_33" model="material.master">
+            <field name="name">FORM NO.16A</field>
+            <field name="material_code">LET27</field>
+        </record>
+        <record id="material_master_34" model="material.master">
+            <field name="name">DOCKET</field>
+            <field name="material_code">LET28</field>
+        </record>
+        <record id="material_master_35" model="material.master">
+            <field name="name">POWER OF ATTORNEY</field>
+            <field name="material_code">LET29</field>
+        </record>
+        <record id="material_master_36" model="material.master">
+            <field name="name">STATUS REPORT</field>
+            <field name="material_code">LET30</field>
+        </record>
+        <record id="material_master_37" model="material.master">
+            <field name="name">CHQ BOOK</field>
+            <field name="material_code">LET31</field>
+        </record>
+        <record id="material_master_38" model="material.master">
+            <field name="name">LETTER FOR COURT FEE</field>
+            <field name="material_code">LET33</field>
+        </record>
+        <record id="material_master_39" model="material.master">
+           <field name="name">OPINION LETTER</field>
+            <field name="material_code">LET32</field>
+        </record>
+        <record id="material_master_40" model="material.master">
+            <field name="name">REJOINDER</field>
+            <field name="material_code">LET34</field>
+        </record>
+        <record id="material_master_41" model="material.master">
+            <field name="name">VAKALATNAMA</field>
+            <field name="material_code">LET35</field>
+        </record>
+        <record id="material_master_42" model="material.master">
+            <field name="name">STATEMENT OF CLAIM</field>
+            <field name="material_code">LET36</field>
+        </record>
+        <record id="material_master_43" model="material.master">
+            <field name="name">COURT FEES</field>
+            <field name="material_code">LET37</field>
+        </record>
+        <record id="material_master_44" model="material.master">
+            <field name="name">BILL RECEIPT</field>
+            <field name="material_code">LET38</field>
+        </record>
+        <record id="material_master_45" model="material.master">
+            <field name="name">VERFICATION LETTER</field>
+            <field name="material_code">LET39</field>
+        </record>
+        <record id="material_master_46" model="material.master">
+            <field name="name">REPLY LETTER</field>
+            <field name="material_code">LET40</field>
+        </record>
+        <record id="material_master_47" model="material.master">
+            <field name="name">TDS CERTIFICATE</field>
+	    <field name="material_code">TDS</field>            
+        </record>
+        <record id="material_master_48" model="material.master">
+            <field name="name">SUMMONS</field>
+            <field name="material_code">SUM</field>
+        </record>
+        <record id="material_master_49" model="material.master">
+            <field name="name">VOUCHER</field>
+            <field name="material_code">VOU</field>
+        </record>
+        <record id="material_master_50" model="material.master">
+            <field name="name">REGISTRATION CERTIFICATE</field>
+            <field name="material_code">RC</field>
+        </record>
+  
+<record id="material_master_51" model="material.master">   
+<field name="name">E-MAIL</field>
+<field name="material_code">DOC</field>
+</record>  
+<record id="material_master_52" model="material.master">
+<field name="name">EMPTY ENVELOPEE</field>
+<field name="material_code">ENVE</field> 
+</record>
+<record id="material_master_53" model="material.master">
+<field name="name">EMPTY ENVELOPE</field>
+<field name="material_code">ENVEL</field>
+</record>
+<record id="material_master_54" model="material.master">
+<field name="name">LAW JOURNAL</field>
+<field name="material_code">BOOK</field> 
+</record>
+<record id="material_master_55" model="material.master">
+<field name="name">CHALLAN</field>
+<field name="material_code">BILL</field> 
+</record>
+<record id="material_master_56" model="material.master">
+<field name="name">COUNSEL BRIEF</field>
+<field name="material_code">BRIEF</field>
+</record>
+<record id="material_master_57" model="material.master">
+<field name="name">DEMAND DRAFT</field>
+<field name="material_code">CHQ</field>  
+</record>
+<record id="material_master_58" model="material.master">
+<field name="name">CIVIL JURISDICTION</field>
+<field name="material_code">CJ</field>
+</record>
+<record id="material_master_59" model="material.master">
+<field name="name">DOCUMENTS FOR ARBITRATION</field>
+<field name="material_code">DFA</field>
+</record>
+<record id="material_master_60" model="material.master">
+<field name="name">CUSTOMER FEEDBACK FORM</field>
+<field name="material_code">CFF</field>
+</record>
+<record id="material_master_61" model="material.master">
+<field name="name">SEALED ENVELOPE</field>
+<field name="material_code">SE</field>
+</record>
+<record id="material_master_62" model="material.master">
+<field name="name">REG. A.D</field>
+<field name="material_code">RA</field>
+</record>
+<record id="material_master_63" model="material.master">
+<field name="name">COURT RECEIVER</field>
+<field name="material_code">CR</field>
+</record>
+<record id="material_master_64" model="material.master">
+<field name="name">CARD</field>
+<field name="material_code">CARD</field>
+</record>
+<record id="material_master_65" model="material.master">
+<field name="name">C.C COPY</field>
+<field name="material_code">CC</field>
+</record>
+<record id="material_master_66" model="material.master">
+<field name="name">ARBITATOR REFERENCE LETTER</field>
+<field name="material_code">ARL</field>
+</record>
+<record id="material_master_67" model="material.master">
+<field name="name">GREETING</field>
+<field name="material_code">GREE</field>
+</record>
+<record id="material_master_68" model="material.master">
+<field name="name">ARBITRATION OVERSEAS</field>
+<field name="material_code">AO</field>
+</record>
+<record id="material_master_69" model="material.master">
+<field name="name">ARBITRATION (OVERSEAS AGREEMENT BREACH)</field>
+<field name="material_code">A(AB)</field>
+</record>
+<record id="material_master_70" model="material.master">
+<field name="name">CAVEAT</field>
+<field name="material_code">CAVE</field>
+</record>
+<record id="material_master_71" model="material.master">
+<field name="name">OFFICIAL LIQUIDATORS REPORT</field>
+<field name="material_code">OLR</field>
+</record>
+
+<!-- Delivery Types Master -->
+<record id="delivery_master_1" model="delivery.master">
+<field name="name">COURIER</field>
+<field name="code">CR</field>
+</record>
+<record id="delivery_master_2" model="delivery.master">
+<field name="name">HAND DELIVERY</field>
+<field name="code">HD</field>
+</record>
+<record id="delivery_master_3" model="delivery.master">
+<field name="name">ORDINARY POST</field>
+<field name="code">OP</field>
+</record>
+<record id="delivery_master_4" model="delivery.master">
+<field name="name">REG. A.D</field>
+<field name="code">RAD</field>
+</record>
+<record id="delivery_master_5" model="delivery.master">
+<field name="name">SCAN COPY</field>
+<field name="code">SC</field>
+</record>
+
+<!-- Indian States -->
+<record id="countrystate_1" model="res.country.state">
+<field name="name">Andhra Pradesh</field>
+<field name="code">AP</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_2" model="res.country.state">
+<field name="name">Arunachal Pradesh</field>
+<field name="code">AR</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_3" model="res.country.state">
+<field name="name">Assam</field>
+<field name="code">AS</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_4" model="res.country.state">
+<field name="name">Bihar</field>
+<field name="code">BR</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_5" model="res.country.state">
+<field name="name">Chhattisgarh</field>
+<field name="code">CT</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_6" model="res.country.state">
+<field name="name">Goa</field>
+<field name="code">GA</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_7" model="res.country.state">
+<field name="name">Gujarat</field>
+<field name="code">GJ</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_8" model="res.country.state">
+<field name="name">Haryana</field>
+<field name="code">HR</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_9" model="res.country.state">
+<field name="name">Himachal Pradesh</field>
+<field name="code">HP</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_10" model="res.country.state">
+<field name="name">Jammu and Kashmir</field>
+<field name="code">JK</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_11" model="res.country.state">
+<field name="name">Jharkhand</field>
+<field name="code">JH</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_12" model="res.country.state">
+<field name="name">Karnataka</field>
+<field name="code">KA</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_13" model="res.country.state">
+<field name="name">Kerala</field>
+<field name="code">KL</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_14" model="res.country.state">
+<field name="name">Madhya Pradesh</field>
+<field name="code">MP</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_15" model="res.country.state">
+<field name="name">Maharashtra</field>
+<field name="code">MH</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_16" model="res.country.state">
+<field name="name">Manipur</field>
+<field name="code">MN</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_17" model="res.country.state">
+<field name="name">Meghalaya</field>
+<field name="code">ML</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_18" model="res.country.state">
+<field name="name">Mizoram</field>
+<field name="code">MZ</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_19" model="res.country.state">
+<field name="name">Nagaland</field>
+<field name="code">NL</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_20" model="res.country.state">
+<field name="name">Orissa</field>
+<field name="code">OR</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_21" model="res.country.state">
+<field name="name">Punjab</field>
+<field name="code">PB</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_22" model="res.country.state">
+<field name="name">Rajasthan</field>
+<field name="code">RJ</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_23" model="res.country.state">
+<field name="name">Sikkim</field>
+<field name="code">SK</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_24" model="res.country.state">
+<field name="name">Tamil Nadu</field>
+<field name="code">TN</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_25" model="res.country.state">
+<field name="name">Tripura</field>
+<field name="code">TR</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_26" model="res.country.state">
+<field name="name">Uttarakhand</field>
+<field name="code">UT</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_27" model="res.country.state">
+<field name="name">Uttar Pradesh</field>
+<field name="code">UP</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_28" model="res.country.state">
+<field name="name">West Bengal</field>
+<field name="code">WB</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_29" model="res.country.state">
+<field name="name">Andaman and Nicobar Islands</field>
+<field name="code">AN</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_30" model="res.country.state">
+<field name="name">Chandigarh</field>
+<field name="code">CH</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_31" model="res.country.state">
+<field name="name">Dadra and Nagar Haveli</field>
+<field name="code">DN</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_32" model="res.country.state">
+<field name="name">Daman and Diu</field>
+<field name="code">DD</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_33" model="res.country.state">
+<field name="name">Delhi</field>
+<field name="code">DL</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_34" model="res.country.state">
+<field name="name">Lakshadweep</field>
+<field name="code">LD</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_35" model="res.country.state">
+<field name="name">Puducherry</field>
+<field name="code">PY</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+<record id="countrystate_36" model="res.country.state">
+<field name="name">Telangana</field>
+<field name="code">TS</field>
+<field name="country_id" ref="base.in"></field>
+</record>
+    </data>
+</odoo>

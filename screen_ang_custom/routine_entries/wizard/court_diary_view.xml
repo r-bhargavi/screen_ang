@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	    <record id='court_diary_form' model="ir.ui.view">
+            <field name="name">court.diary.form</field>
+            <field name="model">court.diary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Court History">
+                <!--<form string="Court History" create="false" edit="false" delete="false">-->
+                    <group col="4">
+                        <field name="name" colspan="2"/>
+                       <!-- <field name="client_id" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' colspan="2"/>  -->
+                        <label for="date_filter"/>
+                        <div>
+                        <field name="date_filter" style="width:45%%"/>
+                        <field name="from_date" style="width:25%%" attrs="{'invisible':[('date_filter','=',False)],'required':[('date_filter','!=',False)]}"/>
+                        <field name="to_date" style="width:25%%" attrs="{'invisible':[('date_filter','!=','between')],'required':[('date_filter','=','between')]}"/>
+
+                        </div>
+                        <label for="next_date_filter"/>
+                        <div>
+                        <field name="next_date_filter" style="width:45%%"/>
+                        <field name="next_from_date" style="width:25%%" attrs="{'invisible':['|',('next_date_filter','=',False), ('next_date_filter','=','missing')],'required':[('next_date_filter','!=',False),('next_date_filter','!=','missing')]}"/>
+                        <field name="next_to_date" style="width:25%%" attrs="{'invisible':[('next_date_filter','!=','between')],'required':[('next_date_filter','=','between')]}"/>
+                        </div>
+                        <field name="office_id"/>
+                        <field name="state_id"/>
+                        <field name="assignee_id"/>
+                        <field name="division_id"/>
+                        <field name="missing_date"/>
+                        <field name="client_service_manager_id"/>
+                        <field name="last_smt"/>
+                    </group>
+                    <group col="4" string="Clients">
+                        <field name="client_ids" domain="[('customer','=',True),('is_company','=',True)]" colspan="4" nolabel="1"/>
+                    </group>
+                    <button name="filter_proceedings" string="Go" type="object" context="{'division_id': division_id,'assignee_id': assignee_id, 'last_smt': last_smt,'client_service_manager_id':client_service_manager_id, 'office_id':office_id,'state_id':state_id,'case_id':name,'client_ids':client_ids,'date_filter':date_filter,'proceed_from_date':from_date,'proceed_to_date':to_date, 'next_date_filter':next_date_filter,'next_proceed_from_date': next_from_date,'next_proceed_to_date':next_to_date, 'missing_date': missing_date}" class="oe_highlight"/>
+                    or
+                    <button name="clear_filters" string="Clear" type="object" class="oe_link"/>
+                    <group>
+                        <group string="Court Proceedings">
+                        </group>
+                        <group>
+                            <div>
+                            <button name="generate_report" string="Generate" type="object" class="oe_highlight"/>
+                            or
+                            <button name="clear_filters_all" string="Clear All" type="object" class="oe_link"/>
+                            </div>
+                        </group>
+                        <field name="court_proceed_lines" readonly="1" nolabel="1" colspan="4"/>
+                    </group>
+                </form>
+            </field>
+        </record>        
+        <record id="court_diary_tree" model="ir.ui.view">
+            <field name="name">court.diary.tree</field>
+            <field name="model">court.diary</field>
+            <field name="arch" type="xml">
+                <tree string="Court Diary" colors="red:date_missing == True;blue:not_fully_billed == True">
+                    <field name="name"/>
+                    <field name="assignee_id"/>
+                    <field name="from_date"/>
+                    <field name="next_from_date" string="Next Proceed Date"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_court_diary" model="ir.actions.act_window">
+             <field name="name">Court Diary</field>
+             <field name="res_model">court.diary</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Reports" id="sub_menu_report_case_entries" sequence="3"
+                  parent="base_main_menu_routine_entries"  groups="group_case_entries_officer"/>
+        <menuitem id="sub_menu_court_diary" action="action_court_diary" name="Court Diary / Missing Dates" parent="sub_menu_report_case_entries" sequence="1"  groups="group_case_entries_officer"/>
+
+    </data>
+</odoo>

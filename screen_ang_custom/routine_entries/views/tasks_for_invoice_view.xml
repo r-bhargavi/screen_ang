@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_tasks_for_invoice_filter" model="ir.ui.view">
+            <field name="name">tasks.for.invoice.select</field>
+            <field name="model">tasks.for.invoice</field>
+            <field name="arch" type="xml">
+                <search string="Search Tasks for Invoice">
+               </search>
+            </field>
+        </record>
+        <record id="tasks_for_invoice_tree" model="ir.ui.view">
+            <field name="name">tasks.for.invoice.tree</field>
+            <field name="model">tasks.for.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Tasks For Invoice" create="false">
+                    <!--<field name="case_id"/>-->
+                    <!--<field name="name"/>-->
+                    <field name="assignee_id"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="invoiced" invisible="1"/>
+                    <field name="inv_total_amt"/>
+		    <field name="inv_balance_amt"/>
+		    <field name="inv_state"/>
+                    <button name="invoice_stage" string="Invoice Stage" type="object" icon="STOCK_REDO" attrs="{'invisible':['|',('invoiced','=',True),('state','!=','Completed')]}"/>
+                    <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}"/>
+                    <button name="view_case_sheet" string="View Related Casesheet" type="object" icon="STOCK_EDIT"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="tasks_for_invoice_form" model="ir.ui.view">
+            <field name="name">tasks.for.invoice.form</field>
+            <field name="model">tasks.for.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Tasks for Invoice">
+                <header>
+                </header>
+	         <sheet>
+	                	<!--<group >-->
+	                	<group col='4' string="Tasks for Invoice">
+				    <!--<field name="case_id"/>-->
+				    <!--<field name="name"/>-->
+				    <field name="assignee_id"/>
+				    <field name="amount"/>
+				    <field name="state"/>		                    
+		                </group>	                	
+		                <!--</group>-->
+	                </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <record id="action_tasks_for_invoice_form" model="ir.actions.act_window">
+            <field name="name">Tasks to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tasks.for.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tasks_for_invoice_tree"/>
+        </record>
+        <!-- <menuitem id="sub_menu_tasks_for_invoice" action="action_tasks_for_invoice_form" name="Tasks to Invoice" parent="base.sub_menu_routine_entries" sequence="4"  groups=""/>  -->    
+               
+	</data>
+</odoo>

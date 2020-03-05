@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<data noupdate="1">-->
+    <data>
+
+        <!--Mail template for case sheet request-->
+        <record id="email_template_for_case_sheet_request" model="mail.template">
+		    <field name="name">Case Sheet Request</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Case sheet request for ${ctx.get('casesheet_id')}</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="partner_to">${object.id}</field>
+            <field name="model_id" ref="legal_e.model_case_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Client Name : ${object.client_id.name}</p>
+				<p>Office : ${object.ho_branch_id.name}</p>
+				<p>Client Service Manager : ${object.client_service_executive_id.name}</p>
+				<p>Client Relationship  Manager : ${object.client_service_manager_id.name}</p>
+				<p>Case Type : ${object.casetype_id.name}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+        <!--Mail template for case sheet approve request-->
+        <record id="email_template_for_case_sheet_confirm_request" model="mail.template">
+		    <field name="name">Confirmed Case Sheet</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Confirmed case sheet for ${ctx.get('casesheet_id')}</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="model_id" ref="legal_e.model_case_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>The requested <b>${ctx.get('casesheet_id')}</b> Case sheet is being confirmed.</p>
+				<p>Client Name : ${object.client_id.name}</p>
+				<p>Office : ${object.ho_branch_id.name}</p>
+				<p>Client Service Manager : ${object.client_service_executive_id.name}</p>
+				<p>Client Relationship  Manager : ${object.client_service_manager_id.name}</p>
+				<p>Case Type : ${object.casetype_id.name}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+        <!--Mail template for case sheet reject request-->
+        <record id="email_template_for_case_sheet_reject_request" model="mail.template">
+		    <field name="name">Reject Case Sheet</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Reject case sheet request for ${ctx.get('casesheet_id')}</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <!--<field name="partner_to">${object.id}</field>-->
+            <field name="model_id" ref="legal_e.model_case_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Your request for <b>${ctx.get('casesheet_id')}</b> case sheet creation request is being rejected because of <b>${ctx.get('reason')}</b>.</p>
+				<p>Client Name : ${ctx.get('client_id')}</p>
+				<p>Office : ${ctx.get('ho_branch_id')}</p>
+				<p>Client Service Manager : ${ctx.get('client_service_executive_id')}</p>
+				<p>Client Relationship  Manager : ${ctx.get('client_service_manager_id')}</p>
+				<p>Case Type : ${ctx.get('casetype_id')}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+		<!--Mail template for case sheet invoice confirmation-->
+        <record id="email_template_for_case_sheet_invoice_confirmation" model="mail.template">
+		    <field name="name">Case Sheet Invoice Confirmation</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Case Sheet Invoice ${ctx.get('casesheet_id')} for Confirmation</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <!--<field name="partner_to">${object.partner_id.id}</field>-->
+            <field name="model_id" ref="legal_e.model_case_sheet_invoice"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>The requested Case sheet invoice <b>${ctx.get('casesheet_id')}</b> is send for confirmation.</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+		<!--Mail template for case sheet invoice confirmation reject-->
+        <record id="email_template_for_case_entry_reject_request" model="mail.template">
+		    <field name="name">Case Sheet Invoice Confirmation Rejected</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Reject case sheet invoice confirmation for ${ctx.get('casesheet_id')}</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <field name="partner_to">${user.partner_id.id}</field>
+            <field name="model_id" ref="legal_e.model_case_sheet_invoice"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Your request for <b>${ctx.get('casesheet_id')}</b> case sheet creation request is being rejected because of <b>${ctx.get('reason')}</b>.</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+		<!--Mail template send for special approval-->
+        <record id="email_template_send_for_special_approval" model="mail.template">
+		    <field name="name">Expense Send for Special Approval</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Expense ${ctx.get('expense_id')} Send for Special Approval</field>
+		    <field name="email_to">${ctx.get('email_to')}</field>
+            <!--<field name="partner_to">${object.employee_id.user_id.partner_id.id}</field>-->
+            <field name="model_id" ref="legal_e.model_hr_expense_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>This Expense <b>${object.name}</b> is sent for special approval. Please approve expense.</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+
+		<!--Mail template send for case closer request for account approval-->
+        <record id="email_template_for_case_closure_request_account" model="mail.template">
+		    <field name="name">Case Closure Request for Account</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Case closure request for ${ctx.get('case_id')} to account</field>
+			<field name="email_to">${ctx.get('email_to')}</field>
+            <field name="model_id" ref="legal_e.model_case_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Date: ${object.close_date}</p>
+				<p>Remarks: ${object.close_comments}</p>
+				<p>Closure Type: ${object.closure_type}</p>
+				<p>Time Duration: ${object.time_duration}</p>
+				<p>Case Sheet Id: ${ctx.get('case_id')}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+        <record id="email_template_for_case_closure_request_admin" model="mail.template">
+		    <field name="name">Case Closure Request for Admin</field>
+		    <field name="email_from">${(user.email or '')|safe}</field>
+		    <field name="subject">Case closure request for ${ctx.get('case_id')} to account</field>
+			<field name="email_to">${ctx.get('email_to')}</field>
+            <field name="model_id" ref="legal_e.model_case_sheet"/>
+		    <field name="auto_delete" eval="False"/>
+		    <field name="body_html"><![CDATA[
+				<p>Hello</p>
+				<p>Date: ${object.close_date}</p>
+				<p>Remarks: ${object.close_comments}</p>
+				<p>Closure Type: ${object.closure_type}</p>
+				<p>Time Duration: ${object.time_duration}</p>
+				<p>Case Sheet Id: ${ctx.get('case_id')}</p>
+				<p>
+                    <a href="${ctx.get('url_link')}">View Request</a>
+                </p>
+				<p>Thank you</p>
+            ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

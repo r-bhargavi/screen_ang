@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_case_closure_approval" model="res.groups">
+            <field name="name">Case Closure Approval</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]" />
+        </record>
+    </data>
+</odoo>

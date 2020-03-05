@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_material_master_filter" model="ir.ui.view">
+            <field name="name">material.master.select</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Master">
+               </search>
+            </field>
+        </record>
+        <record id="material_master_tree" model="ir.ui.view">
+            <field name="name">material.master.tree</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <tree string="Material Master">
+                    <field name="material_code"/>
+                    <field name="name"/>                    
+                </tree>
+            </field>
+        </record>
+        <record id="material_master_form" model="ir.ui.view">
+            <field name="name">material.master.form</field>
+            <field name="model">material.master</field>
+            <field name="arch" type="xml">
+                <form string="Material Details">
+	                <sheet>
+		                <group col='4' string='Material Details'>
+		                    <field name="name" colspan="2"/>
+		                    <field name="material_code"  colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_material_master_form" model="ir.actions.act_window">
+            <field name="name">Material Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="material_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_material_master" action="action_material_master_form" name="Material Master" parent="sub_menu_masters" sequence="10" groups="hr.group_hr_user"/>
+               
+	</data>
+</odoo>

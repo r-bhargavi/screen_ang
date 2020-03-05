@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_outward_register_filter" model="ir.ui.view">
+            <field name="name">outward.register.select</field>
+            <field name="model">outward.register</field>
+            <field name="arch" type="xml">
+                <search string="Search outward Register">
+                    <field name="name" string="Entry Number"/>
+                    <field name="file_number" string="File Number"/>
+                    <field name="file_ref_no" string="Ref. No"/>
+                    <field name="to_names" string="To Name" filter_domain="[('to_names','ilike',self)]"/>
+                    <field name="assignee_id" string="Assignee"/>
+                    <field name = "ho_branch_id" string="Location" filter_domain="[('ho_branch_id','ilike',self)]"/>
+               </search>
+            </field>
+        </record>
+        <record id="outward_register_tree" model="ir.ui.view">
+            <field name="name">outward.register.tree</field>
+            <field name="model">outward.register</field>
+            <field name="arch" type="xml">
+                <tree string="Outward Register" colors="red:remainder_date and (remainder_date&lt;current_date) and state!='done'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="ho_branch_id"/>
+                    <field name="file_number"/>
+                    <field name="file_ref_no"/>
+                    <field name="material_id"/>
+                    <field name="to_names"/>
+                    <field name="set_remainder"/>
+                    <field name="remainder_date" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="outward_register_form" model="ir.ui.view">
+            <field name="name">outward.register.form</field>
+            <field name="model">outward.register</field>
+            <field name="arch" type="xml" >
+                <form string="Outward Register">
+                    <header>
+                        <button name="action_dispatch" states="draft" string="Dispatch" groups="base.group_user" type="object" class="oe_highlight"/>
+                        <button name="action_receive" states="dispatch" string="Receive" groups="base.group_user" type="object" class="oe_highlight"/>
+                        <button name="complete_outward" states="receive" string="Done" groups="base.group_user" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,dispatch,receive,done" />
+                    </header>
+                    <sheet>
+                        <group col="4" string="Task for Outward Register">
+                            <field name="name" class="oe_inline" />
+                            <field name="date"/>
+                            <field name="ho_branch_id" required="0" options="{'create_edit': false,'create':false}"/>
+                            <field name="file_number" options="{'create_edit': false}"/>
+                            <field name="description"/>
+                            <field name="file_ref_no"/>
+                            <field name="material_code"/>
+                            <field name="material_id" on_change="onchange_material_title(material_id)"/>
+                            <field name="assignee_id"/>
+                            <field name="delivery_mode"/>
+                            <field name="party_receipt_date"/>
+                            <field name="inward_date"/>
+                            <field name="set_remainder" on_change="onchange_remainder(set_remainder)"/>
+                            <field name="datas" filename="datas_fname"/>
+                            <field name="days_ahead" attrs="{'invisible':[('set_remainder','!=',True)]}"/>
+                            <field name="auto_ref_no" invisible="1"/>
+                            <field name="received_date" attrs="{'invisible':[('state', 'not in', ('receive', 'done'))]}"/>
+                            <field name="received_proof" widget="binary" filename="datas_fname" attrs="{'invisible': [('state', 'not in', ('receive', 'done'))], 'required':['|', ('file_number', '=', True), ('state', '=', 'receive')]}" />
+                        </group>
+                        <group string="ACK Details" colspan="2">
+                            <field name="to_ids" nolabel="1" colspan="2">
+                                <form string="Time and Material Stages" version="7.0">
+                                    <group>
+                                        <group>
+                                            <field name="from_name" required="1"/>
+                                            <field name="name" readonly="0"/>
+                                            <field name="acknowledgement_status" options="{'create_edit': false}"/>
+                                            <field name="ack_reference"/>
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree string="Time and Material Stages" editable="top">
+                                    <field name="from_name" required="1"/>
+                                    <field name="name" readonly="0"/>
+                                    <field name="acknowledgement_status" options="{'create_edit': false}"/>
+                                    <field name="ack_reference"/>
+                                </tree>
+                             </field>
+                        </group>
+                        <group string="Remarks" colspan="2">
+                            <field name="remarks" nolabel="1" placeholder="Remarks......."/>
+                        </group>
+                        <field name="datas_fname" invisible="1" class="oe_inline oe_right"/>
+                    </sheet>
+	                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+                
+        <record id="action_outward_register_form1" model="ir.actions.act_window">
+            <field name="name">Outward Register</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">outward.register</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="outward_register_tree"/>
+        </record>
+        <menuitem id="sub_menu_outward_register1" action="action_outward_register_form1" name="Outward Register" parent="base_sub_menu_routine_entries" sequence="3"  groups="legal_e.group_outward_register_user"/>
+        <record id="acknowledgement_status_tree" model="ir.ui.view">
+            <field name="name">acknowledgement.status.tree</field>
+            <field name="model">acknowledgement.status</field>
+            <field name="arch" type="xml">
+                <tree string="Acknowledgement Status">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="acknowledgement_status_form" model="ir.ui.view">
+            <field name="name">acknowledgement.status.form</field>
+            <field name="model">acknowledgement.status</field>
+            <field name="arch" type="xml">
+                <form string="Acknowledgement Status">
+	                <sheet>
+	                	<group col="2">
+				            <field name="name"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <record id="action_acknowledgement_status_form" model="ir.actions.act_window">
+            <field name="name">Acknowledgement Status</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">acknowledgement.status</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="acknowledgement_status_tree"/>
+        </record>
+        <menuitem id="sub_menu_acknowledgement_status" action="action_acknowledgement_status_form" name="Acknowledgement Status" parent="base_sub_menu_case_entries_Configuration" sequence="3"/>
+	</data>
+</odoo>

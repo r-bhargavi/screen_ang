@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_job_sheet_master_filter" model="ir.ui.view">
+            <field name="name">job.sheet.master.select</field>
+            <field name="model">job.sheet.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Job Sheet Master">
+                    <field name="name"/>
+                    <field name="mer_name"/>
+                    <field name="contact_no" />
+                    <field name="email_id" />
+               </search>
+            </field>
+        </record>
+        <record id="job_sheet_master_tree" model="ir.ui.view">
+            <field name="name">job.sheet.master.tree</field>
+            <field name="model">job.sheet.master</field>
+            <field name="arch" type="xml">
+                <tree string="Job Sheet Master">
+                    <field name="job_sheet_number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="job_sheet_master_form" model="ir.ui.view">
+            <field name="name">job.sheet.master.form</field>
+            <field name="model">job.sheet.master</field>
+            <field name="arch" type="xml">
+                <form string="Job Sheet Master">
+	                <sheet>
+                        <group>
+                            <group string="Company Details">
+		                    <field name="company_name" colspan="2"/>
+		                    <field name="company_code"  colspan="2"/>
+		                    <field name="company_address"  colspan="2"/>
+		                </group>
+                        <group string="Contact Person Details">
+		                    <field name="name" colspan="2"/>
+		                    <field name="designation"  colspan="2"/>
+		                    <field name="contact_no"  colspan="2"/>
+		                    <field name="email_id"  colspan="2"/>
+		                </group>
+                        </group>
+
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_job_sheet_master_form" model="ir.actions.act_window">
+            <field name="name">Job Sheet Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.sheet.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="job_sheet_master_tree"/>
+        </record>
+        <menuitem name="Masters"
+            id="main_menu_masters1" sequence="11"
+            web_icon="screen_ang_custom,static/src/img/master_dat_icon.jpg"
+            />
+
+        <menuitem name="Masters"
+            id="sub_menu_masters"
+            parent="main_menu_masters1"
+            />
+        <menuitem id="sub_menu_job_sheet_master" action="action_job_sheet_master_form" name="Job Sheet Master" parent="sub_menu_masters" sequence="8"/>
+
+	</data>
+</odoo>

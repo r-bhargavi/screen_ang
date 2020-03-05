@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+    
+        <!-- Public Holidays -->
+
+        <record id="holiday_1" model="hr.holidays.status">
+            <field name="name">Public Holidays</field>
+            <field name="color_name">red</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

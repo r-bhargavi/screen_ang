@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_split_products_form" model="ir.ui.view">
+        <field name="name">split.products.form</field>
+        <field name="model">split.products</field>
+        <field name="arch" type="xml">
+            <form string="Split Products">
+              <p class="oe_grey">
+                  1. Click on Clear Data to set Product Code In Supplier Info.<br/>
+                  2. Click on Split to Split Product Base On Vendor Color.<br/>
+                  3. Click on Update Internal Ref. if data is not correct.<br/>
+                  Note: Execute "Clear Data" and "Update Internal Ref" Only One Time In DB
+              </p>
+               <group>
+                    <field name="template_ids" nolabel="1"/>
+               </group>
+               <footer>
+                    <button name="clear_data" string="Clear Data" type="object"/>
+                    <button name="split" string="Split" type="object" class="oe_highlight"/>
+                    <button name="update_inter_ref" string="Update Internal Ref." type="object"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+               </footer>
+           </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_split_products">
+        <field name="name">Split products</field>
+        <field name="res_model">split.products</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_split_products_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- <menuitem name="Split Products" id="split_products" parent="manage_products" action="action_split_products"/> -->
+</odoo>

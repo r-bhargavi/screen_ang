@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+         <record id="case_sheet_inv_filter" model="ir.ui.view">
+             <field name="name">case.invoice.select</field>
+             <field name="model">case.sheet.invoice</field>
+             <field name="arch" type="xml">
+                 <search string="Search Case Sheet Invoice Details">
+                 <field name="case_id" string="File Number"/>
+                 <field name="invoice_id" string="Invoice Number" filter_domain="['|','|','|', ('invoice_id.legale_number','ilike',self), ('invoice_id.origin','ilike',self), ('invoice_id.supplier_invoice_number', 'ilike', self), ('invoice_id.partner_id', 'child_of', self)]"/>
+                 </search>
+             </field>
+         </record>
+         <record id="case_sheet_inv_tree" model="ir.ui.view">
+             <field name="name">case.invoice.tree</field>
+             <field name="model">case.sheet.invoice</field>
+             <field name="arch" type="xml">
+                 <tree string="Case Sheet Invoice Details">
+                     <field name="case_id"/>
+                     <field name="invoice_id"/>
+                     <field name="amount_total_1"/>
+                 </tree>
+             </field>
+         </record>
+
+ 	     <record id='wizard_case_sheet_inv_id' model="ir.ui.view">
+             <field name="name">case.invoice.wizard</field>
+             <field name="model">case.sheet.invoice</field>
+             <field name="type">form</field>
+             <field name="arch" type="xml">
+                 <form string="Case Sheet Invoice Details" create="0">
+                     <header>
+<!--                         <button name="action_send_for_confirmation" string="Send for Confirmation" type="object" states="draft" class="oe_highlight"/>
+                         <button name="action_approve_case_sheet_invoice" string="Approve" groups="legal_e.group_case_sheet_invoice_confirmation"
+                                 type="object" class="oe_highlight" states="sent_for_confirm"/>
+                         <button name="action_reject_case_sheet_invoice" string="Reject" groups="legal_e.group_case_sheet_invoice_confirmation"
+                                 type="object" states="sent_for_confirm"/>-->
+                         <!--<button name="resend_for_confirm_casesheet_invoice" states="rejected" string="Resubmit for Confirmation"  type="object" class="oe_highlight"/>-->
+                         <button name="invoice_case_sheet" string="Create Invoice" type="object" states="draft,sent_for_confirm" class="oe_highlight"/>
+                         <field name="state" widget="statusbar" statusbar_visible="draft,sent_for_confirm,approved,invoiced" />
+                     </header>
+                     <h1>
+                         <field name="name" readonly="1"/>
+                     </h1>
+                     <field name="invoice_id" readonly="1" />
+                     <group>
+                         <field name="bill_type" required="0" invisible="1"/>
+                         <notebook>
+                             <page string="Fixed Price Stages" attrs="{'invisible':[('bill_type','=','assignment_wise')]}">
+                                 <group>
+                                     <field name="invoice_lines_fixed" nolabel="1">
+                                         <tree string="Fixed Price Stages">
+                                             <field name="name" string="Task Related"/>
+                                             <field name="description" string="Description"/>
+                                             <field name="amount" sum="Total Amount"/>
+                                             <field name="out_of_pocket_amount" sum="Total Out of Pocket Expenses"/>
+                                             <!-- Add office field // Sanal Davis // 27/5/15 -->
+                                              <field name="office_id"/>
+                                              <field name="department_id"/>
+                                             <field name="inv_id_fixed" invisible="1"/>
+                                         </tree>
+                                     </field>
+                                 </group>
+                             </page>
+                             <page string="Hourly Stages" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                 <group>
+                                     <field name="invoice_lines_assignment_hourly" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                         <tree string="Hourly Stages" readonly="0" create="false" delete="true">
+                                             <field name="name" string="Description"/>
+                                             <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                             <field name="inv_id_assignment_hourly" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                             </page>
+                             <page string="Fixed Price Stages" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                 <group>
+                                     <field name="invoice_lines_assignment_fixed" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                         <tree string="Fixed Price Stages">
+                            <!--  <tree string="Fixed Price Stages" readonly="0" create="false" delete="true">-->
+                                             <field name="name" string="Task Related"/>
+                                             <field name="amount" sum="Total Amount"/>
+                                             <field name="out_of_pocket_amount" sum="Total Out of Pocket Expenses"/>
+                                             <field name="inv_id_assignment_fixed" invisible="1"/>
+                                         </tree>
+                                     </field>
+                                 </group>
+                             </page>
+                             <page string="Other expenses Billable">
+                                 <group>
+                                     <field name="invoice_lines_other_expenses" nolabel="1">
+                                     <!--<field name="invoice_lines_other_expenses" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">-->
+                                     <tree string="Other Expenses">
+                                     <!--<tree string="Other Expenses" readonly="0" create="false" delete="true">-->
+                                         <field name="name" string="Description"/>
+                                         <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                         <field name="inv_id_other_expense" invisible="1"/>
+                                     </tree>
+                                    </field>
+                                 </group>
+                             </page>
+                             <page string="Out of Pocket Expenses" invisible="1">
+                                 <group>
+                                     <field name="invoice_lines_out_of_pocket" readonly="0" nolabel="1" create="false">
+                                         <tree string="Out of Pocket Expenses" readonly="0" create="false" delete="true">
+                                             <field name="name" string="Description"/>
+                                             <field name="amount" sum="Total Amount" string="Total Amount"/>
+                                             <field name="inv_id_out_of_pocket" invisible="1"/>
+                                         </tree>
+                                     </field>
+                                 </group>
+                             </page>
+                             <page string="Court Proceedings Billable" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                                 <group>
+                                     <field name="invoice_lines_court_proceedings_assignment" readonly="0" nolabel="1" create="false" attrs="{'readonly':[('invoice_id','!=',False)]}">
+                                         <tree string="Court Proceedings" create="false" delete="true">
+                                             <field name="effective"/>
+                                             <field name="name" string="Proceed Date(s)"/>
+                                             <field name="amount" sum="Total Amount" string="Amount"/>
+                                             <field name="inv_id_court_proceed_assignment" invisible="1"/>
+                                         </tree>
+                                     </field>
+                                 </group>
+                             </page>
+                         </notebook>
+                         <group colspan="2" col="6">
+                             <label string=""/>
+                                 <div class="oe_subtotal_footer_separator oe_inline">
+                                     <label for="amount_total_1"/>
+                                     <button name="dummy" string="(update)" type="object" class="oe_link"/>
+                                 </div>
+                             <field name="amount_total_1" nolabel="1"/>
+                         </group>
+                         <group string="Billing Particulars">
+                             <field name="subject"/>
+                             <field name="department_ids" widget="many2many_tags" options="{'create_edit': false,'create': false}" />
+                             <field name="invoice_lines">
+                                 <tree string="Invoice Details" editable="bottom">
+                                     <field name="name" string="Particulars" required="1"/>
+                                     <field name="amount" sum="Total Amount" required="1" string="Amount"/>
+                                 </tree>
+                            </field>
+                         </group>
+                     </group>
+                     <group>
+                         <field name="reject_comment" attrs="{'invisible': [('state', '!=', 'rejected')]}"/>
+                     </group>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                     </div>
+                 </form>
+             </field>
+         </record>
+
+         <record id="action_case_sheet_invoice" model="ir.actions.act_window">
+             <field name="name">Case Sheet Invoice</field>
+             <field name="res_model">case.sheet.invoice</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+         </record>
+        
+         <menuitem
+             parent="base_sub_menu_routine_entries"
+             id="case_sheet_invoice_menu"
+             icon="STOCK_PRINT"
+             name="Case Sheet Invoice"
+             action="action_case_sheet_invoice"
+             sequence="2"
+         />
+         <!--<menuitem-->
+            <!--id="case_sheet_invoice_menu"-->
+            <!--icon="STOCK_PRINT"-->
+            <!--name="Case Sheet Invoice"-->
+            <!--action="action_case_sheet_invoice"-->
+            <!--sequence="2"-->
+         <!--groups="legal_e.group_legal_e_hide_menus"-->
+           <!--/>-->
+        
+
+    </data>
+</odoo>

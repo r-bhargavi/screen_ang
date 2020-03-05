@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 		<record id="legale_add_employee_form" model="ir.ui.view">
+            <field name="name">Add/Remove Employees</field>
+            <field name="model">legale.add.employee</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Add/Remove Employees">
+                    <group>
+                        <field name="type" required="1"/>
+                        <field name="dept_id" invisible="1"/>
+                    </group>
+                    <group string="Employees" attrs="{'invisible':[('type','!=','add')]}">
+                        <field name="employee_ids" colspan="2" nolabel="1"/>
+                    </group>
+                    
+                    <group string="Employees" attrs="{'invisible':[('type','!=','remove')]}">
+                    	 <group>
+                        	<field name="remo_employee_id" context="{'dept_employes': dept_id}" attrs="{'required':[('type','!=','add')]}"/>
+                    	 </group>
+                    	 <group>
+                        	<field name="new_employee_id" context="{'dept_employes': dept_id}"/>
+                    	 </group>
+                    </group>
+                    
+                    <footer>
+						<button name="update_add_remove_dept" string="OK"  class="oe_highlight" icon="gtk-ok" type="object" colspan="1"/>
+                         or
+                         <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>                                                       
+                </form>
+            </field>
+        </record>        
+
+      
+        <act_window
+        	context="{'default_dept_id':[active_id]}"
+        	groups="legal_e.group_case_sheet_operation_manager"
+            id="act_action_legale_add_employee_form"
+            name="Add/Remove Employees"
+            res_model="legale.add.employee"
+            src_model="hr.department"
+            view_mode="form"
+            view_type="form"
+            target="new"/>
+            
+
+    </data>
+</odoo>

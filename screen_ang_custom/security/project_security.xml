@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+      <!--  <record model="ir.rule" id="project.task_visibility_rule">
+            <field name="name">Project/Task: employees: public, portal, employee or following or assigned</field>
+            <field name="domain_force">[
+	            ('assignee_id.user_id', '=', user.id),
+	            ('project_id.privacy_visibility', 'in', ['public', 'portal', 'employees'])                                             
+	            ]
+	         	</field>
+	         <field eval="0" name="perm_unlink"/>
+	         <field eval="1" name="perm_write"/>
+	         <field eval="1" name="perm_read"/>
+	         <field eval="0" name="perm_create"/>
+	         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record> -->
+        
+        
+       <record model="ir.rule" id="project.task_visibility_rule">
+            <field name="name">Project/Task: employees: public, portal, employee or following or assigned</field>
+            <field name="domain_force">['|',('project_id.members','in',[user.id]),'&amp;',
+                                            ('assignee_id.user_id', '=', user.id),
+                                            
+                                                ('project_id.privacy_visibility', 'in', ['public', 'portal', 'employees'])                                             
+                                        ]</field>
+            <field eval="0" name="perm_unlink"/>
+	         <field eval="1" name="perm_write"/>
+	         <field eval="1" name="perm_read"/>
+	         <field eval="1" name="perm_create"/>
+	         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        
+        
+        <record model="ir.rule" id="project.project_public_members_rule">
+            <field name="name">Project: employees: public, portal, employees or following</field>
+            <field name="domain_force">[
+            ('privacy_visibility', 'in', ['public', 'portal', 'employees']),('members','in',[user.id])
+            ]
+            </field>
+            <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+         
+
+    </data>
+</odoo>
+

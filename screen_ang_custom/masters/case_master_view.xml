@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_case_master_filter" model="ir.ui.view">
+            <field name="name">case.master.select</field>
+            <field name="model">case.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Case Master">
+                   <field  name="name" string="CaseTitle"/>
+                   <field  name="parent" string="parentType"/>
+                   <separator/>
+                  
+                   <group expand="0" string="Group By...">
+                       <filter string="Parent Type" context="{'group_by': 'parent'}"/>
+                   </group>
+               </search>
+            </field>
+        </record>
+        <record id="case_master_tree" model="ir.ui.view">
+            <field name="name">case.master.tree</field>
+            <field name="model">case.master</field>
+            <field name="arch" type="xml">
+                <tree string="Case Master">
+                    <field name="name"/>
+                    <field name="case_data_id"/>  
+                    <field name="parent"/>
+                    <field name="prefixed_price"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="case_master_form" model="ir.ui.view">
+            <field name="name">case.master.form</field>
+            <field name="model">case.master</field>
+            <field name="arch" type="xml">
+                <form string="Case Details">
+	                <sheet>
+		                <group col='4' string='Case Details'>
+		                    <field name="name" colspan="2"/>
+		                    <field name="case_data_id"  colspan="2"/>
+		                    <field name="parent"  colspan="2"/>
+		                    <field name="prefixed_price" colspan="2"/>
+		                    <field name="no_court" colspan="2"/>
+		                    <field name="active"/>
+		                </group>
+		                <group string="Remarks" col="4">
+		                    <field name="remarks" nolabel="1"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_case_master_form" model="ir.actions.act_window">
+            <field name="name">Case Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="case_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_case_master" action="action_case_master_form" name="Case Master" parent="sub_menu_masters" sequence="9"/>            
+               
+	</data>
+</odoo>

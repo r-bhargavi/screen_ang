@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_reset_emp_leaves_id' model="ir.ui.view">
+            <field name="name">reset.emp.leaves.wizard</field>
+            <field name="model">reset.emp.leaves</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reset leaves Details" create="false" edit="false">
+                <!--<header>-->
+                        <!--<button special="cancel" icon="gtk-cancel" string="Cancel"/>-->
+                        <!--<button name="reset_leaves" string="Submit" icon="gtk-ok" type="object" context="{'leave_type':name,'employee_ids':employee_ids}" class="oe_button oe_form_button_save oe_highlight" />-->
+              <!--</header>     -->
+                        <group> 
+                        <group colspan="4">
+                            <i><label string="(If Leave Type is not selected, then All the leaves of the Selected Employees shall be Resetted)"/></i>
+                        </group>                    
+                        <group colspan="4">
+                            <field name="name"/>                            
+                            <field name="employee_ids">     
+                            <tree string="Employees">
+                                    <field name="name"/>
+                                    <field name="work_phone"/>
+                                    <field name="work_email"/>
+                                    <field name="department_id"/>
+                                    <field name="job_id"/>
+                                    <field name="remaining_leaves"/>
+                            </tree>        
+                            </field>
+                        </group>                        
+                        </group>
+                    <footer>
+                        <button special="cancel" icon="gtk-cancel" string="Cancel"/>
+                        <button name="reset_leaves" string="Submit" icon="gtk-ok" type="object" context="{'leave_type':name,'employee_ids':employee_ids}" class="oe_button oe_form_button_save oe_highlight" />
+              </footer>
+                </form>
+            </field>
+        </record>        
+
+        <record id="action_reset_emp_leaves" model="ir.actions.act_window">
+             <field name="name">Reset Leaves</field>
+             <field name="res_model">reset.emp.leaves</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+        <menuitem parent="base_sub_menu_routine_entries" id="menu_reset_emp_leaves" icon="STOCK_PRINT" name="Reset Employee Leaves" action="action_reset_emp_leaves" sequence="30" groups="legal_e.group_case_entries_admin,hr.group_hr_manager"/>
+
+    </data>
+</odoo>

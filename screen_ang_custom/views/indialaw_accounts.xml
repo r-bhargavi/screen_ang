@@ -1,0 +1,4205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <odoo>
+ 	<data>
+
+		<record model="account.account.template" id="a0">
+ 			<field name="name">IndiaLaw</field>
+ 			<field name="code">0</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_view"/>
+ 			<field name="reconcile" eval="False"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1">
+ 			<field name="name">Balance Sheet</field>
+ 			<field name="code">1</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_view"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a0"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10">
+ 			<field name="name">Liabilities</field>
+ 			<field name="code">10</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a100">
+ 			<field name="name">Capital Account</field>
+ 			<field name="code">100</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a10"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1000">
+ 			<field name="name">Reserves &amp; Surplus</field>
+ 			<field name="code">1000</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a100"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10000">
+ 			<field name="name">Capital A/c Sreejith K P</field>
+ 			<field name="code">10000</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10001">
+ 			<field name="name">Maintanance  - Raheja Building</field>
+ 			<field name="code">10001</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10002">
+ 			<field name="name">Mediclaim</field>
+ 			<field name="code">10002</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10003">
+ 			<field name="name">PROFESSIONAL TAX-KPS</field>
+ 			<field name="code">10003</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10004">
+ 			<field name="name">School Fees</field>
+ 			<field name="code">10004</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10005">
+ 			<field name="name">Sree Gokulam Chits</field>
+ 			<field name="code">10005</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1000"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a101">
+ 			<field name="name">Loans (Liability)</field>
+ 			<field name="code">101</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a10"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1010">
+ 			<field name="name">Bank OD A/c</field>
+ 			<field name="code">1010</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10100">
+ 			<field name="name">Central Bank - OD Account - 6538</field>
+ 			<field name="code">10100</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1010"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1011">
+ 			<field name="name">Secured Loans</field>
+ 			<field name="code">1011</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10110">
+ 			<field name="name">Central Bank of India-Term Loan</field>
+ 			<field name="code">10110</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10111">
+ 			<field name="name">Hdfc Bank Loan</field>
+ 			<field name="code">10111</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10112">
+ 			<field name="name">Hdfc Bank Vehicle Loan</field>
+ 			<field name="code">10112</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10113">
+ 			<field name="name">Home Loan - Central Bank</field>
+ 			<field name="code">10113</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10114">
+ 			<field name="name">Home Loan - Federal Bank</field>
+ 			<field name="code">10114</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10115">
+ 			<field name="name">LIC Loan</field>
+ 			<field name="code">10115</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10116">
+ 			<field name="name">LOAN CBI - JUINAGAR OFFICE</field>
+ 			<field name="code">10116</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1011"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1012">
+ 			<field name="name">Unsecured Loans</field>
+ 			<field name="code">1012</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10120">
+ 			<field name="name">GANESH - LOAN</field>
+ 			<field name="code">10120</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1012"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10121">
+ 			<field name="name">HDFC Bank Ltd - Loan</field>
+ 			<field name="code">10121</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1012"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10122">
+ 			<field name="name">SANKARANARAYANAN - LOAN</field>
+ 			<field name="code">10122</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1012"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1013">
+ 			<field name="name">Premlal Loan A/c</field>
+ 			<field name="code">1013</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1014">
+ 			<field name="name">Vehicle Loan - Innova</field>
+ 			<field name="code">1014</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1015">
+ 			<field name="name">VEHICLE LOAN - JAGGUAR</field>
+ 			<field name="code">1015</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1016">
+ 			<field name="name">Vehicle Loan - Kerala</field>
+ 			<field name="code">1016</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1017">
+ 			<field name="name">Vehicle Loan - Maruti</field>
+ 			<field name="code">1017</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a101"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a102">
+ 			<field name="name">Current Liabilities</field>
+ 			<field name="code">102</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a10"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1020">
+ 			<field name="name">COURT FEES - SCB</field>
+ 			<field name="code">1020</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1021">
+ 			<field name="name">Duties &amp; Taxes</field>
+ 			<field name="code">1021</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10210">
+ 			<field name="name">Interest on Credit Card</field>
+ 			<field name="code">10210</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1021"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10211">
+ 			<field name="name">PROFESIONAL TAX</field>
+ 			<field name="code">10211</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1021"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10212">
+ 			<field name="name">Service Tax Paid On Credit Card</field>
+ 			<field name="code">10212</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1021"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1022">
+ 			<field name="name">Provisions</field>
+ 			<field name="code">1022</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10220">
+ 			<field name="name">SALARY OUTSTANDING</field>
+ 			<field name="code">10220</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1022"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1023">
+ 			<field name="name">Sundry Creditors</field>
+ 			<field name="code">1023</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10230">
+ 			<field name="name">GANESH</field>
+ 			<field name="code">10230</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10231">
+ 			<field name="name">GOKULAM CHIT FUND</field>
+ 			<field name="code">10231</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10232">
+ 			<field name="name">OTHERS</field>
+ 			<field name="code">10232</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10233">
+ 			<field name="name">PREMLATHA AGARWAL</field>
+ 			<field name="code">10233</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10234">
+ 			<field name="name">RUSTIC DEVELOPMENT</field>
+ 			<field name="code">10234</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10235">
+ 			<field name="name">SARA CHEMICALS</field>
+ 			<field name="code">10235</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10236">
+ 			<field name="name">SHREE WEB TECHNOLOGIES &amp; SERVICES</field>
+ 			<field name="code">10236</field>
+ 			<field name="type">payable</field>
+ 			<field name="user_type" ref="account.data_account_type_payable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1023"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1024">
+ 			<field name="name">Professional Fee- Receipts</field>
+ 			<field name="code">1024</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10240">
+ 			<field name="name">ADVANCE BHUDHELLO TRAVELS</field>
+ 			<field name="code">10240</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1024"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a10241">
+ 			<field name="name">Rudra Pharma - Adv. Receipts</field>
+ 			<field name="code">10241</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1024"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1025">
+ 			<field name="name">ADVANCE FOR COURT FEES</field>
+ 			<field name="code">1025</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1026">
+ 			<field name="name">ADVANCE- PROFESSIONAL FEES</field>
+ 			<field name="code">1026</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1027">
+ 			<field name="name">Arex Tours &amp; Travels - Reim. A/c (AT&amp;L 10777)</field>
+ 			<field name="code">1027</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1028">
+ 			<field name="name">Budhallo &amp; Sons - Reim. A/c (B &amp; S 10774)</field>
+ 			<field name="code">1028</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1029">
+ 			<field name="name">Budhallo Travels Reim. A/c (BT 10773)</field>
+ 			<field name="code">1029</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1030">
+ 			<field name="name">COURT FEES - SCB 13832</field>
+ 			<field name="code">1030</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1031">
+ 			<field name="name">DC Guptha - Reim. A/c (DCG 10772)</field>
+ 			<field name="code">1031</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1032">
+ 			<field name="name">DR. P.P. BASTA</field>
+ 			<field name="code">1032</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1033">
+ 			<field name="name">GURU NANAK - REIM. A/C (GT &amp; T 10771)</field>
+ 			<field name="code">1033</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1034">
+ 			<field name="name">PANDIT RAO - REIM. A.C (PAP 15569)</field>
+ 			<field name="code">1034</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1035">
+ 			<field name="name">TCFSL - PAYBLE</field>
+ 			<field name="code">1035</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1036">
+ 			<field name="name">TDS - OTHERS</field>
+ 			<field name="code">1036</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1037">
+ 			<field name="name">TDS Payable-Outstanding</field>
+ 			<field name="code">1037</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a1038">
+ 			<field name="name">TDS Payble</field>
+ 			<field name="code">1038</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_liability"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a102"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20">
+ 			<field name="name">Assets</field>
+ 			<field name="code">20</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a1"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a200">
+ 			<field name="name">Fixed Assets</field>
+ 			<field name="code">200</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2000">
+ 			<field name="name">AIR CONDITION</field>
+ 			<field name="code">2000</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2001">
+ 			<field name="name">APPLE IPAD</field>
+ 			<field name="code">2001</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2002">
+ 			<field name="name">COMPUTER</field>
+ 			<field name="code">2002</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2003">
+ 			<field name="name">EPABX SYSTEM</field>
+ 			<field name="code">2003</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2004">
+ 			<field name="name">FAX</field>
+ 			<field name="code">2004</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2005">
+ 			<field name="name">FLAT</field>
+ 			<field name="code">2005</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2006">
+ 			<field name="name">FURNITURE &amp; FIXTURE</field>
+ 			<field name="code">2006</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2007">
+ 			<field name="name">LAND</field>
+ 			<field name="code">2007</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2008">
+ 			<field name="name">MOBILE</field>
+ 			<field name="code">2008</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2009">
+ 			<field name="name">MOTOR CAR</field>
+ 			<field name="code">2009</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2010">
+ 			<field name="name">OFFICE EQUIPMENT</field>
+ 			<field name="code">2010</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2011">
+ 			<field name="name">OFFICE PREMISES</field>
+ 			<field name="code">2011</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2012">
+ 			<field name="name">Office Primises (Jui Nagar)</field>
+ 			<field name="code">2012</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2013">
+ 			<field name="name">SCANNER</field>
+ 			<field name="code">2013</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a200"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205">
+ 			<field name="name">Current Assets</field>
+ 			<field name="code">205</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2050">
+ 			<field name="name">Bank Accounts</field>
+ 			<field name="code">2050</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20500">
+ 			<field name="name">Central Bank - Current A/c - 4382</field>
+ 			<field name="code">20500</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20501">
+ 			<field name="name">CENTRAL BANK SB A/C-1246</field>
+ 			<field name="code">20501</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20502">
+ 			<field name="name">CITIBANK SB ACCOUNT</field>
+ 			<field name="code">20502</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20503">
+ 			<field name="name">Federal Bank - 4051</field>
+ 			<field name="code">20503</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20504">
+ 			<field name="name">ICICI BANK - 8280</field>
+ 			<field name="code">20504</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20505">
+ 			<field name="name">Kotak Bank - 6693</field>
+ 			<field name="code">20505</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20506">
+ 			<field name="name">Kotak Bank - Client A/c - 4457</field>
+ 			<field name="code">20506</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20507">
+ 			<field name="name">SBI - SB A/C - 60020</field>
+ 			<field name="code">20507</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2050"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2051">
+ 			<field name="name">Cash-in-hand</field>
+ 			<field name="code">2051</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20510">
+ 			<field name="name">CASH</field>
+ 			<field name="code">20510</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2051"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20511">
+ 			<field name="name">PC - Chembur Office</field>
+ 			<field name="code">20511</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2051"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20512">
+ 			<field name="name">PC - HO CLIENT A/C</field>
+ 			<field name="code">20512</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2051"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20513">
+ 			<field name="name">PC - HO MAIN A/C</field>
+ 			<field name="code">20513</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2051"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20514">
+ 			<field name="name">PETTYCASH</field>
+ 			<field name="code">20514</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2051"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2052">
+ 			<field name="name">Deposits (Asset)</field>
+ 			<field name="code">2052</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2053">
+ 			<field name="name">Loans &amp; Advances (Asset)</field>
+ 			<field name="code">2053</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20530">
+ 			<field name="name">Staff Loan</field>
+ 			<field name="code">20530</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205300">
+ 			<field name="name">Amol Loan A/c</field>
+ 			<field name="code">205300</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205301">
+ 			<field name="name">Anitha Loan A/c</field>
+ 			<field name="code">205301</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205302">
+ 			<field name="name">Babu Loan A/c</field>
+ 			<field name="code">205302</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205303">
+ 			<field name="name">DEVENDRA - STAFF LOAN</field>
+ 			<field name="code">205303</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205304">
+ 			<field name="name">Jyothi Loan A/c</field>
+ 			<field name="code">205304</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205305">
+ 			<field name="name">Krishnaraj Loan A/c</field>
+ 			<field name="code">205305</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205306">
+ 			<field name="name">Mangesh Loan A/c</field>
+ 			<field name="code">205306</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205307">
+ 			<field name="name">Nitin Loan A/c</field>
+ 			<field name="code">205307</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205308">
+ 			<field name="name">Prashant Loan A/c</field>
+ 			<field name="code">205308</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205309">
+ 			<field name="name">Sahoo Loan A/c</field>
+ 			<field name="code">205309</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205310">
+ 			<field name="name">Santaram Loan A/c</field>
+ 			<field name="code">205310</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205311">
+ 			<field name="name">Sugitha Loan A/c</field>
+ 			<field name="code">205311</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205312">
+ 			<field name="name">Advance Paid (Rent)</field>
+ 			<field name="code">205312</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205313">
+ 			<field name="name">ARRMS (INDIA) PVT LTD.</field>
+ 			<field name="code">205313</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205314">
+ 			<field name="name">BIJU - ADVANCE</field>
+ 			<field name="code">205314</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205315">
+ 			<field name="name">Deepthi Sreejith</field>
+ 			<field name="code">205315</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205316">
+ 			<field name="name">Dinesh Delhi</field>
+ 			<field name="code">205316</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205317">
+ 			<field name="name">DINOOP</field>
+ 			<field name="code">205317</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205318">
+ 			<field name="name">Dipin Vasai - Loan A/c</field>
+ 			<field name="code">205318</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205319">
+ 			<field name="name">K.C. RAJAN KERALA</field>
+ 			<field name="code">205319</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205320">
+ 			<field name="name">Lasercode - Reim. A/c</field>
+ 			<field name="code">205320</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205321">
+ 			<field name="name">LUCID COLLOIDS - REIM. A/C</field>
+ 			<field name="code">205321</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205322">
+ 			<field name="name">Maa Ashish - Reim A/c</field>
+ 			<field name="code">205322</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205323">
+ 			<field name="name">PASIKANTI NAGARAJ- LOAN</field>
+ 			<field name="code">205323</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205324">
+ 			<field name="name">PREMLAL K.K</field>
+ 			<field name="code">205324</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205325">
+ 			<field name="name">PRITI</field>
+ 			<field name="code">205325</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205326">
+ 			<field name="name">RAJEESH LOAN A/C</field>
+ 			<field name="code">205326</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205327">
+ 			<field name="name">RAJNEESH - LOAN A/C</field>
+ 			<field name="code">205327</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205328">
+ 			<field name="name">Ranjith</field>
+ 			<field name="code">205328</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205329">
+ 			<field name="name">SAJEEV - LOAN A/C</field>
+ 			<field name="code">205329</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205330">
+ 			<field name="name">SANTAKUMARI</field>
+ 			<field name="code">205330</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205331">
+ 			<field name="name">Sara Chemicals - Reimbursement A/c</field>
+ 			<field name="code">205331</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205332">
+ 			<field name="name">SCARLET CIRCLE - LOAN A/C</field>
+ 			<field name="code">205332</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205333">
+ 			<field name="name">SHIJU.P. V - Loan A/c</field>
+ 			<field name="code">205333</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205334">
+ 			<field name="name">SUJITH</field>
+ 			<field name="code">205334</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205335">
+ 			<field name="name">UNICHEM LABORATRIES -REIMBURSEMENT</field>
+ 			<field name="code">205335</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2053"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2054">
+ 			<field name="name">Sundry Debtors</field>
+ 			<field name="code">2054</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20540">
+ 			<field name="name">EP</field>
+ 			<field name="code">20540</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205400">
+ 			<field name="name">L&amp;T FINANCE LTD. - EP</field>
+ 			<field name="code">205400</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205401">
+ 			<field name="name">RELIANCE CAPITAL-COMMERCIAL -EP</field>
+ 			<field name="code">205401</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205402">
+ 			<field name="name">RELIANCE CAPITAL LTD- EP</field>
+ 			<field name="code">205402</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205403">
+ 			<field name="name">TATA CAPITAL LIMITED- EP</field>
+ 			<field name="code">205403</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205404">
+ 			<field name="name">TATA MOTORS FINANCE LTD - EP</field>
+ 			<field name="code">205404</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205405">
+ 			<field name="name">TATA MOTORS LIMITED- EP</field>
+ 			<field name="code">205405</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20540"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20550">
+ 			<field name="name">HO</field>
+ 			<field name="code">20550</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205500">
+ 			<field name="name">ADSUN OFFSHORE DIVING CONTRACTORS PVT LTD</field>
+ 			<field name="code">205500</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205501">
+ 			<field name="name">AREX TRAVELS &amp; LOGISTICS</field>
+ 			<field name="code">205501</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205502">
+ 			<field name="name">ASHAPURA GROUP OF INDUSTRIES</field>
+ 			<field name="code">205502</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205503">
+ 			<field name="name">ASHOK L. NARANG</field>
+ 			<field name="code">205503</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205504">
+ 			<field name="name">AZIZ WALL PAPER</field>
+ 			<field name="code">205504</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205505">
+ 			<field name="name">BAERLOCHER INDIA ADDITIVES PVT. LTD.</field>
+ 			<field name="code">205505</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205506">
+ 			<field name="name">BLUE STAR LTD</field>
+ 			<field name="code">205506</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205507">
+ 			<field name="name">BOMBAY BUILDERS</field>
+ 			<field name="code">205507</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205508">
+ 			<field name="name">BUTHELLO &amp; SONS</field>
+ 			<field name="code">205508</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205509">
+ 			<field name="name">BUTHELLO TRAVELS</field>
+ 			<field name="code">205509</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205510">
+ 			<field name="name">CASA DECOR PVT LTD.</field>
+ 			<field name="code">205510</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205511">
+ 			<field name="name">C. RADHAKRISHNAN</field>
+ 			<field name="code">205511</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205512">
+ 			<field name="name">DARSHAN CHEMICALS</field>
+ 			<field name="code">205512</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205513">
+ 			<field name="name">DAULATRAM K. NAGPAL</field>
+ 			<field name="code">205513</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205514">
+ 			<field name="name">DB CORP.LTD.-RADIO DIVISION</field>
+ 			<field name="code">205514</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205515">
+ 			<field name="name">DC GUPTA &amp; SONS</field>
+ 			<field name="code">205515</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205516">
+ 			<field name="name">DHARAMSI MORARJI CHEMICAL CO.LTD.</field>
+ 			<field name="code">205516</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205517">
+ 			<field name="name">DIPESH RAMESH DHONE</field>
+ 			<field name="code">205517</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205518">
+ 			<field name="name">DROLIA CONFECTIONARY</field>
+ 			<field name="code">205518</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205519">
+ 			<field name="name">GLOBAL FLEXI SYSTEMS INDIA PVT. LTD.</field>
+ 			<field name="code">205519</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205520">
+ 			<field name="name">GOLDSTAR METAL SOLUTIONS PVT LTD</field>
+ 			<field name="code">205520</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205521">
+ 			<field name="name">GOVIND H.RAHIRA(HUF)</field>
+ 			<field name="code">205521</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205522">
+ 			<field name="name">GOVIND H.ROHIRA &amp; ANR</field>
+ 			<field name="code">205522</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205523">
+ 			<field name="name">GURUNANAK TRAVELS &amp; TOURS</field>
+ 			<field name="code">205523</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205524">
+ 			<field name="name">HARISHREE AROMATIC AND CHEMICALS PVT LTD</field>
+ 			<field name="code">205524</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205525">
+ 			<field name="name">HARSHIT MERCHANT</field>
+ 			<field name="code">205525</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205526">
+ 			<field name="name">HDFC BANK LTD.</field>
+ 			<field name="code">205526</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205527">
+ 			<field name="name">HYDROTECH SYSTEMS PVT. LTD.</field>
+ 			<field name="code">205527</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205528">
+ 			<field name="name">JITIN STEELS</field>
+ 			<field name="code">205528</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205529">
+ 			<field name="name">J.P. KARWA</field>
+ 			<field name="code">205529</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205530">
+ 			<field name="name">KABEER MANSUKHANI</field>
+ 			<field name="code">205530</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205531">
+ 			<field name="name">KAPPERALA VENKATA KISHORE VERMA</field>
+ 			<field name="code">205531</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205532">
+ 			<field name="name">KDAC CHEM PVT. LTD.</field>
+ 			<field name="code">205532</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205533">
+ 			<field name="name">KIRAN A. CHHABRIA</field>
+ 			<field name="code">205533</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205534">
+ 			<field name="name">KOTAK MAHINDRA BANK LTD.</field>
+ 			<field name="code">205534</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205535">
+ 			<field name="name">KUMAR SYNTHETICS PVT. LTD.</field>
+ 			<field name="code">205535</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205536">
+ 			<field name="name">LACHHMANDAS L. NARANG</field>
+ 			<field name="code">205536</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205537">
+ 			<field name="name">LASERCODE PRINTOGRAFIK SYSTEMS PVT. LTD.</field>
+ 			<field name="code">205537</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205538">
+ 			<field name="name">L&amp;T FINANCE LTD.</field>
+ 			<field name="code">205538</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205539">
+ 			<field name="name">Lucid Colloids  Ltd</field>
+ 			<field name="code">205539</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205540">
+ 			<field name="name">Maa Ashish Textile Industries Pvt. Ltd.</field>
+ 			<field name="code">205540</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205541">
+ 			<field name="name">MAHESH N. THAKKAR</field>
+ 			<field name="code">205541</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205542">
+ 			<field name="name">MANHATTAN EXPORTS</field>
+ 			<field name="code">205542</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205543">
+ 			<field name="name">MANSI CHEM LIMITED</field>
+ 			<field name="code">205543</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205544">
+ 			<field name="name">MATHURADAS N. THAKKAR</field>
+ 			<field name="code">205544</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205545">
+ 			<field name="name">MOBILE COMMERCE SOLUTIONS LIMITED</field>
+ 			<field name="code">205545</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205546">
+ 			<field name="name">MOHAN T MIRCHANDANI</field>
+ 			<field name="code">205546</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205547">
+ 			<field name="name">MOHINI AGENCY</field>
+ 			<field name="code">205547</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205548">
+ 			<field name="name">M/s. BHATI HOMES PRIVATE LTD</field>
+ 			<field name="code">205548</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205549">
+ 			<field name="name">MULUND SHITAL DARSHAN C.H.S. LTD.</field>
+ 			<field name="code">205549</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205550">
+ 			<field name="name">NABILA MERCHANT</field>
+ 			<field name="code">205550</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205551">
+ 			<field name="name">NANDINI SUCHDE</field>
+ 			<field name="code">205551</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205552">
+ 			<field name="name">NARENDRA D. TRIVEDI</field>
+ 			<field name="code">205552</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205553">
+ 			<field name="name">NAVIN ANANT GAWALI</field>
+ 			<field name="code">205553</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205554">
+ 			<field name="name">NILESH T KADAM</field>
+ 			<field name="code">205554</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205555">
+ 			<field name="name">NIRMAL KHATRI</field>
+ 			<field name="code">205555</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205556">
+ 			<field name="name">OPERA CLOTHING</field>
+ 			<field name="code">205556</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205557">
+ 			<field name="name">Pamanabha Anantrao Panditrao</field>
+ 			<field name="code">205557</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205558">
+ 			<field name="name">PARAMOUNT MERCHANDISE PVT. LTD.</field>
+ 			<field name="code">205558</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205559">
+ 			<field name="name">PHAROACH P. BASTA</field>
+ 			<field name="code">205559</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205560">
+ 			<field name="name">PRABHAT INDUSTRIES</field>
+ 			<field name="code">205560</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205561">
+ 			<field name="name">PRAKASH MODY</field>
+ 			<field name="code">205561</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205562">
+ 			<field name="name">PRASHANT G BENDE</field>
+ 			<field name="code">205562</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205563">
+ 			<field name="name">PUNJAB STATE CONTAINER &amp; WAREHOUSING</field>
+ 			<field name="code">205563</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205564">
+ 			<field name="name">PURSHOTTAM PAROLIA</field>
+ 			<field name="code">205564</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205565">
+ 			<field name="name">RAHUL S. GURNANI</field>
+ 			<field name="code">205565</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205566">
+ 			<field name="name">RAJARAM SATLE</field>
+ 			<field name="code">205566</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205567">
+ 			<field name="name">RAJDEEP JEWELLERS PVT. LTD.</field>
+ 			<field name="code">205567</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205568">
+ 			<field name="name">RAMAN KAUSHIK</field>
+ 			<field name="code">205568</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205569">
+ 			<field name="name">RAMESH H.RAHIRA &amp; ANR</field>
+ 			<field name="code">205569</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205570">
+ 			<field name="name">RAMESH ROHIRA(HUF)</field>
+ 			<field name="code">205570</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205571">
+ 			<field name="name">RELIANCE CAPITAL-COMMERCIAL FINANCE</field>
+ 			<field name="code">205571</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205572">
+ 			<field name="name">RELIANCE LIFE INSURANCE CO LTD</field>
+ 			<field name="code">205572</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205573">
+ 			<field name="name">RELIANCE WEBSTORE LTD</field>
+ 			<field name="code">205573</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205574">
+ 			<field name="name">RUDRA PHARMA DISTIBUTORS PVT.LTD.</field>
+ 			<field name="code">205574</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205575">
+ 			<field name="name">Salvi Chemicals Industries Ltd</field>
+ 			<field name="code">205575</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205576">
+ 			<field name="name">SAMEER SHIGWAN</field>
+ 			<field name="code">205576</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205577">
+ 			<field name="name">SAPNA. N BHARWANI</field>
+ 			<field name="code">205577</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205578">
+ 			<field name="name">SARA CHEMICALS &amp; CONSULTANTS</field>
+ 			<field name="code">205578</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205579">
+ 			<field name="name">SARA RESEARCH &amp; DEVELOPMENT PVT LTD.</field>
+ 			<field name="code">205579</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205580">
+ 			<field name="name">SATELLITE DEVELOPERS LIMITED</field>
+ 			<field name="code">205580</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205581">
+ 			<field name="name">SBICI BANK LTD.</field>
+ 			<field name="code">205581</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205582">
+ 			<field name="name">SHANTI VASHDEV VALECHA</field>
+ 			<field name="code">205582</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205583">
+ 			<field name="name">SHREE SIDDHIVINAYAK ESTATE</field>
+ 			<field name="code">205583</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205584">
+ 			<field name="name">S.P. JAGTIANI</field>
+ 			<field name="code">205584</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205585">
+ 			<field name="name">SREE GOKULAM CHIT &amp; FIN.CO.LTD.</field>
+ 			<field name="code">205585</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205586">
+ 			<field name="name">STANDARD CHARTERED BANK</field>
+ 			<field name="code">205586</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205587">
+ 			<field name="name">STATE BANK OF INDIA</field>
+ 			<field name="code">205587</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205588">
+ 			<field name="name">STATE OF KERALA</field>
+ 			<field name="code">205588</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205589">
+ 			<field name="name">STEELFAB BUILDING SYSTEMS</field>
+ 			<field name="code">205589</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205590">
+ 			<field name="name">Sterling Auxiliaries Pvt. Ltd.</field>
+ 			<field name="code">205590</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205591">
+ 			<field name="name">SUBHASH DAVID THEKKAKARA</field>
+ 			<field name="code">205591</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205592">
+ 			<field name="name">SUBIR SIRKAR KOLKATA</field>
+ 			<field name="code">205592</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205593">
+ 			<field name="name">SUBODH KUMAR SABOO</field>
+ 			<field name="code">205593</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205594">
+ 			<field name="name">SUDHAKAR C.H.S. LTD</field>
+ 			<field name="code">205594</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205595">
+ 			<field name="name">SURESH GURNANI</field>
+ 			<field name="code">205595</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205596">
+ 			<field name="name">SURIYA D KANAL</field>
+ 			<field name="code">205596</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205597">
+ 			<field name="name">TATA CAPITAL FINANCIAL SERVICES LTD.</field>
+ 			<field name="code">205597</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205598">
+ 			<field name="name">TATA CAPITAL HOUSING FINANCE LIMITED</field>
+ 			<field name="code">205598</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205599">
+ 			<field name="name">TATA CONSULTANCY SERVICES</field>
+ 			<field name="code">205599</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205600">
+ 			<field name="name">TATA ENGINEERING &amp; LOCOMOTIVE CO LTD</field>
+ 			<field name="code">205600</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205601">
+ 			<field name="name">TATA FINANCE LTD.</field>
+ 			<field name="code">205601</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205602">
+ 			<field name="name">TATA HOUSING DEVELOPMENT CO. LTD</field>
+ 			<field name="code">205602</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205603">
+ 			<field name="name">TATA MOTORS FINANCE LTD.</field>
+ 			<field name="code">205603</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205604">
+ 			<field name="name">TATA MOTORS LTD</field>
+ 			<field name="code">205604</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205605">
+ 			<field name="name">TILAKRAJ WAZIRCHAND (HUF)</field>
+ 			<field name="code">205605</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205606">
+ 			<field name="name">TITAGARH INDUSTRIES LIMITED</field>
+ 			<field name="code">205606</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205607">
+ 			<field name="name">TITAGARH WAGONS LTD</field>
+ 			<field name="code">205607</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205608">
+ 			<field name="name">UNICHEM LABORATORIES LIMITED</field>
+ 			<field name="code">205608</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205609">
+ 			<field name="name">VASHDEV H.VALECHA</field>
+ 			<field name="code">205609</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205610">
+ 			<field name="name">VERVE COMPUSOFT PVT LTD.</field>
+ 			<field name="code">205610</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205611">
+ 			<field name="name">VIHAAN DIRECT SELLING INDIA PVT. LTD.</field>
+ 			<field name="code">205611</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205612">
+ 			<field name="name">VISHINDAS NARANG</field>
+ 			<field name="code">205612</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205613">
+ 			<field name="name">VOLKSWAGEN FINANCE PVT.LTD</field>
+ 			<field name="code">205613</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205614">
+ 			<field name="name">V.V.F</field>
+ 			<field name="code">205614</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205615">
+ 			<field name="name">WASUDEV LILARAM</field>
+ 			<field name="code">205615</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20550"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20565">
+ 			<field name="name">INSURANCE</field>
+ 			<field name="code">20565</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205650">
+ 			<field name="name">ICICI PRUDENTIAL LIFE INSURANCE COMPANY LIMITED-INS</field>
+ 			<field name="code">205650</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20565"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205651">
+ 			<field name="name">INDIA FIRST LIFE INSURANCE -INSURANCE</field>
+ 			<field name="code">205651</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20565"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205652">
+ 			<field name="name">RELIANCE LIFE INSURANCE CO. LTD.-INSURANCE</field>
+ 			<field name="code">205652</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20565"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205653">
+ 			<field name="name">THE NEW INDIA ASSSURANCE-INSURANCE</field>
+ 			<field name="code">205653</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20565"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20570">
+ 			<field name="name">NEP</field>
+ 			<field name="code">20570</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205700">
+ 			<field name="name">ANKITA BUILDERS - NEP</field>
+ 			<field name="code">205700</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205701">
+ 			<field name="name">ATUL KUMAR SINHA-NEP</field>
+ 			<field name="code">205701</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205702">
+ 			<field name="name">ELIZABETH-NEP</field>
+ 			<field name="code">205702</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205703">
+ 			<field name="name">INDIA FIRST LIFE INSURANCE -NEP</field>
+ 			<field name="code">205703</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205704">
+ 			<field name="name">IQBAL SINGH BINDRA AND RABINDER KAUR BINDRA-NEP</field>
+ 			<field name="code">205704</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205705">
+ 			<field name="name">MAKS CARE TRADING PVT. LTD. NEP</field>
+ 			<field name="code">205705</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205706">
+ 			<field name="name">M/S STANDARD FARMS PVT. LTD.</field>
+ 			<field name="code">205706</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205707">
+ 			<field name="name">NANDU P ASRANI</field>
+ 			<field name="code">205707</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205708">
+ 			<field name="name">NEERAJ GOYAL - NEP</field>
+ 			<field name="code">205708</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205709">
+ 			<field name="name">RADHIKA SAWANT MOHIT - NEP</field>
+ 			<field name="code">205709</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205710">
+ 			<field name="name">RAJENDRA KUMAR GOYAL -NEP</field>
+ 			<field name="code">205710</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205711">
+ 			<field name="name">RAJESH MAGOW - NEP</field>
+ 			<field name="code">205711</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205712">
+ 			<field name="name">RAKESH BEHARI LAL &amp; MANJU LAL-NEP</field>
+ 			<field name="code">205712</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205713">
+ 			<field name="name">RELIANCE CAPITAL LTD-NEP</field>
+ 			<field name="code">205713</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205714">
+ 			<field name="name">RELIANCE LIFE INSURANCE CO.LTD. -NEP</field>
+ 			<field name="code">205714</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205715">
+ 			<field name="name">RICHFEEL HEALTH AND BEAUTY PVT. LTD.--NEP</field>
+ 			<field name="code">205715</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205716">
+ 			<field name="name">SARVINDER SINGH/PRANEET KAUR-NEP</field>
+ 			<field name="code">205716</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205717">
+ 			<field name="name">SHYAM GOPAL-NEP</field>
+ 			<field name="code">205717</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205718">
+ 			<field name="name">SIERRA FIRMA LIMITED NIGERIA-NEP</field>
+ 			<field name="code">205718</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205719">
+ 			<field name="name">SLEEK ADVERTISING (P) LTD. - NEP</field>
+ 			<field name="code">205719</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205720">
+ 			<field name="name">Smart Value Homes Ltd.-NEP</field>
+ 			<field name="code">205720</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205721">
+ 			<field name="name">STANDARD CHARTERED BANK-NEP</field>
+ 			<field name="code">205721</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205722">
+ 			<field name="name">TATA CAPITAL FINANCIAL SERVICES LIMITED - NEP</field>
+ 			<field name="code">205722</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205723">
+ 			<field name="name">TATA CAPITAL HOUSING FINANCE LTD-NEP</field>
+ 			<field name="code">205723</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205724">
+ 			<field name="name">TATA CAPITAL LTD - NEP</field>
+ 			<field name="code">205724</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205725">
+ 			<field name="name">TATA CONSULTANCY SERVICES LTD-NEP</field>
+ 			<field name="code">205725</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205726">
+ 			<field name="name">TATA HOUSING DEVELOPMENT CO.-NEP</field>
+ 			<field name="code">205726</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205727">
+ 			<field name="name">TATA MOTORS FINANCE LTD.-NEP</field>
+ 			<field name="code">205727</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205728">
+ 			<field name="name">TATA MOTORS LTD-NEP</field>
+ 			<field name="code">205728</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205729">
+ 			<field name="name">VIMAL JHAJHARIA-NEP</field>
+ 			<field name="code">205729</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205730">
+ 			<field name="name">VIVEK KUMAR SINGHA - NEP</field>
+ 			<field name="code">205730</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20570"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a20575">
+ 			<field name="name">PIHO</field>
+ 			<field name="code">20575</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a205750">
+ 			<field name="name">PIHO ARB</field>
+ 			<field name="code">205750</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a20575"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2057500">
+ 			<field name="name">L&amp;T Finance Ltd.-ARB</field>
+ 			<field name="code">2057500</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2057501">
+ 			<field name="name">TATA CAPITAL FINANCIAL SERVICE LTD-ARB</field>
+ 			<field name="code">2057501</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2057502">
+ 			<field name="name">TATA CONSULTANCY SERVICES-ARB</field>
+ 			<field name="code">2057502</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2055">
+ 			<field name="name">Stock-in-hand</field>
+ 			<field name="code">2055</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2056">
+ 			<field name="name">Advance Tax - TDS</field>
+ 			<field name="code">2056</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2057">
+ 			<field name="name">AEBC Credit Bill</field>
+ 			<field name="code">2057</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2058">
+ 			<field name="name">Capital in Indialaw-Delhi</field>
+ 			<field name="code">2058</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2059">
+ 			<field name="name">Capital in M/s.Sreeju &amp; Lal</field>
+ 			<field name="code">2059</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2060">
+ 			<field name="name">Citi Bank - Creditcard Bill</field>
+ 			<field name="code">2060</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2061">
+ 			<field name="name">HDFC Bank Credit Bill - 2876</field>
+ 			<field name="code">2061</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2062">
+ 			<field name="name">Induslnd Credit Bill</field>
+ 			<field name="code">2062</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2063">
+ 			<field name="name">Legalese - Loan</field>
+ 			<field name="code">2063</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2064">
+ 			<field name="name">LIP</field>
+ 			<field name="code">2064</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2065">
+ 			<field name="name">ORION RESORT - LOAN A/C</field>
+ 			<field name="code">2065</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_asset"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a205750"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a2">
+ 			<field name="name">Profit &amp; Loss</field>
+ 			<field name="code">2</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_view"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a0"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a30">
+ 			<field name="name">Direct Expenses</field>
+ 			<field name="code">30</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a300">
+ 			<field name="name">Postages ( D J  Corporation)</field>
+ 			<field name="code">300</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a301">
+ 			<field name="name">INCENTIVE</field>
+ 			<field name="code">301</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a302">
+ 			<field name="name">Incentive Paid</field>
+ 			<field name="code">302</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a303">
+ 			<field name="name">Professional Chag. &amp; Council Fee</field>
+ 			<field name="code">303</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a304">
+ 			<field name="name">SALARY PAID</field>
+ 			<field name="code">304</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a305">
+ 			<field name="name">ADVERTISING EXP.</field>
+ 			<field name="code">305</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a306">
+ 			<field name="name">Bank Charges</field>
+ 			<field name="code">306</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a307">
+ 			<field name="name">BLUE STAR SOLUTIONS</field>
+ 			<field name="code">307</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a308">
+ 			<field name="name">Books</field>
+ 			<field name="code">308</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a309">
+ 			<field name="name">Brokerage</field>
+ 			<field name="code">309</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a310">
+ 			<field name="name">COMPUTER EXP</field>
+ 			<field name="code">310</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a311">
+ 			<field name="name">CONVEYANCE EXP.</field>
+ 			<field name="code">311</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a312">
+ 			<field name="name">COURT EXP.</field>
+ 			<field name="code">312</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a313">
+ 			<field name="name">COURT FEE EXP.</field>
+ 			<field name="code">313</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a314">
+ 			<field name="name">COURT FEES - MSCC12969</field>
+ 			<field name="code">314</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a315">
+ 			<field name="name">Digital Signature</field>
+ 			<field name="code">315</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a316">
+ 			<field name="name">DONATION</field>
+ 			<field name="code">316</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a317">
+ 			<field name="name">Electricity Charges</field>
+ 			<field name="code">317</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a318">
+ 			<field name="name">ELECTRICITY CHARGES (JUINAGAR)</field>
+ 			<field name="code">318</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a319">
+ 			<field name="name">Maintanance - Kamer Building</field>
+ 			<field name="code">319</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a320">
+ 			<field name="name">MISCELLANEOUS EXP.</field>
+ 			<field name="code">320</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a321">
+ 			<field name="name">NOTARY CHARGES</field>
+ 			<field name="code">321</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a322">
+ 			<field name="name">OFFICE EXP.</field>
+ 			<field name="code">322</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a323">
+ 			<field name="name">POSTAGE &amp; COURIER</field>
+ 			<field name="code">323</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a324">
+ 			<field name="name">PRINTING &amp; STATIONARY</field>
+ 			<field name="code">324</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a325">
+ 			<field name="name">Rent</field>
+ 			<field name="code">325</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a326">
+ 			<field name="name">SEARCH EXPENCES</field>
+ 			<field name="code">326</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a327">
+ 			<field name="name">STAFF WELFARE</field>
+ 			<field name="code">327</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a328">
+ 			<field name="name">STAMP PAPER</field>
+ 			<field name="code">328</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a329">
+ 			<field name="name">Telephone &amp; Mobile Charges</field>
+ 			<field name="code">329</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a330">
+ 			<field name="name">TRAVELLING EXPENSES</field>
+ 			<field name="code">330</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a331">
+ 			<field name="name">Vehicle Expenses</field>
+ 			<field name="code">331</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a332">
+ 			<field name="name">XEROX EXP.</field>
+ 			<field name="code">332</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a30"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a40">
+ 			<field name="name">Indirect Expenses</field>
+ 			<field name="code">40</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a400">
+ 			<field name="name">AMC (Computer)</field>
+ 			<field name="code">400</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a401">
+ 			<field name="name">Commission on Postage</field>
+ 			<field name="code">401</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a402">
+ 			<field name="name">DRAWINGS A/C</field>
+ 			<field name="code">402</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a403">
+ 			<field name="name">ENTERTEMENT EXP.</field>
+ 			<field name="code">403</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a404">
+ 			<field name="name">Expenses Reimburesement</field>
+ 			<field name="code">404</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a405">
+ 			<field name="name">Insurance</field>
+ 			<field name="code">405</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a406">
+ 			<field name="name">INTEREST ON LOAN</field>
+ 			<field name="code">406</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a407">
+ 			<field name="name">INTEREST ON OD A/C</field>
+ 			<field name="code">407</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a408">
+ 			<field name="name">LOAN PROCESSING EXP.</field>
+ 			<field name="code">408</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a409">
+ 			<field name="name">MSME Registration</field>
+ 			<field name="code">409</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a410">
+ 			<field name="name">PETROL EXP.</field>
+ 			<field name="code">410</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a411">
+ 			<field name="name">REPAIR &amp; MAINTANANCE</field>
+ 			<field name="code">411</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a412">
+ 			<field name="name">ROC CHARGES</field>
+ 			<field name="code">412</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a413">
+ 			<field name="name">Training Expenses</field>
+ 			<field name="code">413</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a414">
+ 			<field name="name">VEHICLE INSURANCE</field>
+ 			<field name="code">414</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a415">
+ 			<field name="name">WEB EXPENSES</field>
+ 			<field name="code">415</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_expense"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a40"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a50">
+ 			<field name="name">Sales Accounts</field>
+ 			<field name="code">50</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a500">
+ 			<field name="name">Manhattan Exports - Reim. A/c</field>
+ 			<field name="code">500</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a50"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a501">
+ 			<field name="name">PROFESSIONAL FEE RECEIPT</field>
+ 			<field name="code">501</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a50"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a60">
+ 			<field name="name">Direct Incomes</field>
+ 			<field name="code">60</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a600">
+ 			<field name="name">Court Fee - Ashapura</field>
+ 			<field name="code">600</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a601">
+ 			<field name="name">COURT FEE - CAMB 12868</field>
+ 			<field name="code">601</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a602">
+ 			<field name="name">Court Fees - CAMB 12866</field>
+ 			<field name="code">602</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a603">
+ 			<field name="name">COURT FEES - CAMB 12867</field>
+ 			<field name="code">603</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a604">
+ 			<field name="name">COURT FEE - SCMC 12510</field>
+ 			<field name="code">604</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a605">
+ 			<field name="name">COURT FEES - SAPL 12220</field>
+ 			<field name="code">605</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a606">
+ 			<field name="name">Professional Receipt Income</field>
+ 			<field name="code">606</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a60"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a70">
+ 			<field name="name">Indirect Incomes</field>
+ 			<field name="code">70</field>
+ 			<field name="type">view</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2"/>
+ 		</record>
+
+
+
+		<record model="account.account.template" id="a700">
+ 			<field name="name">Advance - Receipt</field>
+ 			<field name="code">700</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a70"/>
+ 		</record>
+
+		<record model="account.account.template" id="a701">
+ 			<field name="name">INTEREST ON SB A/C</field>
+ 			<field name="code">701</field>
+ 			<field name="type">other</field>
+ 			<field name="user_type" ref="account.data_account_type_income"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a70"/>
+ 		</record>
+
+		<record model="account.account.template" id="a20580">
+ 			<field name="name">OTHERS INIT</field>
+ 			<field name="code">20580</field>
+ 			<field name="type">receivable</field>
+ 			<field name="user_type" ref="account.data_account_type_receivable"/>
+ 			<field name="reconcile" eval="False"/>
+ 			<field name="parent_id" ref="a2054"/>
+ 		</record>
+ 		
+
+	<record model="account.tax.code.template" id="vat_code_tax_indialaw">
+            <field name="name">Tax</field>
+        </record>
+
+	<record id="indialaw_chart_template_public" model="account.chart.template">
+            <field name="name">IndiaLaw - Chart of Accounts for Private Ltd</field>
+            <field name="account_root_id" ref="a0"/>
+            <field name="tax_code_root_id" ref="vat_code_tax_indialaw"/> 
+            <field name="bank_account_view_id" ref="a1010"/> 
+            <field name="property_account_receivable" ref="a10232"/>
+            <field name="property_account_payable" ref="a20580"/>
+            <field name="property_account_expense_categ" ref="a501"/>
+            <field name="property_account_income_categ" ref="a501"/>
+        </record>
+        
+     <record id="indialaw_indian_chart_template_public_value" model="ir.values">
+            <field name="name">India - Chart of Accounts for Public Ltd</field>
+            <field name="model">account.chart.template</field>
+            <field name="key">default</field>
+            <field name="res_id" ref="indialaw_chart_template_public"/>
+            <field name="value" ref="base.INR"/>
+        </record>
+        
+ 	</data> 		
+</odoo>
+
+

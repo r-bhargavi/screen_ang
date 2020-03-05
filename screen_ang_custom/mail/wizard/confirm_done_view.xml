@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_confirm_done_id' model="ir.ui.view">
+            <field name="name">Mark as Done Wizard</field>
+            <field name="model">confirm.done</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Success Information">
+                        <group col="4">
+                            <!--separator colspan="4"/-->
+			    <h2><label colspan="4" string="Do you wan to Make selected Tasks as Done?"></label></h2>
+                        </group>
+                        <footer>
+                            <button special="cancel" icon="gtk-cancel" string="Cancel" />
+                            <button name="button_confirm" string="OK" type="object" />
+                        </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_success_msg" model="ir.actions.act_window">
+             <field name="name">Mark as Done</field>
+             <field name="res_model">confirm.done</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+        </record>
+        <act_window id="action_move_task in done_state"
+            multi="True"
+            key2="client_action_multi" name="Mark as Done"
+            res_model="confirm.done" src_model="project.task"
+            view_mode="form" target="new" view_type="form" />
+  </data>
+  
+  <data noupdate="1">
+
+         <record model="ir.cron" id="ir_cron_due_days_update">
+		<field name="name">Update Project Tasks Due Days</field>
+		<field name="model_id" ref="model_project_task"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.run_scheduler()</field>
+	</record>
+      <record model="ir.cron" id="ir_cron_task_message_update">
+		<field name="name">Update Project Tasks Message Details</field>
+		<field name="model_id" ref="model_project_task"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.run_scheduler_for_task_message()</field>
+	</record>
+
+      <record model="ir.cron" id="ir_cron_remaind_nextproceed_update">
+		<field name="name">Update Next Proceed Date Remainder</field>
+		<field name="model_id" ref="model_court_proceedings"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.missing_date_scheduler()</field>
+	</record>
+
+      <record model="ir.cron" id="ir_cron_remaind_not_billed_update">
+		<field name="name">Update Check Fully Billed</field>
+		<field name="model_id" ref="model_court_proceedings"/>
+		<field name="interval_number">1</field>
+		<field name="interval_type">days</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="False"/>
+		<field name="state">code</field>
+		<field name="code">model.check_fully_billed()</field>
+	</record>
+   </data>
+        <!--menuitem parent="account.menu_finance_reporting" id="success_msg_menu" icon="STOCK_PRINT" name="Success Msg" action="action_success_msg" sequence="9998"/-->
+
+    
+</odoo>

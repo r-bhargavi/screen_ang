@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_casesheet_quotation">
+    <t t-set="o" t-value="o.with_context({'lang':o.client_id.lang})"/>
+          <t t-call="web.basic_layout">
+                <div class="header">
+                   <table width="100%">
+                        <tr>
+                            <td class="text-center">
+                                <p>
+                                    <img src="/web/binary/company_logo" style="height:50px; width:200px"/>
+                                </p>
+                            </td>
+                        </tr>
+                   </table>
+                </div>
+                <table width="100%">
+                        <t t-if="o.work_type == 'non_litigation'">
+                        <tr>
+                            <td class="text-center">
+                                <p>
+                                <span><b>Confidential</b></span><br/>
+                                <span><b>Attorney Client Privileged</b></span>
+                                </p>
+                            </td>
+                        </tr>
+                        </t>
+                   </table>
+                <div class="page">
+                    <table style="width:100%">
+                        <tr>
+                            <td>
+                                <span><b>Date : </b></span><span t-field="o.date_order" t-options="{&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/><br/>
+                                <span><b>REF :</b></span><span t-field="o.name"/><br/><br/>
+
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <span>To,</span><br/>
+                                <span t-field="o.client_id.name"/><br/>
+                                <span t-field="o.client_id.street"/><br/>
+                                <span t-field="o.client_id.street2"/>
+                                <span t-field="o.client_id.city"/>
+                                <span t-field="o.client_id.zip"/><br/>
+                                <span t-field="o.client_id.state_id"/>
+                                <span t-field="o.client_id.country_id"/><br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br/>
+                                <t t-raw="o.we_thank_you"/>
+                                
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+                
+                <div class="col-xs-12" t-raw="o.scope_of_work" align="justify" style="padding-left:25px;page-break-inside:auto;"/>
+                <table>
+                                  <tr>
+                            <td>
+                                <br/>
+                                <br/>
+                                <p>Yours sincerely,</p>
+                                <br/>
+                                <img style="max-height: 120px; max-width: 120px; padding:5px;" t-att-src="'data:image/png;base64,%s' %  to_text(o.create_uid.digital_signature)"/>
+                                <br/>
+                                <br/>
+                                <p><b><span t-esc="o.create_uid.name"/></b></p>
+                                <p>For IndiaLaw LLP</p>
+                            </td>
+                        </tr>
+                        </table>
+            <div class="page" style="page-break-before:always;">
+                <table style="width:100%">
+                    <tr>
+                        <td align="center">
+                            <b><span>ANNEXURE – I</span></b>
+                            <br/>
+                            <span>SCOPE OF WORK</span>
+                            <br/><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <t t-raw="o.annexure_one"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="page" style="page-break-before:always;">
+                <table style="border: 2px solid #696969;" width="100%">
+                    <tr>
+                        <td align="center">
+                            <b><span>ANNEXURE – II</span></b>
+                            <br/>
+                            <span>FEE</span>
+                            <br/><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <table class="table table-bordered" width="100%" style="border: 2px solid #696969;">
+                            <tr>
+                                <th>Sl. No.</th>
+                                <th>Particulars of Service</th>
+                                <th class="text-right">Amount (INR)</th>
+                            </tr>
+                            <tr t-foreach="o.fees_lines" t-as="l">
+                                <td style="text-align: left;">
+                                    <span t-field="l.slno"/>
+                                </td>
+                                <td style="text-align: left;">
+                                    <span t-field="l.product_id"/>
+                                </td>
+                                <td style="text-align: right;">
+                                    <t t-if="l.fee_amount == 0.0">
+                                    <span t-field="l.description"/>
+                                    </t>
+                                    <t t-if="l.fee_amount> 0.0">
+                                    <span t-field="l.fee_amount"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </tr>
+                    <tr>
+                        <table class="table table-bordered" width="100%" style="border: 2px solid #696969;">
+                            <tr>
+                                <th>Billing Stages</th>
+                                <th class="text-right">Amount (INR)</th>
+                            </tr>
+                            <tr t-if="o.u24 > 0">
+                                <td style="text-align: left;">
+                                    <span>Advance billing</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u24"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.upon_assignment > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Assignment</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.upon_assignment"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u27 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Drafting</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u27"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u20 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Drafting Agreement/Contract</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u20"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u21 > 0">
+                                <td style="text-align: left;">
+                                    <span>Vetting Charges</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u21"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u4 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon drafting FIR</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u4"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u14 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Filing</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u14"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u18 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Petition</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u18"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u16 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Application</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u16"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.upon_filing_complaint > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Filing complaint</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.upon_filing_complaint"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u1 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Filing Writ Petition</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u1"/>
+                                </td>
+                            </tr>
+                             <tr t-if="o.u2 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Criminal Application</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u2"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u6 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Police Complaint</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u6"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u7 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Lodging Complaint/FIR before Police Station
+
+                                    </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u7"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.upon_admission > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Admission</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.upon_admission"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u8 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing of SOC</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u8"/>
+                                </td>
+                            </tr>
+                             <tr t-if="o.u15 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Claim</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u15"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u9 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Rejoinder</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u9"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u10 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Evidence</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u10"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u3 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing Reply</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u3"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.upon_filing_statement > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Written statement/Reply
+                                    </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.upon_filing_statement"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u12 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon filing defense Evidence</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u12"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u23 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon disposal of Interim application</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u23"/>
+                                </td>
+                            </tr>
+                             <tr t-if="o.appearance_charges > 0">
+                                <td style="text-align: left;">
+                                    <span>Appearance Billing</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.appearance_charges"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.effective_appearance > 0">
+                                <td style="text-align: left;">
+                                    <span>Effective Appearance/ hearing billing</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.effective_appearance"/>
+                                </td>
+                            </tr>
+                             <tr t-if="o.non_effective_appearance > 0">
+                                <td style="text-align: left;">
+                                    <span>Non- Effective Appearance/ hearing billing</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.non_effective_appearance"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u19 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Opinion</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u19"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u22 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon submitting final Report</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u22"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u25 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon completions</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u25"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u26 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon commencement of work</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u26"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u5 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Disposal</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u5"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u11 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Award</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u11"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u13 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Disposal/Award</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u13"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.u17 > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Disposal/Withdrawal</span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.u17"/>
+                                </td>
+                            </tr>
+                            
+                            <tr t-if="o.disposal > 0">
+                                <td style="text-align: left;">
+                                    <span>Upon Admission/Disposal/Withdrawal
+
+                                </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <span t-field="o.disposal"/>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </tr>
+                </table>
+            </div>
+            <div class="page" style="page-break-before:always;">
+                <table style="width:100%">
+                    <tr>
+                        <td align="center">
+                            <b><span>ANNEXURE – III</span></b>
+                            <br/>
+                            <span>STANDARD CONDITIONS OF ENGAGEMENT</span>
+                            <br/><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <t t-raw="o.annexure_three"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer">
+                <div class="text-center">
+                    <span>Mumbai | Delhi | Chennai | Kolkata | Bengaluru | Hyderabad | Cochin | Ahmedabad | Navi Mumbai | Pune | UAE</span><br/>
+                    <b>Reg. &amp; Head Office</b> - INDIALAW LLP, Apeejay Chambers, Ground flr, Wallace St, Fort, Mumbai - 400 001.<br/>
+                    <b>LLPIN</b> - AAC-7831 | <b>W</b> - www.indialaw.in | <b>e</b> - mumbai@indialaw.in | <b>t</b> - 022-22197400
+                    <br/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="action_report_casesheet_quotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="legal_e.report_casesheet_quotation" t-lang="o.client_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

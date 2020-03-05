@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="product.product_normal_action_sell" model="ir.actions.act_window">
+            <field name="domain">[('type','!=','service')]</field>
+        </record>
+        
+        <record id="product.product_normal_action" model="ir.actions.act_window">
+            <field name="domain">[('type','!=','service')]</field>
+        </record>
+        
+        <!--<record id="product.product_normal_action_puchased" model="ir.actions.act_window">-->
+            <!--<field name="domain">[('type','!=','service')]</field>-->
+        <!--</record>-->
+        
+        <record id="service_product_normal_action" model="ir.actions.act_window">
+            <field name="name">Service Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('type','=','service')]</field>
+            <field name="view_id" ref="product.product_product_tree_view"/>
+            <field name="search_view_id" ref="product.product_search_form_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new product.
+              </p><p>
+                You must define a product for everything you buy or sell,
+                whether it's a physical product, a consumable or service.
+              </p>
+            </field>
+        </record>
+        
+               
+        <!--<menuitem action="service_product_normal_action" id="menu_service_products" parent="sub_menu_masters" sequence="2"/> -->
+        
+    </data>
+</odoo>

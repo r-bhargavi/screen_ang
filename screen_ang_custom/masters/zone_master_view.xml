@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_zone_master_filter" model="ir.ui.view">
+            <field name="name">zone.master.select</field>
+            <field name="model">state.zone</field>
+            <field name="arch" type="xml">
+                <search string="Search Zone Master">
+               </search>
+            </field>
+        </record>
+        <record id="zone_master_tree" model="ir.ui.view">
+            <field name="name">zone.master.tree</field>
+            <field name="model">state.zone</field>
+            <field name="arch" type="xml">
+                <tree string="Zone Master">
+                    <field name="name"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="zone_master_form" model="ir.ui.view">
+            <field name="name">zone.master.form</field>
+            <field name="model">state.zone</field>
+            <field name="arch" type="xml">
+                <form string="Zone Details">
+	                <sheet>
+	                   <group>
+                        	<group string='Zone Details'>
+                        	    <field name="name"/>
+		                        <field name="state_id"/>
+		                    </group>
+                       </group>
+		                <group string='Branches'>
+                            <!--<field name="branch_ids" nolabel="1" readonly="1"/>-->
+		                </group>    
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_zone_master_form" model="ir.actions.act_window">
+            <field name="name">Zone Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">state.zone</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="zone_master_tree"/>
+        </record>
+        
+         <menuitem id="sub_menu_zone_master" action="action_zone_master_form" name="Zone Master" parent="sub_menu_masters" sequence="15"/>  
+               
+	</data>
+</odoo>

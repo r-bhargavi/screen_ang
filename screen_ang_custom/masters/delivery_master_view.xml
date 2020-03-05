@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_delivery_master_filter" model="ir.ui.view">
+            <field name="name">delivery.master.select</field>
+            <field name="model">delivery.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Delivery Master">
+               </search>
+            </field>
+        </record>
+        <record id="delivery_master_tree" model="ir.ui.view">
+            <field name="name">delivery.master.tree</field>
+            <field name="model">delivery.master</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Master">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="delivery_master_form" model="ir.ui.view">
+            <field name="name">delivery.master.form</field>
+            <field name="model">delivery.master</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Details">
+	                <sheet>
+                        <group col='4' string='Delivery Details'>
+                            <field name="name" colspan="2"/>
+                            <field name="code" colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_delivery_master_form" model="ir.actions.act_window">
+            <field name="name">Delivery Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">delivery.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="delivery_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_delivery_master" action="action_delivery_master_form" name="Delivery Master" parent="sub_menu_masters" sequence="5"/>            
+               
+	</data>
+</odoo>

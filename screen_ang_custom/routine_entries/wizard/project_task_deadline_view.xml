@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_update_task_deadline_id' model="ir.ui.view">
+            <field name="name">task.deadline.wizard</field>
+            <field name="model">project.task.deadline</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Project Task Deadline Change Details" >                        
+                        <group colspan="4">
+                            <field name="new_date_deadline" required="1"/>
+                            <field name="name" required="1"/>   
+                        </group>
+			<group colspan="1">
+			</group>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel" colspan="1"/>
+                            <button name="create_record" string="Send for Approval" icon="gtk-ok" type="object" context="{'reason':name,'new_date_deadline':new_date_deadline}" class="oe_button oe_form_button_save oe_highlight" colspan="1"/>
+                        </group>
+			<group colspan="1">
+			</group>                        
+                </form>
+            </field>
+        </record>        
+        
+         <record id="tree_approve_task_deadline" model="ir.ui.view">
+            <field name="name">approve.task.deadline.tree</field>
+            <field name="model">project.task.deadline</field>
+            <field name="arch" type="xml">
+                <tree string="Tasks To Approve Updated Deadline Date" create="false">
+                    <field name="project_id"/>
+                    <field name="task_id"/>
+                    <field name="date_deadline"/>
+                    <field name="new_date_deadline"/>
+                    <field name="name"/>
+                    <field name="state" invisible="1"/>
+                    <button name="update_date_deadline" string="Approve" type="object" icon="STOCK_REDO" attrs="{'invisible':[('state','=','approve')]}"/>
+                </tree>               
+            </field>
+        </record>        
+
+        <record id="action_approve_task_deadline" model="ir.actions.act_window">
+             <field name="name">Approve Tasks Deadline</field>
+             <field name="res_model">project.task.deadline</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree</field>            
+            <field name="view_id" ref="tree_approve_task_deadline"/>
+            <field name="context">{"search_default_state":'new'}</field>
+            <field name="domain">[('state','=','new'),('project_id.user_id','=',uid)]</field>
+        </record>
+        <menuitem parent="base_sub_menu_routine_entries" id="menu_approve_task_deadline" icon="STOCK_PRINT" name="Approve Tasks Deadline" action="action_approve_task_deadline" sequence="13" groups="legal_e.group_case_entries_officer"/>
+
+    </data>
+</odoo>

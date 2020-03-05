@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         <record id="view_res_company_form_inherit" model="ir.ui.view">
+            <field name="name">view.res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">                     
+                <data>
+				    <field name="currency_id" position="after">
+					    <field name="company_pan_no"/>
+				    </field>
+				    <notebook position="inside">
+                        <page string="Scope of Work Litigation">
+                            <group>
+                                <field name="we_thank_you" widget="html"/>
+                                <field name="scope_of_work" widget="html"/>
+                                <field name="annexure_one" widget="html"/>
+                                <field name="annexure_three" widget="html"/>
+                            </group>
+                        </page>
+                        <page string="Scope of Work Non Litigation">
+                            <group>
+                                <field name="nl_we_thank_you" widget="html"/>
+                                <field name="nl_scope_of_work" widget="html"/>
+                                <field name="nl_annexure_one" widget="html"/>
+                                <field name="nl_annexure_three" widget="html"/>
+                            </group>
+                        </page>
+	                    <page string="Expense Accounts">
+	                        <field name="expense_account_ids" nolabel="1" colspan="4" domain="[('type','!=','view')]"/>
+	                    </page>
+                	</notebook>
+                	
+                <xpath expr="//group[@name='social_media']" position="after">
+                   	<group name="miscellaneous" string="Miscellaneous">
+                        <field name="proceed_stage_id" required="1"/>
+                    </group>
+                </xpath>
+                </data>
+            </field>
+        </record>
+	</data>
+</odoo>

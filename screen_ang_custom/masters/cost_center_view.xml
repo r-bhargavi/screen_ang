@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_legal_cost_center_filter" model="ir.ui.view">
+            <field name="name">legal.cost.center.select</field>
+            <field name="model">legal.cost.center</field>
+            <field name="arch" type="xml">
+                <search string="Search Cost Center">
+                    <field name="name"/>
+                    <field name="office_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Office" context="{'group_by': 'office_id'}" icon="terp-folder-orange"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="legal_cost_center_tree" model="ir.ui.view">
+            <field name="name">legal.cost.center.tree</field>
+            <field name="model">legal.cost.center</field>
+            <field name="arch" type="xml">
+                <tree string="Cost Center">
+                    <field name="name"/>
+                    <field name="office_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="legal_cost_center_form" model="ir.ui.view">
+            <field name="name">legal.cost.center.form</field>
+            <field name="model">legal.cost.center</field>
+            <field name="arch" type="xml">
+                <form string="Cost Center">
+	                <sheet>
+		                <group col='4'>
+		                    <field name="name"/>
+                            <field name="office_id"/>
+		                </group>
+                        <group string="Departments">
+                            <field name="dept_ids" colspan="4" nolabel="1"/>
+                        </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_legal_cost_center_form" model="ir.actions.act_window">
+            <field name="name">Cost Center</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">legal.cost.center</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="legal_cost_center_tree"/>
+        </record>
+
+        <menuitem id="sub_menu_legal_cost_center" action="action_legal_cost_center_form" name="Cost Center" parent="hr.menu_human_resources_configuration" sequence="6"/>
+               
+	</data>
+</odoo>

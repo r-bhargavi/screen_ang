@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_legal_followup_remark_filter" model="ir.ui.view">
+            <field name="name">legal.followup.remark.select</field>
+            <field name="model">legal.followup.remark</field>
+            <field name="arch" type="xml">
+                <search string="Search Followup Remarks">
+                    <field name="name" string="District Name" filter_domain="[('name','ilike',self)]"/>
+                    <field name="sl_no" string="District Code" filter_domain="[('code','ilike',self)]"/>
+               </search>
+            </field>
+        </record>
+        <record id="legal_followup_remark_tree" model="ir.ui.view">
+            <field name="name">legal.followup.remark.tree</field>
+            <field name="model">legal.followup.remark</field>
+            <field name="arch" type="xml">
+                <tree string="Followup Remarks">
+                    <field name="sl_no"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="legal_followup_remark_form" model="ir.ui.view">
+            <field name="name">legal.followup.remark.form</field>
+            <field name="model">legal.followup.remark</field>
+            <field name="arch" type="xml">
+                <form string="Followup Remarks">
+                    <sheet>
+                       <group string='Followup Remarks'>
+                            <group>
+                                <field name="sl_no"/>
+                                <field name="name"/>
+                            </group>
+                        </group>    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_legal_followup_remark_form" model="ir.actions.act_window">
+            <field name="name">Followup Remarks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">legal.followup.remark</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="legal_followup_remark_tree"/>
+        </record>
+        
+         <menuitem id="sub_menu_legal_followup_remark" action="action_legal_followup_remark_form" name="Followup Remarks" parent="sub_menu_masters" sequence="25"/>  
+               
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_mediator_master_filter" model="ir.ui.view">
+            <field name="name">mediator.master.select</field>
+            <field name="model">mediator.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Mediator Master">
+               </search>
+            </field>
+        </record>
+        <record id="mediator_master_tree" model="ir.ui.view">
+            <field name="name">mediator.master.tree</field>
+            <field name="model">mediator.master</field>
+            <field name="arch" type="xml">
+                <tree string="Mediator Master">
+                    <field name="name"/>
+                    <field name="number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="mediator_master_form" model="ir.ui.view">
+            <field name="name">mediator.master.form</field>
+            <field name="model">mediator.master</field>
+            <field name="arch" type="xml">
+                <form string="Mediator Master">
+	                <sheet>
+		                <group col='4' string="Mediators">
+		                    <field name="name" colspan="2"/>
+		                    <field name="number"  colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_mediator_master_form" model="ir.actions.act_window">
+            <field name="name">Mediator Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mediator.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="mediator_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_mediator_master" action="action_mediator_master_form" name="Mediator Master" parent="sub_menu_masters" sequence="14"/>            
+               
+	</data>
+</odoo>

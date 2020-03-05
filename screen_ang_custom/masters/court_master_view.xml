@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_court_master_filter" model="ir.ui.view">
+            <field name="name">court.master.select</field>
+            <field name="model">court.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Court Master">
+                 
+	                   <field  name="ref" string="CourtId"/>
+	                   <field  name="name" string="CourtName"/>
+	                   <field  name="city" string="City"/>
+	                   <separator/>
+	                   <field name="district_id"/>
+	                   <field name="state_id"/>
+                  
+                   <group expand="0" string="Group By...">
+                       <filter string="State" icon="terp-personal" domain="[]" context="{'group_by' : 'state_id'}" />
+                       <filter string="District" context="{'group_by': 'district_id'}"/>
+                       
+                   </group>
+               </search>
+            </field>
+        </record>
+        <record id="court_master_tree" model="ir.ui.view">
+            <field name="name">court.master.tree</field>
+            <field name="model">court.master</field>
+            <field name="arch" type="xml">
+                <tree string="Court Master">
+                    <field name="ref"/>
+                    <field name="name"/>
+                    <field name="number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="court_master_form" model="ir.ui.view">
+            <field name="name">court.master.form</field>
+            <field name="model">court.master</field>
+            <field name="arch" type="xml">
+                <form string="Court Master">
+	                <sheet>
+		                <group col='4' string="Court Details">
+		                    <field name="name" colspan="2"/>
+		                    <field name="number"  colspan="2"/>
+		                    <field name="ref"  colspan="2"/>
+		                    <field name="active"/>
+		                 </group>
+		                
+                            <label for="street" string="Address" invisible="1"/>
+                             <group col="4" invisible="1">                             
+                                <field name="street" placeholder="Street..."/>
+                                <field name="street2" />
+                               
+                                	<field name="location" placeholder="Court Location"/>
+                                	<field name="landmark" placeholder="Landmark"/>
+                                    <field name="city" required="0"/>
+                                    <field name="district_id" class="oe_no_button" placeholder="District"  options='{"no_open": True}' required="0"/>
+                                    <field name="state_id" class="oe_no_button" placeholder="State"  options='{"no_open": True}' required="0"/>
+                                    <field name="zip"  string="pin" style="width: 27%%"/>
+                                	<field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}' />
+                                	<button name="geo_localize" colspan="2" string="Map" type="object" icon="gtk-zoom-in"/>
+                           
+                            </group>     
+                           
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_court_master_form" model="ir.actions.act_window">
+            <field name="name">Court Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">court.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="court_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_court_master" action="action_court_master_form" name="Court Master" parent="sub_menu_masters" sequence="7"/>
+        
+	<record id="view_state_district_tree" model="ir.ui.view">
+            <field name="name">state.district.tree</field>
+            <field name="model">district.district</field>
+            <field name="arch" type="xml">
+                <tree string="District">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_state_district_form" model="ir.ui.view">
+            <field name="name">state.district.form</field>
+            <field name="model">district.district</field>
+            <field name="arch" type="xml">
+                <form string="District" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="state_id" options='{"no_open": True}'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_state_district" model="ir.actions.act_window">
+            <field name="name">Districts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">district.district</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_state_district_tree"/>
+        </record>
+
+         <!-- <menuitem action="action_state_district" id="menu_state_district_partner" parent="res.menu_localisation" sequence="3" groups="base.group_no_one"/> -->
+               
+	</data>
+</odoo>

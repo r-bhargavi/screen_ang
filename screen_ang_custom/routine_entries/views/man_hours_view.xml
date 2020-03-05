@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="man_hours_tree" model="ir.ui.view">
+            <field name="name">man.hours.tree</field>
+            <field name="model">man.hours</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Man Hours">
+                    <field name="task_id" />
+                    <field name="assign_to" />
+                    <field name="no_of_hours" sum="Total time" widget="float_time"/>
+                    <field name="case_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_man_hours_tree" model="ir.actions.act_window">
+            <field name="name">Man Hours</field>
+            <field name="res_model">man.hours</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="man_hours_tree"/>
+        </record>
+    </data>
+</odoo>

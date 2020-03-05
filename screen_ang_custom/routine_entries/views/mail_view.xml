@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="custom_send_mail_tree" model="ir.ui.view">
+            <field name="name">custom.send.mail.tree</field>
+            <field name="model">custom.send.mail</field>
+            <field name="arch" type="xml">
+                <tree string="Send Mail">
+                    <field name="partner_ids" />
+                </tree>
+            </field>
+    </record>
+    <record id="custom_send_mail_form" model="ir.ui.view">
+            <field name="name">custom.send.mail.form</field>
+            <field name="model">custom.send.mail</field>
+            <field name="arch" type="xml">
+                <form string="Send Mail">
+                    <header>
+                        <button name="action_send_mail" string="send Mail"  type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                    <field name="partner_ids" required="1" widget="many2many_tags"/>
+                    <field name="subject" />
+                    <field name="group" />
+                    <field name="template_id" required="1" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+    
+    <record id="action_custom_send_mail_form" model="ir.actions.act_window">
+        <field name="name">Send Mail</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">custom.send.mail</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="custom_send_mail_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+          </p><p>
+          </p>
+        </field>
+    </record>
+    
+    <menuitem name="Send Mail" action="action_custom_send_mail_form"
+            id="menu_action_custom_send_mail_form"
+                  sequence="8"
+            parent="base_sub_menu_case_entries_Configuration"
+            />
+        
+</odoo>

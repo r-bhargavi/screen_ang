@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="email_template_for_case_closure_reject_admin" model="mail.template">
+        <field name="name">Case Closure Reject by Admin</field>
+        <field name="email_from">${(user.email or '')|safe}</field>
+        <field name="subject">Case closure reject by admin for ${ctx.get('case_id')}</field>
+        <field name="email_to">${ctx.get('client_service_executive_id')|safe}</field>
+        <field name="model_id" ref="legal_e.model_reject_case_closure_admin"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+            <p>Hello</p>
+            <p>Your case closure request rejected by admin</p>
+            <p>Reason: ${object.name}</p>
+            <p>Case Sheet Id: ${ctx.get('case_id')}</p>
+            <p>
+                <a href="${ctx.get('url_link')}">View Request</a>
+            </p>
+            <p>Thank you</p>
+        ]]>
+        </field>
+    </record>
+
+    <record id='wizard_reject_case_closure_admin' model="ir.ui.view">
+        <field name="name">reject.case.closure.admin.wizard</field>
+        <field name="model">reject.case.closure.admin</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Reject Case Closure Admin">
+                <group>
+                    <field name="name" required="1"/>
+                </group>
+
+               <footer>
+                    <button name="reject_case_closure_admin" string="Reject" type="object" class="oe_button oe_form_button_save oe_highlight" />
+                    or
+                    <button special="cancel" class="oe_link" string="Cancel" />
+               </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reject_case_closure_assignee" model="ir.actions.act_window">
+         <field name="name">Reject Case Closure Assignee</field>
+         <field name="res_model">reject.case.closure.assignee</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">form</field>
+         <field name="target">new</field>
+    </record>
+</odoo>

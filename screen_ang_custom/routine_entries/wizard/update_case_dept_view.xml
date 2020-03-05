@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 		 <record id='update_case_dept_from' model="ir.ui.view">
+			 <field name="name">update.case.dept.wizard</field>
+			 <field name="model">update.case.dept</field>
+			 <field name="type">form</field>
+				 <field name="arch" type="xml">
+            	 <form string="Update Case Sheet Assignee">
+					 <group>
+						 <field name="partner_id"  required="0" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" />
+					 </group>
+
+					 <newline/>
+
+					 <group col="4">
+						 <field name="office_id" on_change="onchange_office_id(office_id, context)" required="1"/>
+						 <field name="dept_id" domain="[('office_id','=', office_id),('office_id','!=', False)]" required="1"/>
+					 </group>
+
+					 <newline/>
+					 <group>
+						 <group string="Change" col="2">
+							 <field name="assignee_id" required="1"/>
+						 </group>
+
+						 <group string="Change To" col="2">
+							 <field name="new_assignee_id" context="{'dept_manager': dept_id}" required="1" on_change="onchange_new_assignee_id(new_assignee_id, context)"/>
+							 <field name="task_assignee_id" context="{'dept_employes': dept_id}" required="1"/>
+						 </group>
+					</group>
+					 <newline/>
+
+					 <group string="Case Details">
+						 <field name="case_ids" nolabel="1"  domain="[('assignee_id','=',assignee_id),('ho_branch_id','=', office_id),('division_id','=', dept_id),('state','not in',('trasfer','done','cancel'))]"/>
+					 </group>
+
+					 <footer>
+						 <button name="update_emp_dept" string="OK" icon="gtk-ok" type="object"  class="oe_button oe_form_button_save oe_highlight" colspan="1"/>
+						 or
+						 <button string="Cancel" class="oe_link" special="cancel"/>
+                     </footer>
+                </form>
+             </field>
+		 </record>
+
+         <record id="action_update_case_dept_from" model="ir.actions.act_window">
+			 <field name="name">Update Case Sheet Assignee</field>
+             <field name="res_model">update.case.dept</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+         </record>
+        
+		<menuitem parent="base_sub_menu_routine_entries" id="menu_action_update_case_dept_from" icon="STOCK_PRINT" action="action_update_case_dept_from" sequence="20" groups="legal_e.group_case_entries_manager"/>
+    </data>
+</odoo>

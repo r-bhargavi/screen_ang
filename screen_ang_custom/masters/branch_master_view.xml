@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        
+        <record id="view_branch_master_search" model="ir.ui.view">
+            <field name="name">view.branch.master.search</field>
+            <field name="model">sale.shop</field>
+            <field name="arch" type="xml">
+                <search string="Search Branch">
+                    <field name="zone_id" string="Zone" filter_domain="[('zone_id','ilike',self)]"/>
+                    <field name="name" string="Branch" filter_domain="[('name','ilike',self)]"/>
+                    <field name="code" string="Branch Code" filter_domain="[('code','ilike',self)]"/>
+                    <field name="flg_main_branch" string="Main HO Branches" domain="[('flg_main_branch','=',True)]"/>
+                    <field name="flg_main_branch_zone" string="Zonal Main Branches" filter_domain="[('flg_main_branch_zone','=',True)]"/>
+                    <field name="flg_main_branch_state" string="State Main Branches" filter_domain="[('flg_main_branch_state','=',True)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="HO Branch" icon="terp-go-stock" name="ho_branch" domain="[]" context="{'group_by':'ho_branch_id'}"/>
+                        <filter string="State" icon="terp-go-stock" name="state" domain="[]" context="{'group_by':'rel_state_id'}"/>
+                        <filter string="Zone" icon="terp-go-stock" name="zone" domain="[]" context="{'group_by':'zone_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>  
+                
+        <record id="view_shop_form_inhs" model="ir.ui.view">
+            <field name="name">sale.shop.form.inhs</field>
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale.view_shop_form"/>
+            <field name="arch" type="xml">              
+              <xpath expr="//group[@name='shop']" position="before">
+                     <label for="code" class="oe_edit_only"/>
+                     <h2><field name="code"/></h2>
+                     <field name="flg_main_branch" invisible="1"/>
+		     <label for="zone_id" class="oe_edit_only" attrs="{'invisible':[('flg_main_branch','=',True)]}"/>
+                     <h2><field name="zone_id" attrs="{'invisible':[('flg_main_branch','=',True)],'required':[('flg_main_branch','!=',True)]}"/></h2>
+                </xpath>
+                <field name="company_id" position="after">
+                     <field name="flg_main_branch" on_change="onchange_main_ho_branch(flg_main_branch,zone_id)"/>
+                     <field name="flg_main_branch_zone"/>
+                     <field name="flg_main_branch_state"/>
+                     <field name="street"/>
+                     <field name="street2"/>
+                     <field name="location"/>
+                     <field name="phone"/>
+                     <field name="rel_state_id" invisible="1"/>
+                     <field name="ho_branch_id" invisible="1"/>
+                </field>
+                <field name="pricelist_id" position="replace">
+                <field name="partner_id" invisible="1"/>
+                     <field name="pricelist_id" required="0"/>
+                </field>
+                <field name="payment_default_id" position="replace">
+                     <field name="payment_default_id" required="1"/>
+                </field>
+            </field>
+        </record> 
+        
+        
+        <record id="view_sale_shop_form_inherit_inhs" model="ir.ui.view">
+            <field name="name">sale.shop.inherit.form.inhs</field>
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale_stock.view_sale_shop_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='warehouse_id']" position="replace">
+                     <field name="warehouse_id" required="1"/>                     
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_shop_tree_inhs" model="ir.ui.view">
+            <field name="name">sale.shop.tree.inhs</field>
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale.view_shop_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                     <field name="zone_id"/>
+                </field>
+                <field name="name" position="after">
+                     <field name="code"/>
+                </field>
+                <field name="project_id" position="after">
+                     <field name="flg_main_branch"/>
+                </field>
+            </field>
+        </record> 
+        
+        <record id="sale.action_shop_form" model="ir.actions.act_window">
+            <field name="name">Branch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.shop</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_shop_tree_inhs"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new sale shop.
+              </p><p>
+                Each quotation or sales order must be linked to a shop. The
+                shop also defines the warehouse from which the products will be
+                delivered for each particular sales.
+              </p>
+            </field>
+        </record>
+        
+        <!-- <menuitem id="sub_menu_branch_master" action="sale.action_shop_form" name="Branch Master" parent="sub_menu_masters" sequence="16"/>  -->
+         
+            <record id="view_branch_master_tree" model="ir.ui.view">
+            <field name="name">branch.master.tree</field>
+            <field name="model">sale.shop</field>
+            <field name="inherit_id"/>
+            <field name="arch" type="xml">
+            <tree string="Branch Master" version="7.0">
+                    <field name="name"/>
+                    <field name="zone_id"/>
+                    <field name="state_id"/>
+                    <field name="code"/>
+                    <field name="flg_main_branch"/>
+                    <field name="flg_main_branch_state"/>
+                    <field name="flg_main_branch_zone"/>
+                </tree>
+            </field>
+        </record> 
+        
+        <record id="branch_master_action_analysis" model="ir.actions.act_window">
+            <field name="name">Organisation Hierarchy</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.shop</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{"search_default_ho_branch":1,"search_default_state":1,"search_default_zone":1}</field>
+            <field name="view_id" ref="view_branch_master_tree"/>
+        </record>
+        
+         <menuitem id="sub_menu_branch_master_analysis" action="branch_master_action_analysis" name="Organisation Hierarchy" parent="sub_menu_masters" sequence="17" />  
+               
+	</data>
+</odoo>

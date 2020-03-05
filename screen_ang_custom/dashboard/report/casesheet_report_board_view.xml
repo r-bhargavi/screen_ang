@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_case_sheet_board_tree" model="ir.ui.view">
+            <field name="name">report.casesheet.tree</field>
+            <field name="model">casesheet.report.board</field>
+            <field name="arch" type="xml">
+                <tree string="Case Sheets Analysis" create="false">
+                    <field name="name" invisible="0"/>
+                    <field name="state" invisible="0"/>
+                    <field name="date" invisible="0"/>
+                    <field name="nbr"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

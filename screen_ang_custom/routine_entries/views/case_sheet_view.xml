@@ -1,0 +1,2363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+     <record id="act_case_sheet_project_2_project_task" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
+            <!--<field name="search_view_id" ref="project.view_task_search_form"/>-->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new tasks
+                </p>
+                <p>
+                    You can now manage your tasks in order to get things done efficiently. Track progress, discuss, attach documents, etc.
+                </p>
+            </field>
+        </record>
+
+        <record id="view_case_sheet_filter" model="ir.ui.view">
+            <field name="name">case.sheet.select</field>
+            <field name="model">case.sheet</field>
+            <field name="arch" type="xml">
+                <search string="Search Case Sheet">
+                    <field name="name" string="File Number"/>
+                    <field name="lot_name" string="Lot Number"/>
+                    <field name="region" string="Region"/>
+                    <field name="client_id" string="Client/Company"  domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1}"/>
+                    <field name="company_ref_no" string="Company Ref #"/>
+                    <field name="work_type" string="Type of Work"/>
+                    <field name="casetype_id" string="Case Type"/>
+                    <field name="bill_type" string="Billing Type"/>
+                    <!--<field name="division_id" string="Department/Division"/>-->
+                    <field name="assignee_id" string="Assignee"/>
+                    <field name="unbilled_amount"/>
+                    <!-- Set bill_state in Search view of tree view -->
+                    <field name="bill_state" string="Billing State"/>
+                    <field name="contact_partner1_id" domain="[('parent_id','!=',False)]" context="{'search_default_customer':1}" string="Contact Person 1"/>
+                    <field name="contact_partner2_id" domain="[('parent_id','!=',False)]" context="{'search_default_customer':1}" string="Contact Person 2"/>
+                    <field name="ho_branch_id" string="Location" filter_domain="[('ho_branch_id','ilike',self)]"/>
+                    <filter string="Civil Litigation" domain="[('work_type','=','civillitigation')]" icon="terp-camera_test"/>
+                    <filter string="Criminal Litigation" domain="[('work_type','=','criminallitigation')]" icon="terp-camera_test"/>
+                    <filter string="Non Litigation" domain="[('work_type','=','non_litigation')]" icon="terp-camera_test"/>
+                    <filter string="Arbitration" domain="[('work_type','=','arbitration')]" icon="terp-camera_test"/>
+                    <filter string="Execution" domain="[('work_type','=','execution')]" icon="terp-camera_test"/>
+                    <filter string="Mediation" domain="[('work_type','=','mediation')]" icon="terp-camera_test"/>
+                    <separator/>
+                    <!-- Starting // Setting Filter // Sanal Davis // 5-6-15  -->
+                    <filter string="Not Billed" domain="[('bill_state','=','not_billed')]" icon="terp-camera_test"/>
+                    <filter string="Partially Billed" domain="[('bill_state','=','partial_billed')]" icon="terp-camera_test"/>
+                    <filter string="Fully Billed" domain="[('bill_state','=','fully_billed')]" icon="terp-camera_test"/>
+                    <separator/>
+                    <!-- Ending -->
+                    <filter string="New" domain="[('state','=','new')]" icon="terp-camera_test"/>
+                    <filter string="In Progress" domain="[('state','=','inprogress')]" icon="terp-camera_test"/>
+                    <filter string="Closed" domain="[('state','=','done')]" icon="terp-camera_test"/>
+                    <filter string="Transferred" domain="[('state','=','transfer')]" icon="terp-camera_test"/>
+                    <filter string="Cancelled" domain="[('state','=','cancel')]" icon="terp-camera_test"/>
+                    <separator/>
+                    <filter string="Fixed Price" domain="[('bill_type','=','fixed_price')]" icon="terp-camera_test"/>
+                    <filter string="Assignment Wise" domain="[('bill_type','=','assignment_wise')]" icon="terp-camera_test"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Primary Case" context="{'group_by': 'primary_id'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Client Name" context="{'group_by': 'client_id'}" icon="terp-stock_effects-object-colorize"/>
+                        <!--<filter string="Department/Division" context="{'group_by': 'division_id'}" icon="terp-stock_effects-object-colorize"/>-->
+                        <filter string="Assignee" context="{'group_by': 'assignee_id'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Status" context="{'group_by': 'state'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Type of Work" context="{'group_by': 'work_type'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Case Type" context="{'group_by': 'casetype_id'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Billing Type" context="{'group_by': 'bill_type'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Billing State" context="{'group_by': 'bill_state'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Region" context="{'group_by': 'region'}" icon="terp-stock_effects-object-colorize"/>
+                        <!-- Set Group in Tree view // Sanal Davis // 5-6-15 -->
+                        <filter string="State" context="{'group_by': 'state_id'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Lot Number" context="{'group_by': 'lot_name'}" icon="terp-stock_effects-object-colorize"/>
+                        <filter string="Office" context="{'group_by': 'ho_branch_id'}" icon="terp-stock_effects-object-colorize"/>
+
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="case_sheet_tree" model="ir.ui.view">
+            <field name="name">case.sheet.tree</field>
+            <field name="model">case.sheet</field>
+            <field name="arch" type="xml">
+                <tree string="Case Sheet" colors="darkgray:state == 'cancel';coral:state == 'transfer';blue:state == 'new';green:state == 'inprogress';orange:state == 'done';red:state == 'hold'">
+                    <field name="date"/>
+                    <field name="name"/>  
+                    <field name="active" invisible="1"/>                  
+                    <field name="ho_branch_id" string="Office"/>
+                    <field name="division_id" string="Dept/Division"/>
+                    <field name="state_id"/>
+                    <field name="region" invisible="1"/>
+                    <field name="client_id"/>
+                    <field name="company_ref_no"/>
+                    <!--<field name="division_id"/>-->
+                    <field name="assignee_id"/>
+                    <field name="lot_name" invisible="1"/>
+                    <field name="work_type"/>
+                    <field name="casetype_id"/>
+                    <field name="bill_type"/>
+                    <field name="unbilled_amount"/>
+                    <field name="opposite_party"/>
+                    <!-- Set bill_state field in case sheet tree view --> 
+                    <field name="bill_state"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="case_sheet_form" model="ir.ui.view">
+            <field name="name">case.sheet.form</field>
+            <field name="model">case.sheet</field>
+            <field name="arch" type="xml">
+                <form string="Case Sheet" context="{'active_id':id}">
+                <header>
+                    <button name="submit_for_approval_casesheet" states="new" string="Submit for Approval" groups="legal_e.group_case_entry_request" type="object" class="oe_highlight"/>
+                    <button name="confirm_casesheet" states="waiting" string="Confirm Case" groups="legal_e.group_case_sheet_operation_manager,legal_e.group_client_service_executive" type="object" class="oe_highlight"/>
+                    <button name="reject_casesheet" states="waiting" string="Reject Case" groups="legal_e.group_case_sheet_operation_manager,legal_e.group_client_service_executive" type="object"/>
+                    <button name="resubmit_for_approval_casesheet" states="sheet_rejected" string="Resubmit for Approval" groups="legal_e.group_case_entry_request" type="object" class="oe_highlight"/>
+                    <!--<button name="save_tasks_as_template" states="inprogress" string="Save Tasks as Template" groups="legal_e.group_case_sheet_operation_manager" type="object"/>-->
+                    <button name="save_tasks_as_template" states="inprogress" string="Save Tasks as Template" groups="base.group_system" type="object"/>
+                    <button name="close_case_sheet" string="Close" groups="legal_e.group_case_sheet_operation_manager" type="object" class="oe_button oe_form_button_save oe_highlight" attrs="{'invisible':[ ('state','not in',('inprogress'))]}"/>
+                    <button name="reopen_case_sheet" states="done,hold" string="Re Open" groups="legal_e.group_case_closure_approval" type="object" class="oe_button oe_form_button_save oe_highlight"/>
+                    <!--<button name="cancel_case_sheet" string="Cancel" states="new,inprogress" groups="legal_e.group_case_sheet_operation_manager" type="object"/>-->
+                    <button name="transfer_case_sheet" string="Transfer" states="waiting,inprogress" groups="legal_e.group_case_sheet_operation_manager" type="object"/>
+                    <button name="hold_case_sheet" states="inprogress" string="Hold" groups="legal_e.group_case_sheet_operation_manager" type="object" class="oe_button oe_form_button_save oe_highlight"/>
+                    <button name="approve_close_case_sheet_assignee" string="Assignee Approve Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_assignee"/>
+                    <button name="reject_close_case_sheet_assignee" string=" Assignee Reject Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_assignee"/>
+                    <button name="approve_close_case_sheet_accounts" string="Accounts Approve Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_accounts"/>
+                    <button name="reject_close_case_sheet_accounts" string=" Accounts Reject Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_accounts"/>
+                    <button name="approve_close_case_sheet_admin" string="Admin Approve Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_admin"/>
+                    <button name="reject_close_case_sheet_admin" string=" Admin Reject Case Closure" groups="legal_e.group_case_closure_approval" type="object" class="oe_highlight" states="waiting_admin"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,inprogress" statusbar_colors='{"cancel":"red","transfer":"yellow"}'/>
+                </header>
+                <h1>
+                    <label string="Case Sheet "/>
+                    <field name="name" class="oe_inline" readonly="1"/>
+                </h1>
+                <h3>
+                    <label for="transfer_file_number_id" attrs="{'invisible':[('state','!=','transfer')]}"/>
+                    <field name="transfer_file_number_id" class="oe_inline" readonly="1" attrs="{'invisible':[('state','!=','transfer')]}"/>
+                </h3>
+                <h3>
+                    <label for="transfer_location_id" attrs="{'invisible':[('state','!=','transfer')]}"/>
+                    <field name="transfer_location_id" class="oe_inline" readonly="1" attrs="{'invisible':[('state','!=','transfer')]}"/>
+                </h3>
+                <field name="project_id" invisible="1"/>
+                <div class="oe_right oe_button_box" name="buttons" groups="base.group_user">
+                    <button name="view_related_invoices" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Invoices" groups="legal_e.group_legal_e_lawyers,legal_e.group_case_entries_officer,legal_e.group_legal_e_client_service_manager" type="object" icon="fa-pencil-square-o"/>
+                    <button class="oe_stat_button" type="action"
+                        name="%(act_case_sheet_project_2_project_task)d" icon="fa-tasks" string="Tasks" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" context="{'search_default_project_id':project_id or False}">
+                    </button>
+                    <button name="view_related_expenses" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Expense" type="object" icon="fa-usd"/>
+                    <button name="view_related_petty_cash" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Summary" type="object" icon="fa-usd"/>
+                    <button name="view_court_proceedings" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Court Proceedings" type="object" icon="fa-calendar"/>
+                    <button name="view_man_hours" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Man Hours" type="object" icon="fa-calendar"/>
+                    <button name="view_casesheet_invoices" class="oe_stat_button" states="inprogress,done,waiting_accounts,waiting_admin,waiting_assignee" string="Case Sheet Invoices" type="object" icon="fa-pencil-square-o"/>
+                </div>
+
+                <!--<group string="Office Information" colspan="3" col="3">-->
+                <group>
+                    <group string="Office Information">
+                        <field name="date" required="1" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" />
+                        <field name="id" invisible="1"/>
+                        <field name="state_id" required="1" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="region" readonly="1"/>
+                        <field name="ho_branch_id"  string="Office" required="1"  attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="district_id" string="District" domain="[('state_id','=',state_id)]" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" context="{'state_id':state_id}"/>
+                        <field name="division_id" required="1" domain="[('office_id','=',ho_branch_id)]" options="{'create_edit': false,'create': false}" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" />
+                        <!--<field name="department_ids" widget="many2many_tags" domain="[('office_id','=',ho_branch_id)]" options="{'create_edit': false,'create': false}" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" />-->
+                        <field name="assignee_id" required="1" attrs="{'readonly':[('state','=','done')]}" />
+                        <field name="connected_case_sheet" attrs="{'readonly':[('state','=','done')]}" />
+                        <field name="client_service_manager_id"  attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" />
+                        <field name="client_service_executive_id" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" domain="[('ho_branch_id','=', ho_branch_id),('client_service_admin','=',True)]"/>
+                        <!--<field name="referral_type" />-->
+                        <!--<field name="response_person" attrs="{'invisible' : [('referral_type', 'not in', ('ref_emp', 'ref_part'))]}"/>-->
+                        <!--<field name="referral_ref" attrs="{'invisible' : [('referral_type', '!=', 'ref_ext')]}"/>-->
+                        <!--<field name="referral_specification" />-->
+                        <!--<field name="referral_validity" />-->
+                        <field name="lot_name" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="bill_state"/>
+                        <field name="active" groups="legal_e.group_case_sheet_operation_manager"/>
+                        <field name="close_date" invisible="1"/>
+                    </group>
+                    <group string="Billing Information">
+                        <field name="bill_type" attrs="{'readonly':[('state','not in',('new','waiting','inprogress'))]}" required="1"/>
+                        <field name="assignment_approval_date" attrs="{'invisible':[('bill_type','!=','assignment_wise')],'required':[('bill_type','=','assignment_wise')],'readonly':[('state','not in',('new','waiting','inprogress'))]}"/>
+                        <field name="total_projected_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')],'required':[('bill_type','=','assignment_wise')],'readonly':[('state','=','done')]}" class="oe_inline" />
+                        <field name="effective_court_proceed_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}"/>
+                        <field name="non_effective_court_proceed_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}"/>
+                        <field name="fixed_price" attrs="{'invisible':[('bill_type','!=','fixed_price')],'required':[('bill_type','=','fixed_price')],'readonly':[('state','=','done')]}" />
+                        <field name="show_billing" invisible="1"/>
+                        <field name="arbitration_amount" attrs="{'invisible':[('work_type','!=','arbitration')],'required':[('work_type','=','arbitration')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>
+                        <field name="outstanding_amount"/>
+                        <field name="hearing_type"/>
+                        <!--<field name="effective_hearing_cost"/>-->
+                        <!--<field name="non_effective_hearing_cost"/>-->
+                        <field name="limit_on_hearing" attrs="{'invisible' : [('hearing_type', '!=', 'hearing_limit')], 'required' : [('hearing_type', '=', 'hearing_limit')]}"/>
+                        <label for="estimated_time"/>
+                        <div>
+                            <field name="estimated_time" required="1" class="oe_inline" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                            <label string="(in hours)" class="oe_inline"/>
+                        </div>
+                        <field name="estimated_month" required="1" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="estimated_hearing" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                    </group>
+                </group>
+
+                <group>
+                    <group string="Assignment Information ">
+                        <field name="primary_id" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="work_type" colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" />
+                        <field name="casetype_id" colspan="2" domain="[('parent','=',work_type)]"  attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <!--<field name="litigation_type" colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))], 'invisible':[('work_type','!=','non_litigation')], 'required':[('work_type','!=','non_litigation')]}"/>-->
+                        <!--<field name="nonlitigation_type" colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))], 'invisible':[('work_type','=','non_litigation')], 'required':[('work_type','=','non_litigation')]}"/>-->
+                        <field name="litigation_type" colspan="2" attrs="{'invisible':[('work_type','not in',('civillitigation','criminallitigation','arbitration','execution','mediation'))]}"/>
+                        <field name="nonlitigation_type" colspan="2" attrs="{'invisible':[('work_type','!=','non_litigation')]}"/>
+                        <field name="no_court" invisible="1"/>
+                        <field name="arbitrator_id" attrs="{'invisible':[('work_type','!=','arbitration')],'required':[('work_type','=','arbitration')],'readonly':[('state','not in',('new','sheet_rejected'))]}" colspan="2"/>
+                        <field name="mediator_id" attrs="{'invisible':[('work_type','!=','mediation')],'required':[('work_type','=','mediation')],'readonly':[('state','not in',('new','sheet_rejected'))]}" colspan="2"/>
+                        <field name="reg_date" colspan="2" attrs="{'invisible':[('work_type','=','non_litigation')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>
+                        <separator string="Lodging" attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')]}"/>
+                        <newline/>
+                        <field name="lodging_number"  attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>
+                        <field name="lodging_date" attrs="{'invisible':[('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>
+                        <field name="court_district_id" domain="[('state_id','=',state_id)]" attrs="{'invisible':['|',('no_court','=',True),('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')],'required':['|','|',('work_type','=','civillitigation'),('work_type','=','criminallitigation'),('work_type','=','execution')],'readonly':[('state','not in',('new','sheet_rejected'))]}" colspan="2"/>
+                        <field name="court_location_id" quick_create="1" attrs="{'invisible':['|',('no_court','=',True),('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')],'required':['|','|',('work_type','=','civillitigation'),('work_type','=','criminallitigation'),('work_type','=','execution')],'readonly':[('state','not in',('new','sheet_rejected'))]}" colspan="2"/>
+                        <field name="court_id" attrs="{'invisible':['|',('no_court','=',True),('work_type','!=','civillitigation'),('work_type','!=','criminallitigation'),('work_type','!=','execution')],'required':['|','|',('work_type','=','civillitigation'),('work_type','=','criminallitigation'),('work_type','=','execution')],'readonly':[('state','not in',('new','sheet_rejected'))]}" colspan="2"/>
+                        <field name="reg_number" colspan="2" attrs="{'invisible':[('work_type','=','non_litigation')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>
+                        <separator string="Closure" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <newline/>
+                        <field name="close_date" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="close_comments" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="closure_type" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="time_duration" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="approve_closure_date" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="assignee_case_closure_reject" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="accounts_case_closure_reject" colspan="2" attrs="{'invisible':[('case_close', '!=', True)]}"/>
+                        <field name="reject_comment" colspan="2" attrs="{'invisible':[('state','!=','sheet_rejected')]}"/>
+                        <field name="cancel_comments" colspan="2" readonly="1" attrs="{'invisible':[('state','!=','cancel')], 'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="case_close" colspan="2" invisible="1" />
+                    </group>
+
+                    <group string="Client Information">
+                        <field name="client_id" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}'  colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}" on_change="onchange_client(client_id, our_client)"/>
+                        <field name="group_val" colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="contact_partner1_id" domain="[('parent_id','=',client_id),('parent_id','!=',False)]" context="{'search_default_customer':1}"  colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="contact_partner2_id" domain="[('parent_id','=',client_id),('parent_id','!=',False)]" context="{'search_default_customer':1}"  colspan="2" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="our_client" colspan="2" required="1" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>
+                        <field name="company_ref_no" colspan="2"/>
+                        <separator string="Referral" attrs="{'invisible' : [('referral_specification', '=', 'client_specific')]}"/>
+                        <newline/>
+                        <field name="referral_specification"/>
+                        <field name="referral_type" attrs="{'invisible' : [('referral_specification', '=', 'client_specific')]}"/>
+                        <field name="division_id_new" attrs="{'invisible' :[('referral_type', '!=', 'ref_part')],'required' : [('referral_type', '=', 'ref_part')]}"/>
+                        <field name="assignee_id_new" attrs="{'invisible' :[('referral_type', '!=', 'ref_part')],'required' : [('referral_type', '=', 'ref_part')]}"/>
+                        <!--<field name="response_person" attrs="{'required' : [('referral_type', 'in', ('ref_emp', 'ref_part'))]}"/>-->
+                        <field name="response_person" invisible="1"/>
+
+                        <field name="response_person_emp" attrs="{'required' : [('referral_type', '=', 'ref_emp')]}"/>
+                        <field name="referral_ref" attrs="{'required' : [('referral_type', '=', 'ref_ext')]}"/>
+                        <field name="referral_percentage" attrs="{'invisible' : [('referral_specification', '=', 'client_specific')]}"/>
+                        <field name="referral_amount" attrs="{'invisible' : [('referral_specification', '=', 'client_specific')]}"/>
+                        <field name="referral_validity" attrs="{'invisible' : [('referral_specification', '=', 'client_specific')]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="first_party" class="green_label"/>
+                    </group>
+                    <group>
+                        <field name="opposite_party" class="green_label"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Cost Details" groups="legal_e.group_legal_e_lawyers,legal_e.group_legal_e_client_service_manager,account.group_account_manager">
+                        <!--<group>-->
+                            <!--<group>-->
+                                <!--<field name="bill_type" attrs="{'readonly':[('state','not in',('new','waiting','inprogress'))]}" required="1"/>-->
+                                <!--<field name="total_projected_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')],'required':[('bill_type','=','assignment_wise')],'readonly':[('state','=','done')]}" class="oe_inline" />-->
+                                <!--<field name="effective_court_proceed_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}"/>-->
+                                <!--<field name="outstanding_amount"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="fixed_price" attrs="{'invisible':[('bill_type','!=','fixed_price')],'required':[('bill_type','=','fixed_price')],'readonly':[('state','=','done')]}" />-->
+                                <!--<field name="assignment_approval_date" attrs="{'invisible':[('bill_type','!=','assignment_wise')],'required':[('bill_type','=','assignment_wise')],'readonly':[('state','not in',('new','waiting','inprogress'))]}"/>-->
+                                <!--<field name="non_effective_court_proceed_amount" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}"/>-->
+                                <!--<field name="show_billing" invisible="1"/>-->
+                                <!--<field name="arbitration_amount" attrs="{'invisible':[('work_type','!=','arbitration')],'required':[('work_type','=','arbitration')],'readonly':[('state','not in',('new', 'inprogress'))]}"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                  <!--<label for="estimated_time"/>-->
+                                  <!--<div>-->
+                                      <!--<field name="estimated_time" required="1" class="oe_inline" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>-->
+                                      <!--<label string="(in hours)" class="oe_inline"/>-->
+                                  <!--</div>-->
+                                  <!--<field name="estimated_month" required="1" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>-->
+                                  <!--<field name="estimated_hearing" attrs="{'readonly':[('state','not in',('new','sheet_rejected'))]}"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+<!--                        <i><label string="(Click on Update button before adding Tasks for Billing)" class="oe_link oe_edit_only" attrs="{'invisible':[('state','=','done')]}"/></i>
+                        <button name="button_refresh"
+                                    string="(update)" class="oe_link oe_edit_only"
+                                    type="object" help="Save the Case Sheet and Update the Assignee Tasks" attrs="{'invisible':[('state','=','done')]}"/>-->
+                        <group>
+                            <button name="invoice_case_sheet" class="oe_button oe_form_button_save oe_highlight"
+                                    string="Create Invoice" type="object"
+                                    attrs="{'invisible':[('state','in',['new', 'cancel', 'transfer','done'])]}"
+                                    groups="legal_e.group_legal_e_client_service_manager,legal_e.group_case_sheet_operation_manager"/>
+                        </group>
+
+                        <group cols="6" string="Billing Stages" attrs="{'invisible':[('bill_type','not in',('fixed_price','assignment_wise'))]}">
+                            <!--<group cols="6" string="Billing Stages" attrs="{'invisible':[('show_billing','!=', True)]}">-->
+                        <group>
+                        <notebook>
+                            <page string="Fixed Price Stages" attrs="{'invisible':[('bill_type','!=','fixed_price')]}">
+		              <!--<page string="Fixed Price Stages" attrs="{'invisible':[('bill_type','!=','fixed_price')]}">-->
+                            <field cols="6" name="stage_lines" attrs="{'invisible':[('bill_type','!=','fixed_price')],'readonly':[('state','=','done')]}" nolabel="1" context="{'default_office_id': ho_branch_id}">
+                                <!--<field cols="6" name="stage_lines"  attrs="{'invisible':[('bill_type','!=','fixed_price')],'readonly':[('state','=','done')]}" nolabel="1"  context="{'assignee_task_lines':tasks_lines, 'default_office_id': ho_branch_id}">-->
+                                <form string="Fixed Price Stages">
+                                    <group>
+                                        <group>
+                                            <field name="description"/>
+                                            <field name="name"/>
+                                            <field name="office_id" readonly="0" required="1"/>
+
+                                            <field name="department_id" required="1" domain="[('office_id','=',office_id)]" options="{'create_edit': false,'create': false}"/>
+                                            <field name="case_id" invisible="1"/>
+                                            <!--<field name="percent_amount" />-->
+                                            <field name="amount" />
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree string="Fixed Price Stages"  create="true" editable="bottom" delete="true">
+                                    <!-- Add on_change in name // Sanal DAvis // 27/5/15 -->
+                                    <field name="name" domain="[('case_id','=',parent.id)]" options="{'create_edit': false,'create': false}" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                    <field name="description" required="1"/>
+                                    <field name="case_id" invisible="1"/>
+                                    <!--<field name="percent_amount" invisible="0" sum="Total Percent"    required="1" attrs="{'readonly':[('invoiced','=',True)]}"/>-->
+                                    <field name="amount" sum="Total Amount" required="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                    <field name="out_of_pocket_amount" sum="Total Out of Pocket Amount" required="0" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                    <!-- Add office field // Sanal Davis // 27/5/15 -->
+                                    <field name="office_id" readonly="0" required="1"/>
+                                    <field name="department_id" required="1" domain="[('office_id','=',office_id)]"/>
+                                    <field name="state" readonly="1"/>
+                                    <field name="invoiced" readonly="1"/>
+                                    <field name="invoice_id" readonly="1"/>
+	                                <field name="inv_total_amt" invisible="1"/>
+                                    <field name="inv_balance_amt" invisible="1"/>
+                                    <field name="inv_state" invisible="1"/>
+		                   <!-- <button name="invoice_stage" string="Invoice Stage" type="object" icon="STOCK_REDO" attrs="{'invisible':['|',('invoiced','=',True),('state','!=','Completed')]}"/>
+		                    <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}"/> -->
+                                </tree>
+                            </field>
+                            </page>
+                            <page string="Hourly Stages" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                            <button name="update_assignment_hours" string="Update Hours" type="object" groups="" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}"/>
+                            <field name="assignment_hourly_lines"  attrs="{'invisible':[('bill_type','!=','assignment_wise')],'readonly':[('state','=','done')]}" cols="6" nolabel="1" context="{'type':'hour_wise'}">
+                            <!--<field name="assignment_hourly_lines"  attrs="{'invisible':[('bill_type','!=','assignment_wise')],'readonly':[('state','=','done')]}" readonly="0" cols="6" nolabel="1" context="{'assignee_task_lines':tasks_lines,'type':'hour_wise'}">-->
+		                        <form string="Time and Material Stages">
+		                            <group>
+		                                <group>
+		                                    <field name="name" readonly="0"/>
+		                                    <field name="case_hourly_id" invisible="1"/>
+		                                    <field name="hours_spent" widget="float_time"/>
+		                                    <field name="amount"/>
+		                                </group>
+		                            </group>
+		                        </form>
+		                        <tree string="Time and Material Stages" editable="top">
+		                            <field name="name" invisible="1" readonly="1" domain="[('case_id','=',parent.id)]" options="{'create': false,'create_edit': false}"/>
+		                            <field name="type" context="{'type':'hour_wise'}" required="1" invisible="1"/>
+		                            <field name="description" required="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="amount" required="1" string="Amount per Hour" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="case_hourly_id" invisible="1"/>
+		                            <field name="out_of_pocket_amount" sum="Total Out of Pocket Amount" required="0" invisible="1"/>
+		                            <field name="billed_hours" readonly="1" widget="float_time" sum="Total Invoiced Hours"/>
+		                            <field name="remaining_hours" readonly="1" widget="float_time" sum="Total To be Invoiced Hours"/>
+		                            <field name="hours_spent" widget="float_time" sum="Total Hours Spent" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="invoiced" invisible="1" readonly="1"/>
+		                            <field name="state" readonly="1" invisible="1"/>
+		                            <field name="office_id" required="1" domain="[('state_id','=',parent.state_id)]"/>
+                                            <field name="department_id" required="1" domain="[('office_id','=',office_id)]"/>
+
+		                            <field name="inv_total_amt" sum="Total Invoiced Amount" invisible="1"/>
+		                            <field name="inv_balance_amt" sum="Total Invoice Balance Amount" invisible="1"/>
+		                            <!-- <button name="invoice_task" string="Invoice Task" type="object" icon="STOCK_REDO" attrs="{'invisible':[('|',('hours_spent','=',0),('remaining_hours','=',0), ('type','=','hour_wise')),('|',('invoiced','=',True),('state','!=','Completed'),('type','=','task_wise'))]}" groups="account.group_account_invoice"/>
+		                            <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}" groups="account.group_account_invoice"/>  -->
+		                        </tree>
+		                    </field>
+                            </page>
+                            <page string="Fixed Price Stages" attrs="{'invisible':[('bill_type','!=','assignment_wise')]}">
+                            <field name="assignment_fixed_lines"  attrs="{'invisible':[('bill_type','!=','assignment_wise')],'readonly':[('state','=','done')]}" readonly="0" cols="6" nolabel="1" context="{'type':'task_wise'}">
+                            <!--<field name="assignment_fixed_lines"  attrs="{'invisible':[('bill_type','!=','assignment_wise')],'readonly':[('state','=','done')]}" readonly="0" cols="6" nolabel="1" context="{'assignee_task_lines':tasks_lines,'type':'task_wise'}">-->
+		                        <form string="Time and Material Stages">
+		                            <group>
+		                                <group>
+		                                    <field name="name" readonly="0"/>
+		                                    <field name="case_hourly_id" invisible="1"/>
+		                                    <field name="hours_spent" widget="float_time"/>
+		                                    <field name="amount"/>
+		                                </group>
+		                            </group>
+		                        </form>
+		                        <tree string="Time and Material Stages" editable="top">
+		                            <field name="id" invisible="1"/>
+		                            <field name="name" required="1" invisible="0" readonly="0" domain="[('case_id','=',parent.id)]" options="{'create': false,'create_edit': false}" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="type" required="1" invisible="1"/>
+		                            <field name="description" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="amount" sum="Total Amount" required="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="case_fixed_id" invisible="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="out_of_pocket_amount" sum="Total Out of Pocket Amount" required="0" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="office_id"/>
+                                            <field name="department_id" required="1" domain="[('office_id','=',office_id)]" options="{'create_edit': false,'create': false}"/>
+
+		                            <field name="invoiced" invisible="0" readonly="1"/>
+		                            <field name="state" readonly="1" invisible="0"/>
+		                            <field name="inv_total_amt" sum="Total Invoiced Amount" invisible="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <field name="inv_balance_amt" sum="Total Invoice Balance Amount" invisible="1" attrs="{'readonly':[('invoiced','=',True)]}"/>
+		                            <!-- <button name="invoice_task" string="Invoice Task" type="object" icon="STOCK_REDO" attrs="{'invisible':[('|',('hours_spent','=',0),('remaining_hours','=',0), ('type','=','hour_wise')),('|',('invoiced','=',True),('state','!=','Completed'),('type','=','task_wise'))]}" groups="account.group_account_invoice"/>
+		                            <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}" groups="account.group_account_invoice"/>  -->
+		                        </tree>
+		                    </field>
+                            </page>
+                            <page string="Other Expenses" attrs="{'invisible':[('bill_type','=',False)]}">
+                            <field name="other_expenses_lines" cols="6" nolabel="1">
+		                        <form string="Other Expenses">
+		                            <group>
+		                                <group>
+		                                    <field name="name" readonly="0"/>
+		                                    <field name="case_id" invisible="1"/>
+		                                    <field name="date"/>
+		                                    <field name="req_amount"/>
+		                                    <field name="paid_amount"/>
+                                            <field name="billable"/>
+                                            <field name="expense_type"/>
+                                            <field name="billed_amount"/>
+		                                    <field name="invoiced"/>
+                                            <field name="invoice_id" readonly="1"/>
+                                            <field name="invoice_status" readonly="1" />
+                                            <field name="expense_id" invisible="1"/>
+                                        </group>
+		                            </group>
+		                        </form>
+		                        <tree string="Other Expenses" editable="top" create="false">
+		                            <field name="name" invisible="0"  required="1"/>
+		                            <field name="date" required="1" />
+                                    <field name="amount" string="Amount" sum="Total Amount"/>
+                                    <field name="req_amount" sum="Total Requested Amount"/>
+                                    <field name="paid_amount" sum="Total Paid Amount"/>
+                                    <field name="billable" required="1" />
+                                    <field name="expense_type"/>
+                                    <field name="billed_amount" sum="Total Billed Amount"/>
+		                            <field name="invoiced" readonly="1"/>
+                                    <field name="invoice_id" readonly="1"/>
+                                    <field name="invoice_status" readonly="1" />
+                                    <field name="case_id" invisible="1"/>
+                                    <field name="expense_id" invisible="1"/>
+		                            <!--<field name="expense_line_id" invisible="1"/>-->
+                                    <!--<field name="name" invisible="0" attrs="{'readonly':['|',('invoiced','=',True),('expense_line_id','!=',False)]}" required="1"/>-->
+		                            <!--<field name="date" required="1" attrs="{'readonly':['|',('invoiced','=',True),('expense_line_id','!=',False)]}"/>-->
+		                            <!--<field name="amount" sum="Total Amount" required="1" attrs="{'readonly':['|',('invoiced','=',True),('expense_line_id','!=',False)]}"/>-->
+		                            <!--<field name="billable" required="1" attrs="{'readonly':['|',('invoiced','=',True),('expense_line_id','!=',False)]}"/>-->
+		                            <!--<field name="to_whom" required="0" attrs="{'readonly':['|',('invoiced','=',True),('expense_line_id','!=',False)]}"/>-->
+		                            <!--<field name="invoiced" readonly="1"/>-->
+		                            <!--<field name="case_id" invisible="1"/>-->
+		                            <!--<field name="expense_line_id" invisible="1"/>-->
+		                        </tree>
+		                    </field>
+                            </page>
+                            <page string="Associate Payments" attrs="{'invisible':['|',('bill_type','=',False),('other_assignee_ids','=',[])]}">
+                            <field name="associate_payment_lines" cols="6" nolabel="1">
+                            <!--<field name="associate_payment_lines" cols="6" nolabel="1" context="{'associate_tasks_lines':associate_tasks_lines}">-->
+		                        <form string="Associate Payments">
+		                            <group>
+		                                <group>
+		                                    <field name="name" domain="[('case_id','=',parent.id)]" options="{'create': false,'create_edit': false}"/>
+		                                    <field name="date" invisible="1"/>
+		                                    <field name="description"/>
+		                                    <field name="amount"/>
+		                                    <field name="invoiced"/>
+		                                    <field name="case_id" invisible="1"/>
+		                                </group>
+		                            </group>
+		                        </form>
+		                        <tree string="Associate payments" editable="top">
+	                                    <field name="name" domain="[('case_id','=',parent.id)]" options="{'create': false,'create_edit': false}" attrs="{'readonly':[('invoiced','=',True)]}"/>
+	                                    <field name="date" invisible="1"/>
+	                                    <field name="associate_id" required="1" domain="[('case_id','=',parent.id)]" options="{'create': false,'create_edit': false}" attrs="{'readonly':[('invoiced','=',True)]}"/>
+	                                    <field name="description" attrs="{'readonly':[('invoiced','=',True)]}"/>
+	                                    <field name="amount" sum="Total Amount" attrs="{'readonly':[('invoiced','=',True)]}"/>
+	                                    <!--<field name="state" readonly="1"/>-->
+	                                    <field name="invoiced"/>
+	                                    <field name="case_id" invisible="1"/>
+	                                    <button name="invoice_associate_task" string="Invoice Task" type="object" icon="STOCK_REDO"  />
+                                    <!--attrs="{'invisible':['|',('invoiced','=',True),('state','!=','Completed')]}"-->
+		                            <button name="view_invoice_task" string="View Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}" />
+		                        </tree>
+		                    </field>
+                            </page>
+                            </notebook>
+                            </group>
+                            </group>
+                    </page>
+                    <page string="Fees Information">
+                 		<field name="fees_lines" attrs="{'readonly':[('state','=','done')]}">
+                            <form string="Fees Information Lines">
+                                <group>
+                                    <group>
+                                        <field name="slno"/>
+                                        <field name="product_id" options="{'create_edit': false,'create': false}"/>
+                                        <field name="description"/>
+                                        <field name="fee_amount"/>
+                                        <field name="no_of_hours" widget="float_time"/>
+                                        <field name="case_id" invisible="1"/>
+                                   </group>
+                               </group>
+                            </form>
+                            <tree string="Fees Information Lines" editable="bottom">
+                                <field name="slno"/>
+                                <field name="product_id" options="{'create_edit': false,'create': false}"/>
+                                <field name="description"/>
+
+                                <field name="no_of_hours"/>
+                                <field name="application_charge"/>
+                                <field name="fee_amount" sum="Total Fee"/>
+                                <field name="case_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Billing Stages">
+                 		<group>
+                 		    <group>
+                                <field name="u24"/>
+                                <field name="upon_assignment"/>
+                                <field name="u27"/>
+                                <field name="u20"/>
+                                <field name="u21"/>
+                                <field name="u4"/>
+                                <field name="u14"/>
+                                <field name="u18"/>
+                                <field name="u16"/>
+                                <field name="upon_filing_complaint"/>
+                                <field name="u1"/>
+                                <field name="u2"/>
+                                <field name="u6"/>
+                                <field name="u7"/>
+                                <field name="upon_admission"/>
+                                <field name="u8"/>
+                            </group>
+                            <group>
+                                <field name="u15"/>
+                                <field name="u9"/>
+                                <field name="u10"/>
+                                <field name="u3"/>
+                                <field name="upon_filing_statement"/>
+                                <field name="u12"/>
+                                <field name="u23"/>
+                                <field name="appearance_charges"/>
+                                <field name="effective_appearance"/>
+                                <field name="non_effective_appearance"/>
+                                <field name="u19"/>
+                                <field name="u22"/>
+                                <field name="u25"/>
+                                <field name="u26"/>
+                                <field name="u5"/>
+                                <field name="u11"/>
+                                <field name="u13"/>
+                                <field name="u17"/>
+                                <field name="disposal"/>
+                                <field name="uion"/>
+                                <field name="clerkage"/>
+                                <field name="psv"/>
+                                <field name="rep"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Summary" groups="legal_e.group_legal_e_lawyers,legal_e.group_legal_e_client_service_manager,account.group_account_manager">
+                 		<group col="4" colspan="4">
+	                         <group>
+	                         	<field name="billed_amount"/>
+	                         </group>
+	                         <group>
+	                         	<field name="received_amount"/>
+	                         </group>
+	                         <group>
+	                         	<field name="spent_amount"/>
+	                         </group>
+	                    </group>
+                    </page>
+                    <page string="Members" invisible="1">
+                         <group>
+                             <field name="members" nolabel="1"/>
+                         </group>
+                    </page>
+                    <page string="Assignment">
+                         <group>
+                            <field name="district_id_associate" colspan="2" domain="[(ho_branch_id and ('state_id','=',state_id) or ('name','!=',False))]" options="{'create_edit': false,'create': false}" attrs="{'readonly':[('state', '=', 'done')]}" invisible="1"/>
+                            <field name="other_assignee_ids" colspan="2" attrs="{'readonly':[('state','=','done')]}"  groups="base.group_user">
+                                <tree string="Other Associate(s)"  editable="bottom">
+                                    <field name="name" required="1" domain="[('associate','=',True)]" context="{'default_supplier':True,'default_customer':False,'form_view_ref':'legal_e.view_partner_form_legale_associate'}"/>
+                                </tree>
+                            </field>
+                            <field name="other_assignee_id" colspan="2" domain="[('supplier','=',True),(district_id_associate and ('district_id','=',district_id_associate) or ('name','!=',False))]" attrs="{'readonly':[('state','=','done')]}" context="{'default_supplier':True,'default_customer':False,'form_view_ref':'legal_e.view_partner_form_legale_associate'}" invisible="1"/>
+                            <!-- <field name="state_id" colspan="2" options="{'create_edit': false,'create': false}" invisible="1"/> -->
+                         </group>
+                         <label for="connected_matter"/>
+		                 <field name="connected_matter" colspan="4" attrs="{'readonly':[('state','=','done')]}"/>
+                    </page>
+                    <page string="Tasks" attrs="{'invisible':[('casetype_id','=',False)]}">
+                        <notebook>
+                            <page string="Assignee Tasks" groups="base.group_user">
+                                <field name="tasks_lines" attrs="{'readonly':[('state','=','done')]}" context="{'assignee_id':assignee_id}">
+                                <form string="Task Assignment Lines">
+                                    <group>
+                                        <group>
+                                            <field name="slno" invisible="0"/>
+                                            <field name="phase_name"/>
+                                            <field name="assign_to" required="1" options="{'create_edit': false,'create': false}"/>
+                                            <field name="name"/>
+                                            <field name="start_date"/>
+                                            <!--<field name="days"/>-->
+                                            <field name="planned_completion_date"/>
+                                            <field name="state"/>
+                                       </group>
+                                   </group>
+                                </form>
+                                <tree string="Task Assignment Lines"  editable="bottom" colors="red:color_state == 'before' and state != 'Completed' and days != 0;green:color_state == 'before' and state != 'Completed' and days == 0">
+                                    <field name="slno" required="1"/>
+                                    <field name="name"/>
+                                    <field name="phase_name"/>
+                                    <!-- Add on_change function in assign_to // Sanal Davis // 27/5/15 -->
+                                    <field name="assign_to" required="1" options="{'create_edit': false,'create': false}"/>
+                                    <!-- Add office field // Sanal Davis // 27/5/15 -->
+                                    <field name="office_id" domain="[('state_id','=',parent.state_id)]"/>
+                                    <field name="start_date"  />
+<!--                                    <field name="start_date" readonly="0" on_change="onchange_cnt(days, 'planned_completion_date', start_date)"/>-->
+                                    <field name="days" />
+                                    <!--<field name="days" on_change="onchange_cnt(days, 'planned_completion_date', start_date)"/>-->
+                                    <field name="planned_completion_date" />
+                                    <!--<field name="planned_completion_date" on_change="check_for_holiday(planned_completion_date,days, 'planned_completion_date', start_date)"/>-->
+                                    <field name="state"/>
+
+                                    <field name="color_state" invisible="1"/>
+                                    <button name="action_add_timesheet" string="Add Timesheet"  type="object"/>
+                                </tree>
+                                </field>
+                            </page>
+                            <page string="External Associate Tasks" groups="base.group_user">
+                            <field name="associate_tasks_lines" attrs="{'readonly':[('state','=','done')]}">
+                            <!--<field name="associate_tasks_lines" attrs="{'readonly':[('state','=','done')]}" context="{'associate_id':other_assignee_ids}">-->
+                                <form string="Associate Task Assignment Lines">
+                                    <group>
+                                        <group>
+                                            <field name="slno" invisible="0"/>
+                                            <field name="phase_name"/>
+                                            <field name="assign_to_in_associate" required="1" domain="[('supplier','=',True)]" options="{'create_edit': false,'create': false}"/>
+                                            <field name="name"/>
+                                             <field name="start_date"/>
+                                            <field name="days"/>
+                                            <field name="planned_completion_date"/>
+                                       </group>
+                                   </group>
+                                </form>
+                                <tree string="Associate Task Assignment Lines"  editable="top" colors="red:color_state == 'before' and state != 'Completed' and days != 0;green:color_state == 'before' and state != 'Completed' and days == 0">
+                                    <field name="slno" required="1"/>
+                                    <field name="name"/>
+                                    <field name="phase_name"/>
+                                    <field name="assign_to_in_associate" required="1" domain="[('supplier','=',True),(parent.district_id_associate and ('district_id','=',parent.district_id_associate) or ('name','!=',False))]" options="{'create_edit': false,'create': false}"/>
+                                     <field name="start_date" />
+                                    <field name="days" />
+                                    <field name="planned_completion_date" on_change="check_for_holiday(planned_completion_date,days, 'planned_completion_date', start_date)"/>
+                                    <field name="state"/>
+                                    <field name="color_state" invisible="1"/>
+                                </tree>
+                            </field>
+                            </page>
+                            <page string="To Do List">
+                                <field name="client_tasks_lines" attrs="{'readonly':[('state','=','done')]}">
+                                    <form string="Client Task Assignment Lines">
+                                        <group>
+                                            <group>
+                                                <field name="slno"/>
+                                                <field name="name"/>
+                                                <field name="user_id"/>
+                                                <field name="planned_completion_date"/>
+                                                <!--<field name="state"/>-->
+                                           </group>
+                                       </group>
+                                    </form>
+                                    <tree string="Client Task Assignment Lines" editable="top">
+                                        <field name="slno" required="1"/>
+                                        <field name="name"/>
+                                        <field name="user_id"/>
+                                        <field name="planned_completion_date"/>
+                                        <!--<field name="state"/>-->
+                                        <button name="action_complete_task_timesheet" string="Complete Task" type="object"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </page>
+                    <page string="Court Proceedings/History">
+                        <field name="court_proceedings" context="{'default_case_id':active_id,'bill_type':bill_type}" attrs="{'readonly':[('state','=','done')]}">
+                            <form string="Court Proceedings Lines">
+                                <group>
+                                    <group>
+                                        <field name="seq_no"/>
+                                        <field name="name"  attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                        <field name="proceed_date"  attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                        <field name="is_limit_exceed" invisible="1"/>
+                                        <field name="flg_next_date" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                        <field name="next_proceed_date" attrs="{'invisible':[('flg_next_date','=',False)],'required':[('flg_next_date','=',True)],'readonly':[('invoiced','=',True)]}" />
+                                        <field name="case_id" invisible="1"/>
+                                        <field name="invoiced" readonly="1" invisible="1" />
+                                        <field name="parties_desc" invisible="1"/>
+                                        <field name="billable" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                        <field name="effective" attrs="{'invisible':[('billable','=','nobill')],'required':[('billable','=','bill')],'readonly':[('invoiced','=',True)]}" />
+                                        <field name="stage_id" />
+                                        <field name="start_time" required="1"/>
+                                        <field name="end_time" required="1"/>
+                                        <field name="no_of_hours" widget='float_time' />
+                                        <field name="user_id" required="1"/>
+                                        <field name="account_analytic_line_id" readonly="1" invisible="1"/>
+                                        <field name="csm_task_desription" attrs="{'invisible': [('is_limit_exceed', '=', False)], 'required':[('is_limit_exceed', '=', True)]}"/>
+                                        <field name="cp_effective_hearing_cost" attrs="{'invisible': [('is_limit_exceed', '=', False)], 'required':[('is_limit_exceed', '=', True)]}"/>
+                                        <button name="action_create_cp_task_csm" string="Create Task" type="object"
+                                                attrs="{'invisible': [('is_limit_exceed', '=', False)], 'required':[('is_limit_exceed', '=', True)]}"/>
+                                   </group>
+                               </group>
+                            </form>
+                            <tree string="Court Proceedings Lines" >
+                                <field name="seq_no"/>
+                                <field name="proceed_date" string="Date of Listing" style="width:10%%" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                <field name="name" string="Court Proceedings" style="width:50%%" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                <field name="flg_next_date" style="width:7%%" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                <field name="next_proceed_date" attrs="{'invisible':[('flg_next_date','=',False)],'readonly':[('invoiced','=',True)]}" style="width:40%%"/>
+                                <field name="stage_id" />
+                                <field name="parties_desc" invisible="0"/>
+                                <field name="billable" style="width:50%%" attrs="{'readonly':[('invoiced','=',True)]}"/>
+                                <field name="effective" attrs="{'invisible':[('billable','=','nobill')],'required':[('billable','=','bill')],'readonly':[('invoiced','=',True)]}" style="width:50%%"/>
+                                <field name="case_id" invisible="1"/>
+                                <field name="invoiced" readonly="1" invisible="1" attrs="{'invisible':[('billable','=','nobill')],'readonly':[('invoiced','=',True)]}"/>
+                                <field name="start_time" />
+                                <field name="end_time" />
+                                <field name="no_of_hours" widget='float_time' />
+                                <field name="user_id" />
+                                <field name="account_analytic_line_id" readonly="1" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="First Parties">
+                        <field name="first_parties" attrs="{'readonly':[('state','=','done')]}">
+                        <form string="First Parties">
+                            <group>
+                                <group>
+                                    <field name="sl_no"/>
+                                    <field name="type"/>
+                                    <field name="name"/>
+                                </group>
+                            </group>
+                        </form>
+                        <tree string="First Parties" editable="top">
+                            <field name="sl_no"/>
+                            <field name="type"/>
+                            <field name="name"/>
+                        </tree>
+                        </field>
+                    </page>
+                    <page string="Opposite Parties">
+                        <field name="opp_parties" attrs="{'readonly':[('state','=','done')]}">
+                        <form string="Opp Parties">
+                            <group>
+                                <group>
+                                    <field name="sl_no"/>
+                                    <field name="type" required="1"/>
+                                    <field name="name" required="1"/>
+                                </group>
+                            </group>
+                        </form>
+                        <tree string="Opp Parties" editable="top">
+                            <field name="sl_no"/>
+                            <field name="type" required="1"/>
+                            <field name="name" required="1"/>
+                        </tree>
+                        </field>
+                    </page>
+                    <page string="Inward Register" groups="legal_e.group_inward_register_user">
+                        <group>
+                            <group col="6">
+		                        <field name="inward_register" colspan="6" nolabel="1"/>
+		                        <!--<field name="inward_register" colspan="6" readonly="1" nolabel="1"/>-->
+		                    </group>
+		                </group>
+                    </page>
+                    <page string="Outward Register" groups="legal_e.group_outward_register_user">
+                        <group>
+                            <group col="6">
+		                        <field name="outward_register" colspan="6" nolabel="1"/>
+		                        <!--<field name="outward_register" colspan="6" readonly="1" nolabel="1"/>-->
+		                    </group>
+		                </group>
+                    </page>
+                    <page string="Assignment History">
+                        <field name="assignment_history" attrs="{'readonly':[('state','=','done')]}">
+                            <form string="Assignment History">
+                                <group>
+                                    <group>
+                                        <field name="date" required="1"/>
+                                        <field name="name" required="1" />
+                                        <field name="case_id" invisible="1"/>
+                                    </group>
+                                </group>
+                            </form>
+                            <tree string="Assignment History">
+                                <field name="date"/>
+                                <field name="name"/>
+                                <field name="case_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Scope of Work">
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="we_thank_you" widget="html"/>
+                            <field name="scope_of_work" widget="html"/>
+                            <field name="annexure_one" widget="html"/>
+                            <field name="annexure_three" widget="html"/>
+                        </group>
+                    </page>
+                </notebook>
+	                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_case_sheet_form1" model="ir.actions.act_window">
+            <field name="name">Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_new" model="ir.actions.act_window">
+            <field name="name">New Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','new')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_confirm" model="ir.actions.act_window">
+            <field name="name">Confirm Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','inprogress')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_hold" model="ir.actions.act_window">
+            <field name="name">Hold Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','hold')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_transfer" model="ir.actions.act_window">
+            <field name="name">Transfer Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','transfer')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_cancel" model="ir.actions.act_window">
+            <field name="name">Cancel Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','cancel')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_won" model="ir.actions.act_window">
+            <field name="name">Won Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','won')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_artbitrated" model="ir.actions.act_window">
+            <field name="name">Artbitrated Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','arbitrated')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_withdrown" model="ir.actions.act_window">
+            <field name="name">With drown Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','withdrown')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_lost" model="ir.actions.act_window">
+            <field name="name">Lost Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','lost')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_inactive" model="ir.actions.act_window">
+            <field name="name">In Active Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','inactive')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_done" model="ir.actions.act_window">
+            <field name="name">Closed Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('state','=','done')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+        <record id="action_case_sheet_form1_arbitration" model="ir.actions.act_window">
+            <field name="name">Arbitration Case Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">case.sheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="case_sheet_tree"/>
+            <field name="domain">[('work_type','=','arbitration')]</field>
+            <field name="context">{'case_sheet': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new Case Sheet.
+              </p><p>
+                You can create and update Case Details and Tasks. You can assign Tasks for an Assignee.
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="Case Entries"
+            id="base_main_menu_routine_entries" sequence="12"
+            web_icon="legal_e,static/src/img/law.png"
+            groups="group_case_entries_user,group_inward_register_user,group_outward_register_user,group_case_entries_other_associate"
+            />
+        <menuitem name="Case Entries"
+            id="base_sub_menu_routine_entries"
+                  sequence="1"
+            parent="base_main_menu_routine_entries"
+            />
+        <menuitem name="Configuration"
+            id="base_sub_menu_case_entries_Configuration"
+                  sequence="2"
+            parent="base_main_menu_routine_entries" groups="legal_e.group_case_entries_officer"
+            />
+        <!--<menuitem name="Case Entries"-->
+            <!--id="base.main_menu_routine_entries" sequence="12"-->
+            <!--groups="group_case_entries_user,group_inward_register_user,group_outward_register_user,group_case_entries_other_associate"-->
+            <!--/>-->
+        <!--<menuitem name="Case Entries"-->
+            <!--id="base.sub_menu_routine_entries"-->
+            <!--parent="base.main_menu_routine_entries"-->
+            <!--/>-->
+        <!--<menuitem name="Configuration"-->
+            <!--id="base.sub_menu_case_entries_Configuration"-->
+            <!--parent="base.main_menu_routine_entries" groups="legal_e.group_case_entries_officer"-->
+            <!--/>-->
+        <menuitem id="sub_menu_case_sheet" action="action_case_sheet_form1" name="Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_new" action="action_case_sheet_form1_new" name="New Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_confirm" action="action_case_sheet_form1_confirm" name="In Progress Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_won" action="action_case_sheet_form1_won" name="Won Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_artbitrated" action="action_case_sheet_form1_artbitrated" name="Artbitrated Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_withdrown" action="action_case_sheet_form1_withdrown" name="With Drawn Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_lost" action="action_case_sheet_form1_lost" name="Lost Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_hold" action="action_case_sheet_form1_hold" name="Hold Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_transfer" action="action_case_sheet_form1_transfer" name="Transfer Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_inactive" action="action_case_sheet_form1_inactive" name="In Active Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_cancel" action="action_case_sheet_form1_cancel" name="Cancel Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_done" action="action_case_sheet_form1_done" name="Closed Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+        <menuitem id="sub_menu_case_sheet_arbitration" action="action_case_sheet_form1_arbitration" name="Arbitration Case Sheet" sequence="1" parent="base_sub_menu_routine_entries" groups="group_case_entries_user,group_case_entries_other_associate"/>
+
+        
+        <!--<record id="act_hr_timesheet_line_evry1_all_form_inh" model="ir.actions.act_window">-->
+            <!--<field name="name">Tasks Timesheet</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">hr.analytic.timesheet</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="context">{"search_default_today":1}</field>-->
+            <!--<field name="search_view_id" ref="hr_timesheet.hr_timesheet_line_search"/>-->
+            <!--<field name="help" type="html">-->
+              <!--<p class="oe_view_nocontent_create">-->
+                <!--Click to record activities.-->
+              <!--</p><p>-->
+                <!--You can register and track your workings hours by project every-->
+                <!--day. Every time spent on a project will become a cost in the-->
+                <!--analytic accounting/contract and can be re-invoiced to-->
+                <!--customers if required.-->
+              <!--</p>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="legal_e_hr_timesheet_line_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">hr.analytic.timesheet.form.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='date']" position="before">-->
+                     <!--<field name="court_date"/>-->
+                     <!--<field name="court_proceed_id" domain="[('proceed_date','=', court_date),('case_id.project_id.members','in',[uid])]" on_change="onchange_court_proceed_id(court_proceed_id)"/>-->
+                     <!--<field name="case_id" on_change="onchange_case_id(case_id, court_proceed_id)" attrs="{'required':[('type','in',['case','misc'])]}" domain="[('state', 'not in', ['draft', 'cancel','transfer'])]"/>-->
+                <!--</xpath>-->
+                 <!--<xpath expr="//field[@name='product_id']" position="after">-->
+                 	<!--<field name="start_date" required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>-->
+                	<!--<field name="end_date" required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='user_id']" position="after">-->
+                     <!--<field name="employee_id" invisible="1"/>-->
+                	 <!--<field name="type" required="1" on_change="onchange_type(type, case_id)"/>-->
+                <!--</xpath>-->
+
+                 <!--<xpath expr="//group[@string='Accounting']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//group[@string='Product']" position="attributes">-->
+                    <!--<attribute name="string">Time</attribute>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='product_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='product_uom_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+
+
+        	 <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="legal_e_hr_timesheet_invoice_line_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">hr_timesheet_invoice.hr.analytic.timesheet.form.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="inherit_id" ref="hr_timesheet_invoice.hr_timesheet_line_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//group[@string='Invoicing']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+
+         <!--<record id="legal_e_hr_timesheet_line_treee_inherit" model="ir.ui.view">-->
+            <!--<field name="name">hr.analytic.timesheet.tree.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>-->
+            <!--<field name="arch" type="xml">-->
+
+            	<!--<xpath expr="//field[@name='user_id']" position="after">-->
+            	     <!--<field name="employee_id" invisible="1"/>-->
+                	 <!--<field name="type" required="1" on_change="onchange_type(type, case_id)"/>-->
+                <!--</xpath>-->
+
+
+                <!--<xpath expr="//field[@name='name']" position="before">-->
+                	 <!--<field name="court_date"/>-->
+                	 <!--<field name="court_proceed_id" width="5000" domain="[('proceed_date','=', court_date),('case_id.project_id.members','in',[uid])]" on_change="onchange_court_proceed_id(court_proceed_id)"/>-->
+                     <!--<field name="case_id"  attrs="{'required':[('type','in',['case','misc'])]}" on_change="onchange_case_id(case_id, court_proceed_id)" domain="[('state', 'not in', ['draft', 'cancel','transfer'])]"/>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='name']" position="after">-->
+                	 <!--<field name="start_date"  required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>-->
+                	 <!--<field name="end_date" required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>-->
+                <!--</xpath>-->
+        	 <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="hr_timesheet_line_tree_inherit" model="ir.ui.view">-->
+            <!--<field name="name">hr.analytic.timesheet.tree.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="inherit_id" ref="hr_timesheet_invoice.hr_timesheet_line_tree"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                <!--<xpath expr="//field[@name='to_invoice']" position="attributes">-->
+            	    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+
+        <!--<record id="legal_e_hr_timesheet_sheet_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">hr_timesheet_sheet.sheet.form.inherit</field>-->
+            <!--<field name="model">hr_timesheet_sheet.sheet</field>-->
+            <!--<field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//widget[@type='weekly_timesheet']" position="attributes">-->
+            	    <!--<attribute name="readonly">1</attribute>-->
+                <!--</xpath>-->
+        	 <!--</field>-->
+        <!--</record>-->
+
+
+        <!--&lt;!&ndash; CSM Timesheet &ndash;&gt;-->
+        <!--<record id="legal_e_csm_hr_timesheet_line_form_inherit" model="ir.ui.view">-->
+            <!--<field name="name">csm.hr.analytic.timesheet.form.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="priority">500</field>-->
+            <!--<field name="inherit_id" ref="legal_e.legal_e_hr_timesheet_line_form_inherit"/>-->
+            <!--<field name="groups_id" eval="[(4, ref('legal_e.group_legal_e_client_service_manager'))]"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                 <!--<xpath expr="//group[@string='Accounting']" position="before">-->
+                    <!--<group string="Meetings">-->
+                        <!--<field name="industry_type" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="company_address" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="contact_person" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="designation" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="email" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="landline" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="mobile" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                        <!--<field name="next_date" attrs="{'required':[('type','in',('ex_meeting','new_meeting'))]}"/>-->
+                    <!--</group>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='court_date']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+               <!--<xpath expr="//field[@name='court_proceed_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+
+             <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="legal_e_csm_hr_timesheet_line_treee_inherit" model="ir.ui.view">-->
+            <!--<field name="name">csm.hr.analytic.timesheet.tree.inherit</field>-->
+            <!--<field name="model">hr.analytic.timesheet</field>-->
+            <!--<field name="priority">500</field>-->
+            <!--<field name="inherit_id" ref="legal_e.legal_e_hr_timesheet_line_treee_inherit"/>-->
+            <!--<field name="groups_id" eval="[(4, ref('legal_e.group_legal_e_client_service_manager'))]"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//tree" position="attributes">-->
+                    <!--<attribute name="editable"></attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='court_date']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+               <!--<xpath expr="//field[@name='court_proceed_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="view_shop_form_inhs" model="ir.ui.view">-->
+            <!--<field name="name">sale.shop.form.inhs</field>-->
+            <!--<field name="model">sale.shop</field>-->
+            <!--<field name="inherit_id" ref="sale.view_shop_form"/>-->
+            <!--<field name="arch" type="xml">-->
+              <!--<xpath expr="//group[@name='shop']" position="before">-->
+                     <!--<label for="code" class="oe_edit_only"/>-->
+                     <!--<h2><field name="code"/></h2>-->
+                <!--</xpath>-->
+                <!--<field name="company_id" position="after">-->
+                     <!--<field name="flg_main_branch"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<menuitem id="menu_hr_working_hours_inh" parent="base.sub_menu_routine_entries" action="act_hr_timesheet_line_evry1_all_form_inh" sequence="2" groups=""/>  -->
+
+        <!-- <menuitem id="sub_menu_branch_master" action="sale.action_shop_form" name="Branch Master" parent="sub_menu_masters" sequence="11"/>  -->
+
+        <!--id not present in version 11-->
+        <!--<record id="project.view_task_gantt" model="ir.ui.view">-->
+            <!--<field name="name">project.task.gantt</field>-->
+            <!--<field name="model">project.task</field>-->
+            <!--<field eval="2" name="priority"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<gantt date_start="date_start" date_stop="date_end" string="Tasks" default_group_by="phase_id">-->
+                <!--</gantt>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--project_long_term module not found-->
+<!--        <record id="project_invoice_form_inh" model="ir.ui.view">
+            <field name="name">Inherit project form : CaseSheet Data</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <xpath expr='//div[@name="button_box"]' position="replace">
+                <div class="oe_right oe_button_box" name="button_box" groups="base.group_user">
+                	<button name="%(project_long_term.act_project_phases)d" string="Phases" type="action" invisible="1"/>
+                        <button name="%(project.act_project_project_2_project_task_all)d" string="Tasks"
+                            type="action"  invisible="0"/>
+                        <button name="project.attachment_tree_view" string="Documents" type="object" invisible="1"/>
+                        <button name="project_timesheet.open_timesheets" string="Timesheets" type="object" invisible="1"/>
+                        <button name="toggle_active"/>
+
+                </div>
+                </xpath>
+                <xpath expr='//field[@name="partner_id"]' position="after">
+                    <field name='active'/>
+                    
+                </xpath>
+            </field>
+        </record>-->
+
+
+
+        <!--<record id="project_long_term_form_inh" model="ir.ui.view">-->
+            <!--<field name="name">Inherit project Long Term form : CaseSheet Data</field>-->
+            <!--<field name="model">project.project</field>-->
+            <!--<field name="inherit_id" ref="project_long_term.project_phase_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<button string="Phases" position='replace'>-->
+                <!--</button>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+        	<field name="view_mode">tree,form,kanban,gantt</field>
+        	<field name="view_id" ref="project.view_project"/>
+        </record>
+
+        <record id="project.action_view_task" model="ir.actions.act_window">
+        	<field name="view_mode">tree,form,kanban,calendar,gantt,graph</field>
+        	<field name="view_id" ref="project.view_task_tree2"/>
+        </record>
+
+        <record id="project.open_view_task_list_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+        </record>
+        <record id="project.open_view_task_list_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+        </record>
+        
+        <record id="view_project_task_type_form_inhs" model="ir.ui.view">
+            <field name="name">view_project_task_type_form_inhs</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id" ref="project.task_type_edit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mail_template_id']" position="after">
+                    <field name="state"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_phase_task_form_inhs" model="ir.ui.view">
+            <field name="name">phase.task.form.inhs</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="state"/>
+                </xpath>
+                <field name="name" position="after">
+                    <field name="task_name" required="1"/>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" attrs="{'readonly':[('state','in',['done', 'cancelled'])]}" options='{"no_open": True}' invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="task_for"/>
+                    <field name="case_id"/>
+                    <field name="assignee_id" attrs="{'invisible':[('task_for','!=','employee')],'required':[('task_for','=','employee')]}" />
+                    <field name="other_assignee_id" attrs="{'invisible':[('task_for','!=','associate')],'required':[('task_for','=','associate')]}" domain="[('supplier','=',True)]"/>
+                    <field name="client_id" attrs="{'invisible':[('task_for','!=','customer')],'required':[('task_for','=','customer')]}" domain="[('customer','=',True)]"/>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="after">
+                    <field name="date_start" />
+                    <field name="date_end" />
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="billable" invisible="1"/>
+                    <field name="lot_name"/>
+                </xpath>
+
+
+                <!--<xpath expr="//page[@string='Delegation']" position="replace">-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='project_id']" position="replace">
+                <!--<field name="project_id" position="replace">-->
+                    <field name="project_id" required="1" string="Project/File Number"/>
+                    <field name="reg_number"/>
+                    <field name="bill_amount" attrs="{'invisible':[('bill_amount','&lt;=','0')]}"/>
+                <!--</field>-->
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                <!--<field name="date_deadline" position="attributes">-->
+            	    <attribute name="readonly">1</attribute>
+        	<!--</field>-->
+                </xpath>
+                <!--<xpath expr="button[@name='']"-->
+        	<!--<button string="Reactivate" position="after">-->
+        	<!--<button name="project_task_update_deadline" string="Update Deadline" type="object" groups="legal_e.group_case_sheet_operation_manager" attrs="{'invisible':['|',('state','not in',('draft','open','pending')),('task_for','not in',('employee','associate'))]}"/>-->
+        	<!--</button>-->
+
+            <!--<xpath expr="//button[@name='project_task_reevaluate']" position="attributes">-->
+                <!--<attribute name="invisible"> 1</attribute>-->
+            <!--</xpath>-->
+            <xpath expr="//page[@name='extra_info']" position="after">
+                <!--<page string="Extra Info" position="after">-->
+                <page string="First Parties">
+                    <field name="first_parties" attrs="{'readonly':True}">
+                        <form string="First Parties">
+                            <group>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="name"/>
+                                </group>
+                            </group>
+                        </form>
+                        <tree string="First Parties" editable="top">
+                            <field name="type"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Opposite Parties">
+                    <field name="opp_parties" attrs="{'readonly':True}">
+                        <form string="Opp Parties">
+                            <group>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="name"/>
+                                </group>
+                            </group>
+                        </form>
+                        <tree string="Opp Parties" editable="top">
+                            <field name="type"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </page>
+                <!--</page>-->
+                </xpath>
+
+                <!--buttons not found in default-->
+               <!-- <xpath expr='//button[@name="project_task_reevaluate"]' position="attributes">
+            	    <attribute name="groups">legal_e.group_case_sheet_operation_manager</attribute>
+                </xpath>
+                <xpath expr='//button[@name="action_close"]' position="attributes">
+            	    <attribute name="groups">legal_e.group_case_sheet_operation_manager</attribute>
+                </xpath>
+                <xpath expr='//button[@name="do_cancel"]' position="attributes">
+            	    <attribute name="groups">legal_e.group_case_sheet_operation_manager</attribute>
+                </xpath> -->
+
+            </field>
+        </record>
+
+
+        <record id="view_phase_task_search_form_tree_inhs" model="ir.ui.view">
+            <field name="name">phase.task.search.form.tree.inhs</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='user_id']" position="replace">
+                <!--<field name="user_id" position="replace">-->
+                    <field name="user_id" invisible="1"/>
+                </xpath>
+                <field name="name" position="replace">
+                    <field name="task_name" required="1"/>
+                </field>
+                <xpath expr="field[@name='user_id']" position="after">
+                    <field name="task_for" invisible="1"/>
+                    <field name="assigned_to"/>
+                    <field name="lot_name"/>
+                </xpath>
+                <xpath expr="field[@name='stage_id']" position="before">
+                    <field name="date_start" />
+                    <field name="date_end" />
+                </xpath>
+                <!--</field>-->
+                <xpath expr="//tree"  position="attributes">
+                    <attribute name="colors">grey:state in ('cancelled','done');red:date_deadline and (date_deadline&lt;current_date) and (state in ('draft','pending','open'));blue:date_deadline and (date_deadline==current_date) and (state in ('draft','pending','open'));black:date_deadline and (date_deadline&gt;current_date) and (state in ('draft','pending','open'))</attribute>
+                </xpath>
+                <!--<xpath expr="//field[@name='date_start']"  position="attributes">-->
+                    <!--<attribute name="groups"></attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='date_end']"  position="attributes">-->
+                    <!--<attribute name="groups"></attribute>-->
+                <!--</xpath>-->
+
+            </field>
+        </record>
+
+        <!--filter not found in default-->
+        <!--<record id="view_phase_task_search_form_search_inhs" model="ir.ui.view">-->
+            <!--<field name="name">phase.task.search.form.search.inhs</field>-->
+            <!--<field name="model">project.task</field>-->
+            <!--<field name="inherit_id" ref="project.view_task_search_form"/>-->
+            <!--<field name="arch" type="xml">-->
+            	<!--<xpath expr="//filter[@name='group_user_id']" position="after">-->
+            			<!--<filter string="Lot Number" name="group_lot_name" icon="terp-personal" domain="[]" context="{'group_by':'lot_name'}"/>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//filter[@name='group_stage_id']" position="attributes">-->
+                    <!--<attribute name="context">{'group_by':'state'}</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//filter[@string='Deadlines']" position="attributes">-->
+                    <!--<attribute name="domain">[('date_deadline','&lt;',current_date),('state', '=', 'pending')]</attribute>-->
+                <!--</xpath>-->
+
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="view_project_phase_form_inhs" model="ir.ui.view">-->
+            <!--<field name="name">project.phase.form.inhs</field>-->
+            <!--<field name="model">project.phase</field>-->
+            <!--<field name="inherit_id" ref="project_long_term.view_project_phase_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//form/sheet/notebook/page[@string='Tasks Details']/field/tree/field[@name='user_id']" position="replace">-->
+		    <!--<field name="user_id" invisible="1"/>-->
+		    <!--<field name="assigned_to"/>-->
+		<!--</xpath>-->
+		<!--<xpath expr="//page[@string='Constraints']" position="replace">-->
+		<!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+
+        <!--<record id="project_long_term.project_phase_task_list" model="ir.actions.act_window">-->
+            <!--<field name="res_model">project.task</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="name">Tasks</field>-->
+            <!--<field name="view_mode">tree,kanban,form,calendar,gantt,graph</field>-->
+            <!--<field name="context">{'search_default_phase_id': [active_id], 'default_phase_id' : active_id}</field>-->
+        <!--</record>-->
+         <record id="view_arbitrator_master_filter" model="ir.ui.view">
+            <field name="name">arbitrator.master.select</field>
+            <field name="model">arbitrator.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Arbitrator Master">
+               </search>
+            </field>
+        </record>
+
+        <record id="task_template_filter" model="ir.ui.view">
+            <field name="name">task.template.select</field>
+            <field name="model">task.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Tasks Templates">
+                    <field name="name"/>
+                    <field name="casetype_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Type of Work" context="{'group_by': 'name'}" icon="terp-stock_effects-object-colorize"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="task_template_tree" model="ir.ui.view">
+            <field name="name">task.template.tree</field>
+            <field name="model">task.template</field>
+            <field name="arch" type="xml">
+                <tree string="Tasks Templates">
+                    <field name="name"/>
+                    <field name="casetype_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="task_template_form" model="ir.ui.view">
+            <field name="name">task.template.form</field>
+            <field name="model">task.template</field>
+            <field name="arch" type="xml">
+                <form string="Tasks Templates">
+	                <sheet>
+		                <group col='4'>
+		                    <field name="name"/>
+                            <field name="casetype_id"/>
+                        </group>
+				    <separator string="Tasks/Activities"/>
+                        <field name="tasks_lines" nolabel="1">
+                            <form string="Task Assignment Lines">
+                                <group>
+                                    <field name="slno" invisible="0"/>
+                                    <field name="name"/>
+                                    <field name="phase_name"/>
+                                    <field name="days"/>
+                                    <field name="type"/>
+                               </group>
+                            </form>
+                            <tree string="Task Assignment Lines"  editable="top">
+                                <field name="slno" invisible="0"/>
+                                <field name="name"/>
+                                <field name="phase_name"/>
+                                <field name="days"/>
+                                <field name="type" invisible="1"/>
+                            </tree>
+                        </field>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_task_template_form" model="ir.actions.act_window">
+            <field name="name">Tasks Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">task.template</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="task_template_tree"/>
+        </record>
+
+        <menuitem id="sub_menu_task_template" action="action_task_template_form" name="Tasks Templates" parent="base_sub_menu_case_entries_Configuration" sequence="1"  groups=""/>
+
+            <record id="opp_parties_tree" model="ir.ui.view">
+            <field name="name">opp.parties.tree</field>
+            <field name="model">opp.parties</field>
+            <field name="arch" type="xml">
+                <tree string="Opposite Parties">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                </tree>
+            </field>
+        </record>
+        <record id="opp_parties_form" model="ir.ui.view">
+            <field name="name">opp.parties.form</field>
+            <field name="model">opp.parties</field>
+            <field name="arch" type="xml">
+                <form string="Opposite Parties">
+	                <sheet>
+		                <group col='4' string="Opposite Parties">
+		                    	<field name="name" colspan="2"/>
+                    			<field name="email" colspan="2"/>
+                    			<field name="phone" colspan="2"/>
+                    			<field name="mobile" colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="stages_for_billing_tree" model="ir.ui.view">
+            <field name="name">fixed.price.stages.tree</field>
+            <field name="model">fixed.price.stages</field>
+            <field name="arch" type="xml">
+                <tree string="Stages For Invoice">
+                <!--<tree string="Stages For Invoice" create="false">-->
+                    <field name="case_id"/>
+                    <field name="name"/>
+                    <field name="percent_amount"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="invoiced" invisible="1"/>
+                    <field name="inv_total_amt"/>
+		    <field name="inv_balance_amt"/>
+		    <field name="inv_state"/>
+                    <button name="invoice_stage" string="Invoice Stage" type="object" icon="STOCK_REDO" attrs="{'invisible':['|',('invoiced','=',True),('state','!=','Completed')]}"/>
+                    <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}"/>
+                    <button name="view_case_sheet" string="View Related Casesheet" type="object" icon="STOCK_EDIT"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stages_for_billing_form" model="ir.ui.view">
+            <field name="name">fixed.price.stages.form</field>
+            <field name="model">fixed.price.stages</field>
+            <field name="arch" type="xml">
+                <form string="Stages for Invoice">
+                <header>
+                </header>
+	            <sheet>
+	                	<group >
+	                	<group col='4' string="Stages for Invoice">
+				    <field name="case_id"/>
+				    <field name="name"/>
+				    <field name="assignee_id"/>
+				    <field name="amount"/>
+				    <field name="state"/>
+		                </group>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stages_for_invoice_form" model="ir.actions.act_window">
+            <field name="name">Stages to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fixed.price.stages</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stages_for_billing_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state','=','Completed')]</field>
+        </record>
+        <!--<menuitem id="sub_menu_stages_for_invoice" action="action_stages_for_invoice_form" name="Fixed Price Stages to Invoice" parent="base_sub_menu_routine_entries" sequence="4"  groups="account.group_account_invoice"/>-->
+
+         <record id="tm_for_billing_tree" model="ir.ui.view">
+            <field name="name">time.material.tree</field>
+            <field name="model">tm.line</field>
+            <field name="arch" type="xml">
+                <tree string="Time and Material Stages For Invoice"  create="false">
+                    <field name="case_id"/>
+                    <field name="name"/>
+                    <field name="hours_spent"/>
+                    <field name="amount"/>
+                    <field name="billed_hours"/>
+                    <field name="remaining_hours"/>
+                    <field name="state"/>
+                    <field name="invoiced" invisible="1"/>
+                    <field name="inv_total_amt"/>
+		    <field name="inv_balance_amt"/>
+                    <button name="invoice_task" string="Invoice Task" type="object" icon="STOCK_REDO" attrs="{'invisible':['|',('hours_spent','=',0),('remaining_hours','=',0)]}"/>
+                    <button name="view_invoice_task" string="View Related Invoice" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('invoiced','!=',True)]}"/>
+                    <button name="view_case_sheet" string="View Related Casesheet" type="object" icon="STOCK_EDIT"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="tm_for_billing_form" model="ir.ui.view">
+            <field name="name">tm.line.form</field>
+            <field name="model">tm.line</field>
+            <field name="arch" type="xml">
+                <form string="Time and Material Stages for Invoice">
+                <header>
+                </header>
+	         <sheet>
+	                	<group >
+	                	<group col='4' string="Time and Material for Invoice">
+				    <field name="case_id"/>
+				    <field name="name"/>
+				    <field name="amount"/>
+				    <field name="state"/>
+		                </group>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_tm_stages_for_invoice_form" model="ir.actions.act_window">
+            <field name="name">TM Stages to Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tm.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tm_for_billing_tree"/>
+        </record>
+       <!-- <menuitem id="sub_menu_tm_for_invoice" action="action_tm_stages_for_invoice_form" name="T&#38;M Tasks to Invoice" parent="base.sub_menu_routine_entries" sequence="5"  groups="account.group_account_invoice"/>  -->
+
+
+
+
+
+
+        <record id="court_proceedings_stage_tree" model="ir.ui.view">
+            <field name="name">court.proceedings.stage.tree</field>
+            <field name="model">court.proceedings.stage</field>
+            <field name="arch" type="xml">
+                <tree string="Court Proceedings Stage">
+                    <field name="name"/>
+                    <field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="court_proceedings_stage_form" model="ir.ui.view">
+            <field name="name">court.proceedings.stage.form</field>
+            <field name="model">court.proceedings.stage</field>
+            <field name="arch" type="xml">
+                <form string="Court Proceedings Stage">
+	                <header>
+	                </header>
+		         	<sheet>
+		         		<group>
+		                	<group>
+							    <field name="name"/>
+			                </group>
+			                <group>
+	                    		<field name="sequence"/>
+	                    	</group>
+                    	</group>
+		             </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_court_proceedings_stage_form" model="ir.actions.act_window">
+            <field name="name">Court Proceedings Stages</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">court.proceedings.stage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="court_proceedings_stage_tree"/>
+        </record>
+
+         <menuitem id="menu_court_proceedings_stage" action="action_court_proceedings_stage_form" name="Court Proceedings Stages" parent="base_sub_menu_case_entries_Configuration" sequence="10"/>
+
+        <record id="view_court_proceedings_filter" model="ir.ui.view">
+            <field name="name">court.proceedings.select</field>
+            <field name="model">court.proceedings</field>
+            <field name="arch" type="xml">
+                <search string="Search Court Proceedings">
+                    <field name="case_id" string="File Number" filter_domain="[('case_id','ilike',self)]"/>
+                    <field name = "ho_branch_id" string="Location" filter_domain="[('ho_branch_id','ilike',self)]"/>
+                    <field name="client_id" string="Client" domain="[('customer','=',True),('is_company','=',True)]"/>
+                    <field name="proceed_date" string="Proceed Date" filter_domain="[('proceed_date','=',self)]"/>
+                    <filter name="missing_dates" string="Missing Dates" domain="[('flg_next_date','=',True),('next_proceed_date','=',False)]" help="Missing Dates" icon="terp-gtk-media-pause"/>
+                    <filter name="not_fully_billed" string="Not Fully Billed" domain="[('not_fully_billed','=',True)]" help="Not Fully Billed" icon="terp-gtk-media-pause"/>
+
+                    <group expand="0" string="Group By...">
+                        <filter string="File Number" icon="terp-go-stock" domain="[]" context="{'group_by':'case_id'}"/>
+                        <filter string="Client" icon="terp-go-stock" domain="[]" context="{'group_by':'client_id'}"/>
+                        <filter string="Proceed Date" icon="terp-go-month" domain="[]" context="{'group_by':'proceed_date'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+         <record id="court_proceedings_tree" model="ir.ui.view">
+            <field name="name">court.proceedings.tree</field>
+            <field name="model">court.proceedings</field>
+            <field name="arch" type="xml">
+                <tree string="Court Proceedings" colors="red:date_missing == True;blue:not_fully_billed == True">
+                    <field name="case_id" string="File Number"/>
+                    <field name="client_id" string="Client"/>
+                    <field name="name"/>
+                    <field name="checked" invisible="1"/>
+                    <field name="date_missing" invisible="1"/>
+                    <field name="proceed_date"/>
+                    <field name="flg_next_date"/>
+                    <field name="next_proceed_date"/>
+                    <field name="parties_desc" />
+                    <field name="stage_id" />
+                    <field name="date_missing" invisible="1"/>
+                    <field name="checked" invisible="1"/>
+                    <field name="closed" invisible="1"/>
+                    <field name="not_fully_billed" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="court_proceedings_form" model="ir.ui.view">
+            <field name="name">court.proceedings.form</field>
+            <field name="model">court.proceedings</field>
+            <field name="arch" type="xml">
+                <form string="Court Proceedings / History">
+<!--                <header>
+                        <button name="check_issues" string="Check" type="object"/>
+                        <button name="missing_date_scheduler" string="Cron" type="object"/>
+                </header> -->
+                    <group col='4' string="Court Proceedings">
+                        <field name="case_id" string="File Number" required="1"/>
+                        <button name="button_refresh" string="(update)" class="oe_link oe_edit_only" type="object" help="Shows the Existing Assignee, Associate and Client Tasks of the selected Case Sheet" attrs="{'invisible':[('case_id','=',False)]}" colspan="1"/>
+                        <field name="name"/>
+                        <field name="proceed_date"/>
+                        <field name="billable"/>
+                        <field name="effective" attrs="{'invisible':[('billable','=','nobill')],'required':[('billable','=','bill')]}"/>
+                        <field name="flg_next_date"/>
+                        <field name="next_proceed_date" attrs="{'invisible':[('flg_next_date','=',False)]}"/>
+                        <field name="parties_desc" />
+                        <field name="stage_id" />
+                        <field name="no_of_hours" widget='float_time' />
+                        <field name="account_analytic_line_id" readonly="1"/>
+                    </group>
+
+	                <group>
+	                <notebook>
+	                    <page string="Court Proceedings History" readonly="1">
+                            <field name="court_proceedings" attrs="{'readonly':True}">
+                                <tree string="Court Proceedings">
+                                    <field name="proceed_date" style="width:10%%"/>
+                                    <field name="name" style="width:50%%"/>
+                                    <field name="billable" style="width:50%%"/>
+                                    <field name="effective" attrs="{'invisible':[('billable','=','nobill')],'required':[('billable','=','bill')]}" style="width:50%%"/>
+                                    <field name="flg_next_date" style="width:7%%"/>
+                                    <field name="next_proceed_date" attrs="{'invisible':[('flg_next_date','=',False)],'required':[('flg_next_date','!=',False)]}" style="width:40%%"/>
+                                    <field name="case_id" invisible="1"/>
+                                    <field name="invoiced" readonly="1" attrs="{'invisible':[('billable','=','nobill')]}"/>
+                                    <field name="stage_id" widget="statusbar" clickable="True"/>
+                                    <field name="no_of_hours" widget='float_time' />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Assignee Tasks" invisible="1">
+                            <field name="tasks_lines">
+                                <form string="Task Assignment Lines">
+                                    <group>
+                                        <field name="slno" invisible="0"/>
+                                        <field name="phase_name"/>
+                                        <field name="name"/>
+                                        <field name="start_date"/>
+                                        <field name="days"/>
+                                        <field name="planned_completion_date"/>
+                                        <field name="state"/>
+                                   </group>
+                                </form>
+                                <tree string="Task Assignment Lines"  editable="top">
+                                    <field name="slno" invisible="0"/>
+                                    <field name="name"/>
+                                    <field name="phase_name"/>
+                                    <field name="start_date"/>
+                                    <field name="days"/>
+                                    <field name="planned_completion_date" on_change="check_for_holiday(planned_completion_date,days, 'planned_completion_date', start_date)"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                            <page string="Associate Tasks" invisible="1">
+                                <field name="associate_tasks_lines">
+                                    <form string="Associate Task Assignment Lines">
+                                        <group>
+                                            <field name="slno" invisible="0"/>
+                                            <field name="phase_name"/>
+                                            <field name="name"/>
+                                            <field name="days"/>
+                                            <field name="planned_completion_date"/>
+                                       </group>
+                                    </form>
+                                    <tree string="Associate Task Assignment Lines"  editable="top">
+                                        <field name="slno" invisible="0"/>
+                                        <field name="name"/>
+                                        <field name="phase_name"/>
+                                        <field name="days" />
+                                        <field name="planned_completion_date" on_change="check_for_holiday(planned_completion_date,days, 'planned_completion_date', parent.proceed_date)"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Client Tasks" invisible="1">
+                                <field name="client_tasks_lines">
+                                    <form string="Client Task Assignment Lines">
+                                        <group>
+                                            <group>
+                                                <field name="slno" invisible="0"/>
+                                                <field name="name"/>
+                                                <field name="user_id"/>
+                                                <field name="planned_completion_date"/>
+                                           </group>
+                                       </group>
+                                    </form>
+                                    <tree string="Client Task Assignment Lines"  editable="top">
+                                        <field name="slno" invisible="0"/>
+                                        <field name="name"/>
+                                        <field name="user_id"/>
+                                        <field name="planned_completion_date"/>
+                                        <!--<field name="state"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Timesheet Activities">
+                            	<field name="time_sheet_ids" context="{'default_type': 'case', 'default_court_date': proceed_date, 'default_case_id': case_id}">
+                                    <tree editable="top" string="Timesheet Activities">
+                                        <field name="date" on_change="on_change_date(date)" required="1"/>
+                                        <field name="employee_id" invisible="1"/>
+                                        <field name="user_id" on_change="on_change_user_id(user_id)" invisible="1" required="1" options="{'no_open': True}" />
+                                        <field name="court_date" invisible="1"/>
+                                        <field name="court_proceed_id" invisible="1" domain="[('proceed_date','=', court_date),('case_id.project_id.members','in',[uid])]" on_change="onchange_court_proceed_id(court_proceed_id)"/>
+                                        <field name="case_id" invisible="1" on_change="onchange_case_id(case_id, court_proceed_id)" required="1" domain="[('state', 'not in', ['draft', 'cancel','transfer'])]"/>
+                                        <field name="name" width="7000" required="1"/>
+                                        <field name="start_date"  required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>
+                                        <field name="end_date" required="1" on_change="onchange_start_end_date(date, start_date, end_date)"/>
+                                        <field invisible="1" domain="[('type','in',['normal','contract']),('state', '&lt;&gt;', 'close'),('use_timesheets','=',1)]" name="account_id" on_change="on_change_account_id(account_id, user_id)" context="{'default_use_timesheets': 1}"/>
+                                        <field name="unit_amount" string="Duration" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" sum="Total time" widget="float_time" />
+                                        <field name="product_uom_id" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" invisible="1"/>
+                                        <!--<field name="journal_id" invisible="1" />-->
+                                        <field name="type" invisible="1" />
+                                        <field name="amount" sum="Total cost" invisible="1" />
+                                        <!--<field name="to_invoice" />-->
+                                        <field name="general_account_id" invisible="1" />
+                                        <field name="product_id" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" required="1" domain="[('type','=','service')]" invisible="1" />
+                                    </tree>
+                                </field>
+                            </page>
+	                </notebook>
+	                </group>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_court_proceedings" model="ir.actions.act_window">
+            <field name="name">Court Proceedings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">court.proceedings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="court_proceedings_tree"/>
+        </record>
+        <menuitem id="sub_menu_court_proceedings" action="action_court_proceedings" name="Court Proceedings" parent="base_sub_menu_routine_entries" sequence="6"  groups="group_case_entries_user,group_case_entries_other_associate"/>
+
+      <record model="ir.actions.act_window.view" id="action_hr_employee_details_all">
+           <field name="sequence" eval="11"/>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="hr.view_employee_form"/>
+          <field name="act_window_id" ref="hr.open_view_employee_list_my"/>
+      </record>
+
+      <record model="ir.actions.act_window.view" id="action_hr_employee_details_all_tree">
+           <field name="sequence" eval="6"/>
+          <field name="view_mode">tree</field>
+          <field name="view_id" ref="hr.view_employee_tree"/>
+          <field name="act_window_id" ref="hr.open_view_employee_list_my"/>
+      </record>
+
+      <record model="ir.actions.act_window.view" id="action_hr_employee_details_all_kanban">
+           <field name="sequence" eval="5"/>
+          <field name="view_mode">kanban</field>
+          <field name="view_id" ref="hr.hr_kanban_view_employees"/>
+          <field name="act_window_id" ref="hr.open_view_employee_list_my"/>
+      </record>
+
+	<record model="ir.ui.view"  id="view_employee_form_inhs">
+	    <field name="name">view.employee.form.inhs</field>
+	    <field name="model">hr.employee</field>
+	    <field name="inherit_id" ref="hr.view_employee_form"/>
+	    <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="replace">
+			<!--<field name="department_id" position="replace">-->
+		  		<field name="id" invisible="1"/>
+		  		<!-- //Change view of the department field // Sanal Davis // 8-6-15 -->
+		  		<!--<field name="department_id" string="Deparment(SubDivision)" on_change="onchange_department_id(department_id)" invisible="1"/>-->
+                <field name="department_id" string="Deparment(SubDivision)" invisible="1"/>
+	            <!-- <label for="department_id" /> -->
+	            <!--<field name="department_id" on_change="onchange_department_id(department_id)" string="Deparment(SubDivision)"/>-->
+                <field name="department_id" string="Deparment(SubDivision)"/>
+	            <seperator/>
+<!--	            <button name="update_dept" context="{'department_type':department_type}" string="Swap Employee" class="oe_link"
+	            		groups="legal_e.group_case_sheet_operation_manager" type="object" help="To Update the Department of an Employee"  style="width:100%%"/>-->
+			<!--</field>-->
+            </xpath>
+	    </field>
+	</record>
+
+        <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new employee.
+              </p><p>
+                With just a quick glance on the OpenERP employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+<record model="ir.ui.view"  id="view_case_sheet_form_inhs">
+    <field name="name">view.case.sheet.form.inhs</field>
+    <field name="model">case.sheet</field>
+    <field name="inherit_id" ref="case_sheet_form"/>
+    <field name="groups_id" eval="[(6, 0, [ref('legal_e.group_case_entries_officer') ])]"/>
+    <field name="arch" type="xml">
+        <field name="company_ref_no" position="attributes">
+            <attribute name="readonly">1</attribute>
+        </field>
+    </field>
+</record>
+<record model="ir.ui.view"  id="view_case_sheet_form_inhs1">
+    <field name="name">view.case.sheet.form.inhs1</field>
+    <field name="model">case.sheet</field>
+    <field name="inherit_id" ref="view_case_sheet_form_inhs"/>
+    <field name="groups_id" eval="[(6, 0, [ref('legal_e.group_case_entries_manager') ])]"/>
+    <field name="arch" type="xml">
+        <field name="company_ref_no" position="attributes">
+            <attribute name="readonly">0</attribute>
+        </field>
+    </field>
+</record>
+
+		<record id="account_invoice_inherit_form" model="ir.ui.view">
+            <field name="name">account.invoice.inherit.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <header>
+                <button name="set_to_draft_inv" states="cancel" string="Draft if Error" type="object" groups="account.group_account_invoice"/>
+
+                </header>
+                <xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'not in', ('draft','sent_for_validate'))]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='other_info']/group/group[1]/field[@name='account_id']" position="after">
+                   <field name="office_id" readonly="1" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="attributes">
+	                <attribute name="string">Name</attribute>
+	            </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+	                <field name="description" />
+	            </xpath>
+                <!-- Starting // Add office in invoice line // Sanal Davis // 27/5/15 -->
+                <xpath expr="//field[@name='account_id']" position="after">
+                    <field name="office_id"/>
+                    <field name="department_id"/>
+                </xpath>
+                <!-- Ending -->
+                <!--Remove attrs in journal_id for make editable-->
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="attrs"/>
+                </xpath>
+                <!-- Starting // Add Particular Invoice Line // Sanal Davis // 27/5/15 -->
+                <xpath expr="//page[1]" position="after">
+                	<page string="Particular Invoice">
+                    	<field name="particular_invoice_line_ids" readonly="0">
+                    		<tree string="Particular Invoice lines" editable="bottom">
+                    			<field name="name" string="Particulars"/>
+                    			<field name="price_unit" string="Amount"/>
+                    		</tree>
+                    	</field>
+                    	<group class="oe_subtotal_footer oe_right">
+                    		<field name="particular_amount_untaxed" widget="monetary" />
+                    	</group>
+                    </page>
+                </xpath>
+                <!-- Ending -->
+            </field>
+         </record>
+
+
+		 <record model="ir.ui.view"  id="legal_e_account_invoice_inherit_form_inherit">
+		    <field name="name">legal_e.account.invoice.inherit.form</field>
+		    <field name="model">account.invoice</field>
+		    <field name="inherit_id" ref="legal_e.account_invoice_inherit_form"/>
+		    <field name="groups_id" eval="[(6, 0, [ref('account.group_account_manager') ])]"/>
+		    <field name="arch" type="xml">
+		        <xpath expr="//field[@name='particular_invoice_line_ids']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+		    </field>
+		</record>
+
+
+		<record id="purchase.act_res_partner_2_supplier_invoices" model="ir.actions.act_window">
+			<field name="domain">[('partner_id','=',active_id)]</field>
+			<field name="context">{}</field>
+		</record>
+
+		<record id="invoice_supplier_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+            	 <xpath expr="//field[@name='account_id']" position="after">
+                    <field name="office_id" readonly="1" invisible="1"/>
+                    <!--<field name="ho_branch_id" readonly="1" string="Office"/>-->
+                </xpath>
+                <xpath expr="//field[@name='account_id']" position="after">
+                    <!--<field name="case_id"/>-->
+                </xpath>
+
+            </field>
+         </record>
+
+         <!-- Starting // Add case sheet in HR Expense Form // Sanal Davis // 4-6-15 -->
+
+        <menuitem id="hr_expense.next_id_49" name="Expenses" groups="hr.group_hr_user" sequence="15" parent="hr.menu_hr_root"/>
+        <!--<menuitem action="hr_expense.expense_all" id="hr_expense.menu_expense_all" groups="hr.group_hr_user" name="Expenses" parent="hr_expense.next_id_49"/>        <menuitem action="hr_expense.expense_all" id="hr_expense.menu_expense_all" groups="hr.group_hr_user" name="Expenses" parent="hr_expense.next_id_49"/>-->
+        <menuitem id="hr_expense.menu_expense_all" groups="hr.group_hr_user" name="Expenses" parent="hr_expense.next_id_49"/>
+
+         <record id="view_hr_expenses_form_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.form.inherit.custom</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tax_ids']" position="after">
+                    <field name="case_id"/>
+                    <field name="paid_amount" attrs="{'readonly':[('state','=','draft')]}" required="1"/>
+                    <field name="billable" required="1"/>
+                    <field name="expense_type" required="1"/>
+                    <field name="partner_id" attrs="{'invisible':[('expense_type','not in',['associate_pay','third_pp'])], 'required':[('expense_type','in',['associate_pay','third_pp'])]}"/>
+                    <field name="office_id" attrs="{'invisible':[('expense_type','!=','petty_cash')], 'required':[('expense_type','=','petty_cash')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='unit_amount']" position="attributes">
+                    <attribute name="string">Requested Amount</attribute>
+                </xpath>
+                <xpath expr="//label[@for='quantity']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='quantity']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_uom_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tax_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='submit_expenses']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('expense_type','=','other_cash')]}</attribute>
+                </xpath>
+                <!--<xpath expr="//field[@name='line_ids']/tree[@string='Expense Lines']/field[@name='name']" position="after">-->
+                    <!--<field name="is_billable"/>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='line_ids']/tree[@string='Expense Lines']/field[@name='ref']" position="after">-->
+                    <!--<field name="account_id" required="0" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>-->
+                <!--</xpath>-->
+                 <!--<xpath expr="//field[@name='line_ids']/tree[@string='Expense Lines']/field[@name='product_id']"  position="attributes">-->
+		            <!--<attribute name="invisible">1</attribute>-->
+		        <!--</xpath>-->
+		        <!--<xpath expr="//field[@name='line_ids']/tree[@string='Expense Lines']/field[@name='uom_id']"  position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='account_move_id']"  position="attributes">-->
+                    <!--<attribute name="readonly">1</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='line_ids']/tree[@string='Expense Lines']/field[@name='account_id']"  position="attributes">-->
+                    <!--<attribute name="groups">account.group_account_manager</attribute>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//button[@name='done']" position="attributes">-->
+                    <!--<attribute name="groups">account.group_account_manager</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//button[@name='action_view_receipt']" position="attributes">-->
+                    <!--<attribute name="groups">account.group_account_manager</attribute>-->
+                <!--</xpath>-->
+
+                <!-- <xpath expr="//button[@name='action_view_receipt']" position="after">
+                     <button name="invoice_pay_employee" states="done" string="Pay" type="object" groups="account.group_account_invoice"/>
+                </xpath> -->
+            </field>
+         </record>
+
+        <record id="view_hr_expense_sheet_form_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='action_sheet_move_create']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='%(hr_expense.hr_expense_refuse_wizard_action)d']" position="attributes">
+                    <attribute name="states">submit,waiting_special,approve,special_approve</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='action_sheet_move_create']" position="after">
+                    <button name="action_send_for_special_approval" states="approve,submit" string="Send for Special Approval" type="object" groups="account.group_account_manager" class="oe_highlight"/>
+                    <button name="special_approve_expense_sheets" states="waiting_special,submit" string="Special Approve" type="object" groups="hr_expense.group_hr_expense_user" class="oe_highlight o_expense_sheet_approve"/>
+                    <button name="action_sheet_move_create_journal" states="approve,special_approve" string="Create Journal Entries" type="object" groups="account.group_account_manager" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="unit_amount"/>
+                    <field name="paid_amount"/>
+                    <field name="billable"/>
+                    <field name="expense_type"/>
+                    <field name="office_id"/>
+                    <field name="case_id"/>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="assignee_id"/>
+                </xpath>
+            </field>
+        </record>
+
+         <!-- Add office in tree of account move form //4-6-15 -->
+         <record id="view_move_form_legal_e_inherit" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="is_expense" invisible="1"/>
+                    <field name="expense_id" attrs="{'invisible':[('is_expense','!=', True)]}" />
+                    <field name="exp_paid_amount" attrs="{'invisible':[('is_expense','!=', True)]}" />
+                </field>
+            	<xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="after">
+					<field name="office_id"/>
+					<field name="department_id"/>
+					<field name="case_id"/>
+                </xpath>
+            </field>
+		 </record>
+
+		 <!-- Add office in account move line form // 5-6-15 -->
+		 <record id="view_move_line_form_legal_e_inherit" model="ir.ui.view">
+            <field name="name">account.move.line.form</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+		    	<xpath expr="//form/sheet/group/field[@name='partner_id']" position="after">
+					<field name="office_id"/>
+					<field name="department_id"/>
+					<field name="cost_id"/>
+					<field name="case_id"/>
+                </xpath>
+            </field>
+		 </record>
+
+		 <!-- Add office,casesheet in account move line tree // 9-6-15 -->
+		<record id="view_move_line_tree_legal_e_inherit" model="ir.ui.view">
+	        <field name="name">account.move.line.tree.inherit</field>
+	        <field name="model">account.move.line</field>
+	        <field name="priority">20</field>
+	        <field name="inherit_id" ref="account.view_move_line_tree"/>
+	        <field name="arch" type="xml">
+	            <field name="name" position="after">
+	            	<field name="office_id"/>
+	            	<field name="department_id"/>
+	            	<field name="cost_id"/>
+					<field name="case_id"/>
+					<!--<field name="invoice"/>-->
+	            </field>
+	        </field>
+    	</record>
+		<!-- Ending -->
+
+		<record id="view_account_move_line_filter_legal_e_inherit" model="ir.ui.view">
+	        <field name="name">account.move.line.tree.inherit</field>
+	        <field name="model">account.move.line</field>
+	        <field name="priority">20</field>
+	        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+	        <field name="arch" type="xml">
+	            <field name="name" position="after">
+	            	<field name="office_id"/>
+	            	<field name="department_id"/>
+	            	<field name="cost_id"/>
+					<field name="case_id"/>
+	            </field>
+
+	        </field>
+    	</record>
+
+    	<record id="account.action_account_moves_all_a" model="ir.actions.act_window">
+    	   <field name="view_mode">tree,form</field>
+    	</record>
+		 
+	</data>
+</odoo>

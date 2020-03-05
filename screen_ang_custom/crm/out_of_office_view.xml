@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_out_of_office_filter" model="ir.ui.view">
+            <field name="name">out.of.office.select</field>
+            <field name="model">out.of.office</field>
+            <field name="arch" type="xml">
+                <search string="Search Out of Office">
+               </search>
+            </field>
+        </record>
+        <record id="out_of_office_tree" model="ir.ui.view">
+            <field name="name">out.of.office.tree</field>
+            <field name="model">out.of.office</field>
+            <field name="arch" type="xml">
+                <tree string="Out of Office">
+                    <field name="name"/>
+                    <field name="count"/>
+                    <field name="type"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="event_type"/>
+                    <field name="reason"/>
+                </tree>
+            </field>
+        </record>
+        <record id="out_of_office_form" model="ir.ui.view">
+            <field name="name">out.of.office.form</field>
+            <field name="model">out.of.office</field>
+            <field name="arch" type="xml">
+                <form string="Out of Office">
+	                <sheet>
+	                        <!--<group>-->
+		                <group col='4' string="Event Details">
+		                    <field name="name" required="1" colspan="2"/>
+		                    <field name="user_id" required="1" colspan="2" groups="base.group_user"/>
+		                    <field name="type" required="1" colspan="2"/>
+		                    <field name="start_date" attrs="{'invisible':[('type','!=','days')],'required':[('type','=','days')]}" colspan="2"/>
+		                    <field name="end_date" attrs="{'invisible':[('type','!=','days')],'required':[('type','=','days')]}" colspan="2"/>
+		                    <field name="start_time" attrs="{'invisible':[('type','!=','hours')],'required':[('type','=','hours')]}" widget="float_time" colspan="2"/>
+		                    <field name="end_time" attrs="{'invisible':[('type','!=','hours')],'required':[('type','=','hours')]}" widget="float_time" colspan="2"/>
+		                    <field name="count" invisible="1" colspan="2"/>		                    
+		                    <field name="event_type" colspan="2" invisible="1"/>
+		                </group>		                
+		                <!--</group>-->
+	                        <group>
+		                <group col='4' string="Reason">
+		                    <field name="reason" colspan="4" nolabel="1"/>
+		                </group>		                
+		                </group>		                
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_out_of_office_calendar">
+        <field name="name">Events</field>
+        <field name="model">out.of.office</field>
+        <field name="arch" type="xml">
+            <calendar string="Events" date_start="start_date" color="event_type" date_stop="end_date" date_delay="count">
+                <field name="name"/>
+                <field name="event_type"/>
+            </calendar>
+        </field>
+        </record>
+        
+        <record id="action_out_of_office" model="ir.actions.act_window">
+            <field name="name">Event</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">out.of.office</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_out_of_office_calendar"/>
+        </record>
+        <!--<menuitem id="sub_menu_out_of_office" action="action_out_of_office" name="Events" parent="mail.mail_my_stuff" sequence="20" groups="base.group_user"/>-->
+               
+	</data>
+</odoo>

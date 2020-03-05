@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_assignee_master_filter" model="ir.ui.view">
+            <field name="name">assignee.master.select</field>
+            <field name="model">assignee.master</field>
+            <field name="arch" type="xml">
+                <search string="Search assignee Master">
+               </search>
+            </field>
+        </record>
+        <record id="assignee_master_tree" model="ir.ui.view">
+            <field name="name">assignee.master.tree</field>
+            <field name="model">assignee.master</field>
+            <field name="arch" type="xml">
+                <tree string="assignee Master">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+        <record id="assignee_master_form" model="ir.ui.view">
+            <field name="name">assignee.master.form</field>
+            <field name="model">assignee.master</field>
+            <field name="arch" type="xml">
+                <form string="assignee Master">
+	                <sheet>
+                    <group col='4'>
+                        <field name="name" colspan="4"/>
+                        <field name="code"  colspan="4"/>
+                        <field name="phone"  colspan="4"/>
+                        <field name="email"  colspan="4"/>
+                    </group>
+		            <group>
+                        <label for="street" string="Address"/>
+                        <div>
+                            <field name="street" placeholder="Street..." />
+                            <field name="street2"/>
+                            <div class="address_format">
+                                <field name="city" placeholder="City" style="width: 40%%"/>
+                                <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}'/>
+                                <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                            </div>
+                            <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
+                        </div>
+                    </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_assignee_master_form" model="ir.actions.act_window">
+            <field name="name">Other Associate Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">assignee.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="assignee_master_tree"/>
+        </record>
+        <!--<menuitem id="sub_menu_assignee_master" action="action_assignee_master_form" name="Assignee Master" parent="sub_menu_masters" sequence="3"/>            -->
+
+	</data>
+</odoo>

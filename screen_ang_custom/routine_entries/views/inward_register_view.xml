@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_inward_register_filter" model="ir.ui.view">
+            <field name="name">inward.register.select</field>
+            <field name="model">inward.register</field>
+            <field name="arch" type="xml">
+                <search string="Search Inward Register">
+                <field name="name" string="Entry Number"/>
+                <!--<field name="file_number" string="File Number"/>-->
+                <field name="agency_from" string="Agency From"/>
+                <!--<field name="addressee_name" string="Given To"/>-->
+                <field name="assignee_id" string="Assignee"/>
+                <field name = "ho_branch_id" string="Location" filter_domain="[('ho_branch_id','ilike',self)]"/>
+               </search>
+            </field>
+        </record>
+        <record id="inward_register_tree" model="ir.ui.view">
+            <field name="name">inward.register.tree</field>
+            <field name="model">inward.register</field>
+            <field name="arch" type="xml">
+                <tree string="Inward Register">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="ho_branch_id"/>
+                    <!--<field name="file_number"/>-->
+                    <field name="agency_from"/>
+                    <!--<field name="addressee_name"/>-->
+                    <field name="assignee_id"/>
+                    <field name="material_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="inward_register_form" model="ir.ui.view">
+            <field name="name">inward.register.form</field>
+            <field name="model">inward.register</field>
+            <field name="arch" type="xml">            
+                <form string="Inward Register" version="7.0">
+                <header>
+                </header>
+	         <sheet>
+	                	<group col='4' string="Task for Inward Register">
+				    <field name="name" class="oe_inline" readonly="1"/>
+		                    <field name="date"/>
+		                    <field name="ho_branch_id" required="0" options="{'create_edit': false,'create':false}"/>
+		                    <field name="file_number" on_change="onchange_file_number(file_number)" options="{'create_edit': false}"/>
+		                    <field name="our_ref_no"/>
+		                    <field name="their_number"/>
+		                    <field name="inward_date"/>
+		                    <field name="agency_from" domain="[('is_company','=',True)]"/>
+		                    <field name="assignee_id"/>
+		                    <field name="material_code"/>
+		                    <field name="material_id" on_change="onchange_material_title(material_id)"/>
+		                    <field name="datas" filename="datas_fname"/>
+                            	    <field name="datas_fname" invisible="1" class="oe_inline oe_right"/>
+                            	    <field name="priority" invisible="1"/>
+		                </group>	                	
+		                <group col='6'>
+	                	    <field name="task_present"/>
+		                    <field name="assign_date"/>
+		                    <field name="filing_date"/>
+		                    <field name="exec_date"/>
+		                    <field name="remarks" colspan="4" placeholder="Remarks......."/>
+		                </group>    
+		                <group col='6' string="Task Details" attrs="{'invisible':[('task_present','!=',True)]}">
+		                    <field name="task_date" colspan="2"/>
+		                    <field name="task_id" colspan="4" domain="[('case_id','=',file_number)]" options="{'create': false, 'create_edit': false}"/>
+		                </group>
+	                </sheet>
+	                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+                
+                
+        <record id="action_inward_register_form1" model="ir.actions.act_window">
+            <field name="name">Inward Register</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inward.register</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="inward_register_tree"/>
+        </record>
+        <menuitem id="sub_menu_inward_register1" action="action_inward_register_form1" name="Inward Register" parent="base_sub_menu_routine_entries" sequence="3" groups="legal_e.group_inward_register_user"/>
+	</data>
+</odoo>

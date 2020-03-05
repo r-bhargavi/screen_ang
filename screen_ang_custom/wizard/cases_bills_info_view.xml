@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+ 	    <record id='cases_bills_info_form' model="ir.ui.view">
+            <field name="name">cases.bills.info.form</field>
+            <field name="model">cases.bills.info</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Cases and Bills Info">
+                    <group col="4" >
+                        <field name="ho_branch_id" colspan="2" class="ho_branch_id"/>
+                        <field name="name" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' colspan="2" required="0" invisible="0"/>
+                        <field name="invoice_id" colspan="2" domain="[('type','=','out_invoice')]"/>
+                        <field name="case_id" colspan="2" domain="[(name and ('client_id','=',name) or ('name','!=',False))]"/>
+                        <field name="state" colspan="2"  style="width:30%%"/>
+                        <label for="date_filter"/>
+                        <div>
+                        <field name="date_filter" style="width:30%%"/>
+                        <field name="from_date" style="width:30%%" attrs="{'invisible':[('date_filter','=',False)],'required':[('date_filter','!=',False)]}"/>
+                        <field name="to_date" style="width:30%%" attrs="{'invisible':[('date_filter','!=','between')],'required':[('date_filter','=','between')]}"/>
+                        </div>
+                        <field name="assignee_id" colspan="2"/>
+                        <field name="other_assignee_id" colspan="2" domain="[('supplier','=',True)]" context="{'default_supplier':True, 'default_customer':False, 'form_view_ref':'legal_e.view_partner_form_legale_associate'}"/>
+                        <field name="division_id" colspan="2"/>
+                        <field name="work_type" colspan="2"/>
+                        <field name="casetype_id" colspan="2" domain="[(work_type and ('parent','=',work_type) or ('name','!=',False))]"/>
+                        <field name="contact_partner1_id" domain="[(name and ('parent_id','=',name) or ('parent_id','!=',False))]" context="{'search_default_customer':1}"  colspan="2"/>
+                        <field name="contact_partner2_id"  domain="[(name and ('parent_id','=',name) or ('parent_id','!=',False))]" context="{'search_default_customer':1}"  colspan="2"/>
+                        <field name="company_ref_no" colspan="2"/>
+                        <field name="reg_number" colspan="2"/>
+                        <field name="court_district_id" colspan="2"/>
+                        <field name="court_location_id" colspan="2"/>
+                        <field name="court_id" colspan="2"/>
+                        <field name="parent_id_manager" colspan="2"/>
+                        <field name="bill_type" colspan="2"/>
+                        <field name="first_party_name" colspan="2"/>
+                        <field name="oppo_party_name" colspan="2"/>
+                        <field name="case_state" colspan="2"/>
+                    </group>
+                    <group>
+                        <button name="get_data" string="Go" type="object" class="oe_highlight" context="{'client_id':name,'case_id':case_id,'date_filter':date_filter,'from_date':from_date,'to_date':to_date,'state':state, 'invoice_id':invoice_id, 'ho_branch_id':ho_branch_id, 'assignee_id':assignee_id,'other_assignee_id':other_assignee_id, 'division_id':division_id, 'work_type':work_type, 'casetype_id':casetype_id, 'company_ref_no':company_ref_no, 'reg_number':reg_number, 'court_district_id':court_district_id, 'court_location_id':court_location_id, 'court_id':court_id, 'parent_id_manager':parent_id_manager, 'bill_type':bill_type, 'first_party_name':first_party_name, 'oppo_party_name':oppo_party_name, 'case_state':case_state}"/>
+                        <div>
+                            <button name="generate_report" string="Generate" type="object" class="oe_highlight"/>
+                            or
+                            <button name="clear_filters_all" string="Clear All" type="object" class="oe_link"/>
+                        </div>
+                    </group>
+                    <field name="case_bills_ids" readonly="1" nolabel="1" colspan="4">
+                        <tree string="Case Bills Details">
+                            <field name="file_no"/>
+                            <field name="client_name"/>
+                            <field name="total_case_amount"/>
+                            <field name="legale_number"/>
+                            <field name="date_invoice"/>
+                            <field name="amount_total"/>
+                            <field name="amount_balance"/>
+                            <field name="inv_state"/>
+                        </tree>
+                    </field>
+                    <!--<button name="generate_report" string="Generate" icon="gtk-go-forward" type="object" context="{'client_id':name,'date_filter':date_filter,'from_date':from_date,'to_date':to_date,'ho_branch_id':ho_branch_id,'work_type':work_type}" class="oe_highlight"/>-->
+                    <!--<button string="Cancel" class="oe_link" special="cancel"/>-->
+                </form>
+            </field>
+        </record>        
+        <record id="cases_bills_info_tree" model="ir.ui.view">
+            <field name="name">cases.bills.info.tree</field>
+            <field name="model">cases.bills.info</field>
+            <field name="arch" type="xml">
+                <tree string="Bills Payment Details" colors="red:date_missing == True;blue:not_fully_billed == True">
+                    <field name="case_id"/>
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_cases_bills_info2" model="ir.actions.act_window">
+             <field name="name">Cases and Bills Info</field>
+             <field name="res_model">cases.bills.info</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="sub_menu_cases_bills_info" action="action_cases_bills_info2" name="Case and Bills Details" parent="sub_menu_report_case_entries" sequence="4"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record id="bulk_case_hold_form" model="ir.ui.view">
+            <field name="name">bulk.case.hold.form</field>
+            <field name="model">bulk.case.hold</field>
+            <field name="arch" type="xml">            
+                <form string="Bulk Case Sheet Hold/Unhold">
+                    <sheet>
+                	<group>
+                	      <field name="type" required="1"/>
+						  <field name="datas" required="1"/>
+	                </group>
+	                
+	                <footer>
+                        <button name="generate_bulk_casesheet_hold" string="Hold" type="object"
+                                 class="oe_button oe_form_button_save oe_highlight" />
+	                     or
+                        <button special="cancel" class="oe_link" string="Cancel" />
+	                </footer>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <record id="action_bulk_case_hold_form" model="ir.actions.act_window">
+            <field name="name">Bulk Case Sheet Hold/Unhold</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bulk.case.hold</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="view_id" ref="bulk_case_hold_form"/>
+             <field name="target">new</field>
+        </record>
+        <menuitem id="sub_menu_bulk_case_sheet_hold" action="action_bulk_case_hold_form" name="Bulk Case Sheet Hold/Unhold" parent="base_sub_menu_routine_entries" sequence="12"  groups="legal_e.group_case_entries_officer"/>
+
+         <record id="bulk_case_hold_form_closed" model="ir.ui.view">
+            <field name="name">bulk.case.hold.form</field>
+            <field name="model">bulk.case.hold</field>
+            <field name="arch" type="xml">            
+                <form string="Bulk Case Sheet Hold/Unhold">
+                    <group string="The uploaded case sheets has been holded successfully!" attrs="{'invisible':[('type','!=','hold')]}">
+                          <field name="summary" invisible="1"/>
+                    </group>
+                     <field name="type" invisible="0"/>
+                    <newline/>
+                    <group string="The uploaded case sheets has been unholded successfully!"  attrs="{'invisible':[('type','!=','unhold')]}">
+                         
+                    </group>
+                    
+                    <footer>
+                         <button special="cancel" string="OK" colspan="1" class="oe_button oe_form_button_save oe_highlight"/>
+                    </footer>
+                    
+                </form>
+            </field>
+        </record>
+
+	</data>
+</odoo>

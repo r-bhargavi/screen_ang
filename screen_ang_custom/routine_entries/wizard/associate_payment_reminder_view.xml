@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='wizard_associate_payment_reminder_id' model="ir.ui.view">
+            <field name="name">associate.payment.reminder.wizard</field>
+            <field name="model">associate.payment.reminder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Associate Payment Reminder" >                        
+                        <group colspan="4">
+                            <label string="Associate Payment(s) are present for this Case Sheet"/>
+                        </group>
+			<group colspan="1">
+			</group>
+                        <group colspan="2">
+                            <button special="cancel" icon="gtk-cancel" string="Cancel" class="oe_highlight" colspan="1"/>
+                        </group>
+			<group colspan="1">
+			</group>                        
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

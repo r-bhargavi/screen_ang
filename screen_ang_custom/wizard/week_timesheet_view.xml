@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+         <record id='week_timesheet_form' model="ir.ui.view">
+             <field name="name">week.timesheet.form</field>
+             <field name="model">week.timesheet</field>
+             <field name="type">form</field>
+             <field name="arch" type="xml">
+                 <form string="Week Timesheet">
+                     <group>
+                         <field name="name" required="1"/>
+                     </group>
+                     <group>
+                         <field name="date_filter" style="width:33%%" required="1"/>
+                         <field name="from_date" style="width:33%%" attrs="{'invisible':[('date_filter','=',False)],'required':[('date_filter','!=',False)]}"/>
+                         <field name="to_date" style="width:33%%" attrs="{'invisible':[('date_filter','!=','between')],'required':[('date_filter','=','between')]}"/>
+                     </group>
+                     <footer>
+                         <button name="generate_report" string="Generate" type="object" context="{'employee_id':name,'date_filter':date_filter,'from_date':from_date,'to_date':to_date}" class="oe_highlight"/>
+                         or
+                         <button string="Cancel" class="oe_link" special="cancel"/>
+                     </footer>
+                 </form>
+             </field>
+         </record>
+
+         <record id="action_week_timesheet" model="ir.actions.act_window">
+             <field name="name">Week Timesheet</field>
+             <field name="res_model">week.timesheet</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="target">new</field>
+         </record>
+
+        <menuitem id="sub_menu_week_timesheet" action="action_week_timesheet" name="Week Timesheet" parent="sub_menu_report_case_entries" sequence="10"/>
+
+		<record id="view_week_timesheet_form_inherit" model="ir.ui.view">
+            <field name="name">week.timesheet.form.inherit</field>
+            <field name="model">week.timesheet</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="legal_e.week_timesheet_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('legal_e.group_legal_e_lawyers'),ref('legal_e.group_legal_e_client_service_manager'),ref('legal_e.group_legal_e_employee_executive')])]"/>
+            <field name="arch" type="xml">                     
+                <xpath expr='//field[@name="name"]' position="attributes">
+            	    <attribute name="readonly">1</attribute>
+                </xpath>
+			</field>
+		</record>
+		
+    </data>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_task_master_filter" model="ir.ui.view">
+            <field name="name">task.master.select</field>
+            <field name="model">task.master</field>
+            <field name="arch" type="xml">
+                <search string="Search Arbitrator Master">
+                    <field name="task_type"/>
+                    <field name="name"/> 
+               </search>
+            </field>
+        </record>
+        <record id="task_master_tree" model="ir.ui.view">
+            <field name="name">task.master.tree</field>
+            <field name="model">task.master</field>
+            <field name="arch" type="xml">
+                <tree string="Task Master">
+                    <field name="task_type"/>
+                    <field name="name"/>                    
+                </tree>
+            </field>
+        </record>
+        <record id="task_master_form" model="ir.ui.view">
+            <field name="name">task.master.form</field>
+            <field name="model">task.master</field>
+            <field name="arch" type="xml">
+                <form string="Task/Activity Details">
+	                <sheet>
+		                <group col='4' string='Task/Activity Details'>
+		                    <field name="task_type" colspan="2"/>
+		                    <field name="name"  colspan="2"/>
+		                </group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_task_master_form" model="ir.actions.act_window">
+            <field name="name">Task Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">task.master</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="task_master_tree"/>
+        </record>
+        <menuitem id="sub_menu_task_master" action="action_task_master_form" name="Task Master" parent="sub_menu_masters" sequence="6"/>            
+               
+	</data>
+</odoo>

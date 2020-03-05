@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+
+ 	<record id='work_summary_form' model="ir.ui.view">
+            <field name="name">work.summary.form</field>
+            <field name="model">work.summary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Work Summary">
+                        <group col="4">
+                            <field name="name" domain="[('customer','=',True),('is_company','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' colspan="2" required="0"/>
+                            <field name="case_id" colspan="2" required="0" domain="[(name and ('client_id','=',name) or ('name','!=',False))]"/>
+                            <field name="state" colspan="2"/>
+                            <field name="ho_branch_id" colspan="2"/>
+                            <field name="assignee_id" colspan="2"/>
+                            <field name="other_assignee_id" colspan="2" domain="[('supplier','=',True)]" context="{'default_supplier':True, 'default_customer':False, 'form_view_ref':'legal_e.view_partner_form_legale_associate'}"/>
+                            <field name="division_id" colspan="2"/>
+                            <field name="work_type" colspan="2"/>
+		            <field name="casetype_id" colspan="2" domain="[(work_type and ('parent','=',work_type) or ('name','!=',False))]"/>
+		            <field name="contact_partner1_id" domain="[(name and ('parent_id','=',name) or ('parent_id','!=',False))]" context="{'search_default_customer':1}"  colspan="2"/>
+		            <field name="contact_partner2_id"  domain="[(name and ('parent_id','=',name) or ('parent_id','!=',False))]" context="{'search_default_customer':1}"  colspan="2"/>
+		            <field name="company_ref_no" colspan="2"/>
+		            <field name="reg_number" colspan="2"/>
+		            <field name="court_district_id" colspan="2"/>
+		            <field name="court_location_id" colspan="2"/>
+		            <field name="court_id" colspan="2"/>
+		            <field name="parent_id_manager" colspan="2"/>
+		            <field name="bill_type" colspan="2"/>
+		            <field name="first_party_name" colspan="2"/>
+		            <field name="oppo_party_name" colspan="2"/>
+                        </group>                                                      
+                            <button name="filter_proceedings" string="Go" icon="gtk-go-forward" type="object" class="oe_highlight" context="{'client_id':name,'case_id':case_id, 'state':state, 'ho_branch_id':ho_branch_id, 'assignee_id':assignee_id, 'other_assignee_id':other_assignee_id, 'division_id':division_id, 'work_type':work_type, 'casetype_id':casetype_id,  'contact_partner1_id':contact_partner1_id, 'contact_partner2_id':contact_partner2_id, 'company_ref_no':company_ref_no, 'reg_number':reg_number, 'court_district_id':court_district_id, 'court_location_id':court_location_id, 'court_id':court_id, 'parent_id_manager':parent_id_manager, 'bill_type':bill_type, 'first_party_name':first_party_name, 'oppo_party_name':oppo_party_name}"/>
+                                or   
+                            <button name="clear_filters" string="Clear" type="object" class="oe_link"/> 
+                        <group>
+                            <group string="Work Summary Cases">                            
+                            </group>                            
+                            <group>
+                            <div>
+                         	<button name="generate_report" string="Generate" icon="gtk-go-forward" type="object" context="{'client_id':name,'case_id':case_id}" class="oe_highlight"/>
+                          or 
+                          <button name="clear_filters_all" string="Clear All" type="object" class="oe_link"/>   
+                          </div>
+                            </group>
+                            <field name="case_lines" readonly="1" nolabel="1" colspan="4"/>
+                            </group>
+                </form>
+            </field>
+        </record>
+         <record id="work_summary_tree" model="ir.ui.view">
+            <field name="name">work.summary.tree</field>
+            <field name="model">work.summary</field>
+            <field name="arch" type="xml">
+                <tree string="Bills Payment Details" colors="red:date_missing == True;blue:not_fully_billed == True">
+                    <field name="case_id"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_work_summary2" model="ir.actions.act_window">
+             <field name="name">Work Summary</field>
+             <field name="res_model">work.summary</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="sub_menu_work_summary" action="action_work_summary2" name="Work Summary" parent="sub_menu_report_case_entries" sequence="6"/>
+
+    </data>
+</odoo>

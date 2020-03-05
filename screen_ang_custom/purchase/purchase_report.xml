@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                auto="False" id="purchase.report_purchase_quotation"
+                model="purchase.order"
+                name="purchase.quotation"
+                rml="purchase/report/request_quotation.rml"
+                string="Request for Quotation"
+                menu="False"/>
+        <report
+                auto="False"
+                id="purchase.action_report_purchase_order"
+                model="purchase.order"
+                name="purchase.order"
+                rml="legal_e/report/order.rml"
+                usage="default"
+                string="Purchase Order"
+                menu="False"/>
+
+    </data>
+</odoo>

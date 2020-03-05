@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_district_district_filter" model="ir.ui.view">
+            <field name="name">district.district.select</field>
+            <field name="model">district.district</field>
+            <field name="arch" type="xml">
+                <search string="Search District Details">
+                    <field name="state_id" string="State" filter_domain="[('state_id','ilike',self)]"/>
+                    <field name="name" string="District Name" filter_domain="[('name','ilike',self)]"/>
+                    <field name="code" string="District Code" filter_domain="[('code','ilike',self)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" icon="terp-go-stock" name="state" domain="[]" context="{'group_by':'state_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="district_district_tree" model="ir.ui.view">
+            <field name="name">district.district.tree</field>
+            <field name="model">district.district</field>
+            <field name="arch" type="xml">
+                <tree string="District Details">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="district_district_form" model="ir.ui.view">
+            <field name="name">district.district.form</field>
+            <field name="model">district.district</field>
+            <field name="arch" type="xml">
+                <form string="District Details">
+	                <sheet>
+	                   <group>
+                        	<group string='District Details'>
+                        	    <field name="name"/>
+                        	    <field name="code"/>
+		                    <field name="state_id"/>
+		                </group>
+		            </group>    
+	                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_district_district_form" model="ir.actions.act_window">
+            <field name="name">District Master</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">district.district</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="district_district_tree"/>
+        </record>
+        
+         <menuitem id="sub_menu_district_district" action="action_district_district_form" name="District Master" parent="sub_menu_masters" sequence="24"/>  
+               
+	</data>
+</odoo>

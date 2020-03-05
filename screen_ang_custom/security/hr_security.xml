@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+	
+		<record model="ir.module.category" id="legale_acess_groups">
+            <field name="name">Indialaw</field>
+            <field name="description">Access of Indialaw ERP shall be Controlled</field>
+            <field name="sequence">1</field>
+        </record>
+
+	<record model="ir.module.category" id="base.module_legale_case_entries">
+            <field name="name">Case Sheet</field>
+            <field name="description">Access of Case entries shall be Controlled</field>
+            <field name="sequence">1</field>
+        </record>
+
+	    <record id="group_case_entries_user" model="res.groups">
+	        <field name="name">Employee</field>
+	        <field name="category_id" ref="base.module_legale_case_entries"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	    </record>
+	    <!---->
+	    <record id="group_case_entries_officer" model="res.groups">
+	        <field name="name">Officer</field>
+	        <field name="category_id" ref="base.module_legale_case_entries"/>
+	        <field name="implied_ids" eval="[(4, ref('group_case_entries_user'))]"/>
+	    </record>
+	    <!---->
+	    <record id="group_case_entries_manager" model="res.groups">
+	        <field name="name">Manager</field>
+	        <field name="category_id" ref="base.module_legale_case_entries"/>
+	        <field name="implied_ids" eval="[(4, ref('group_case_entries_officer'))]"/>
+	    </record>
+	    <!---->
+	    <record id="group_case_entries_admin" model="res.groups">
+	        <field name="name">Admin</field>
+	        <field name="category_id" ref="base.module_legale_case_entries"/>
+	        <field name="implied_ids" eval="[(4, ref('group_case_entries_manager'))]"/>
+	    </record>
+
+	    <!--<record id="group_case_entries_employee_rule" model="ir.rule">-->
+	        <!--<field name="name">Assigned Case Entries</field>-->
+	        <!--<field ref="model_case_sheet" name="model_id"/>-->
+	        <!--<field name="domain_force">['|',('assignee_id.user_id','=',user.id),('members','in',[user.id])]</field>-->
+	        <!--<field name="groups" eval="[(4, ref('legal_e.group_case_entries_user'))]"/>-->
+	    <!--</record>-->
+
+	    <record id="group_case_proceedings_employee_rule" model="ir.rule">
+	        <field name="name">Employee Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">['|',('case_id.assignee_id.user_id','=',user.id),('case_id.members','in',[user.id])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_user'))]"/>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+	    </record>
+
+	    <record id="group_case_entries_manager_rule" model="ir.rule">
+	        <field name="name">Manager Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_manager'))]"/>
+	    </record>
+
+	    <record id="group_project_project_manager_rule" model="ir.rule">
+	        <field name="name">Manager Case Entries Projects</field>
+	        <field ref="project.model_project_project" name="model_id"/>
+	        <field name="domain_force">[('members','in',[user.id])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_manager'))]"/>
+	    </record>
+
+	    <record id="group_project_task_manager_rule" model="ir.rule">
+	        <field name="name">Manager Case Entries Projects Tasks</field>
+	        <field ref="project.model_project_task" name="model_id"/>
+	        <field name="domain_force">['|',('project_id.members','in',[user.id]),('partner_id.client_manager_id.user_id', '=', user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_manager'))]"/>
+	    </record>
+
+	    <record id="group_case_proceedings_manager_rule" model="ir.rule">
+	        <field name="name">manager Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_manager'))]"/>
+	    </record>
+
+	    <record id="group_case_entries_admin_rule" model="ir.rule">
+	        <field name="name">Admin Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_admin'))]"/>
+	    </record>
+
+	    <record id="group_case_proceedings_admin_rule" model="ir.rule">
+	        <field name="name">Admin Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_admin'))]"/>
+	    </record>
+
+	<record model="ir.module.category" id="module_legale_inward_register">
+            <field name="name">Inward Register</field>
+            <field name="description">Access of Inward Register shall be Controlled</field>
+            <field name="sequence">2</field>
+        </record>
+
+	    <record id="group_inward_register_user" model="res.groups">
+	        <field name="name">User</field>
+	        <field name="category_id" ref="module_legale_inward_register"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	    </record>
+
+
+
+	    <record id="group_inward_register_manager" model="res.groups">
+	        <field name="name">Manager</field>
+	        <field name="category_id" ref="module_legale_inward_register"/>
+	        <field name="implied_ids" eval="[(4, ref('group_inward_register_user'))]"/>
+	    </record>
+
+	    <record id="group_inward_register_user_rule" model="ir.rule">
+	        <field name="name">Assigned Inward Registers</field>
+	        <field ref="model_inward_register" name="model_id"/>
+	        <field name="domain_force">['|','|',('assignee_id.user_id','=',user.id),('file_number.members','in',[user.id]),('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_inward_register_user'))]"/>
+	    </record>
+	    <record id="group_inward_register_manager_rule" model="ir.rule">
+	        <field name="name">All Inward Registers</field>
+	        <field ref="model_inward_register" name="model_id"/>
+	        <field name="domain_force">[('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_inward_register_manager'))]"/>
+	    </record>
+	    <record id="group_inward_register_admin_rule" model="ir.rule">
+	        <field name="name">All Inward Registers for Admin</field>
+	        <field ref="model_inward_register" name="model_id"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_admin'))]"/>
+	    </record>
+
+	<record model="ir.module.category" id="module_legale_outward_register">
+            <field name="name">Outward Register</field>
+            <field name="description">Access of Outward Register shall be Controlled</field>
+            <field name="sequence">3</field>
+        </record>
+
+	    <record id="group_outward_register_user" model="res.groups">
+	        <field name="name">User</field>
+	        <field name="category_id" ref="module_legale_outward_register"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	    </record>
+
+	    <record id="group_outward_register_manager" model="res.groups">
+	        <field name="name">Manager</field>
+	        <field name="category_id" ref="module_legale_outward_register"/>
+	        <field name="implied_ids" eval="[(4, ref('group_outward_register_user'))]"/>
+	    </record>
+
+	    <record id="group_outward_register_user_rule" model="ir.rule">
+	        <field name="name">Assigned Outward Registers</field>
+	        <field ref="model_outward_register" name="model_id"/>
+	        <field name="domain_force">['|','|',('assignee_id.user_id','=',user.id),('file_number.members','in',[user.id]),('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_outward_register_user'))]"/>
+	    </record>
+	    <record id="group_outward_register_manager_rule" model="ir.rule">
+	        <field name="name">All Outward Registers</field>
+	        <field ref="model_outward_register" name="model_id"/>
+	        <field name="domain_force">[('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_outward_register_manager'))]"/>
+	    </record>
+	    <record id="group_outward_register_admin_rule" model="ir.rule">
+	        <field name="name">All Outward Registers for Admin</field>
+	        <field ref="model_outward_register" name="model_id"/>
+	        <field name="domain_force">[(1,'=',1)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_admin'))]"/>
+	    </record>
+	<!---->
+	<record model="ir.module.category" id="module_legale_case_masters">
+            <field name="name">Case Masters</field>
+            <field name="description">Access of Masters Mainmenu shall be Controlled</field>
+            <field name="sequence">2</field>
+        </record>
+		<!---->
+	    <record id="group_case_masters_user" model="res.groups">
+	        <field name="name">User</field>
+	        <field name="category_id" ref="module_legale_case_masters"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	    </record>	    
+	    
+	    <record id="group_case_entries_other_associate" model="res.groups">
+	        <field name="name">Associate</field>
+	    </record>
+
+	    <record id="group_other_associate_rule" model="ir.rule">
+	        <field name="name">Assigned Case Sheets of Associate</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('other_assignee_ids.name','=',user.partner_id.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_other_associate'))]"/>
+	    </record>
+
+	    <record id="group_other_associate_proceedings_rule" model="ir.rule">
+	        <field name="name">Assigned Court Proceedings of Associate</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.other_assignee_ids.name','=',user.partner_id.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_case_entries_other_associate'))]"/>
+	    </record>
+
+
+        <!-- Client Service Access -->
+	     <record id="group_client_service_executive" model="res.groups">
+	        <field name="name">Client Service Executive</field>
+	        <field name="implied_ids" eval="[(4, ref('group_case_entries_manager'))]"/>
+		 </record>
+
+	     <record id="group_client_service_manager" model="res.groups">
+	        <field name="name">Client Relationship Manager</field>
+	        <field name="implied_ids" eval="[(4, ref('group_case_entries_manager'))]"/>
+         </record>
+
+		<!--Case entry request group-->
+        <record id="group_case_entry_request" model="res.groups">
+	        <field name="name">Case Entry Request Group</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups" />
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+			<field name="users" eval="[(4, ref('base.user_root'))]" />
+        </record>
+
+	     <record id="case_entries_client_service_executive_rule" model="ir.rule">
+	        <field name="name">Client Service Executive Case Sheet Rule</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('client_service_executive_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_executive'))]"/>
+	    </record>
+
+	   	<record id="case_entries_client_service_manager" model="ir.rule">
+	        <field name="name">Client Relationship Manager Case Sheet  Rule</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('client_id.client_manager_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_manager'))]"/>
+	    </record>
+
+		<!--Case sheet invoice confirmation-->
+        <record id="group_case_sheet_invoice_confirmation" model="res.groups">
+	        <field name="name">Case Sheet Invoice Confirmation</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups" />
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+		<!--Special Approve Expense-->
+        <record id="group_special_approve_expense" model="res.groups">
+	        <field name="name">Special Approve Expense</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups" />
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+		<!--Revision Authorization-->
+        <record id="group_revision_authorization" model="res.groups">
+	        <field name="name">Revision Authorization</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups" />
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+	    <record id="case_entries_client_service_executive_proceedings_rule" model="ir.rule">
+	        <field name="name">Client Service Executive Court Proceedings Rule</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.client_service_executive_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_executive'))]"/>
+	    </record>
+
+	   	<record id="case_entries_client_service_proceedings_manager" model="ir.rule">
+	        <field name="name">Client Relationship Manager Court Proceedings Rule</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.client_id.client_manager_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_manager'))]"/>
+	    </record>
+
+
+
+
+	    <record id="case_entries_client_service_executive_inward_rule" model="ir.rule">
+	        <field name="name">Client Service Executive Inward Rule</field>
+	        <field ref="model_inward_register" name="model_id"/>
+	        <field name="domain_force">[('file_number.client_service_executive_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_executive'))]"/>
+	    </record>
+
+	   	<record id="case_entries_client_service_manager_inward_rule" model="ir.rule">
+	        <field name="name">Client Relationship Manager Inward Rule</field>
+	        <field ref="model_inward_register" name="model_id"/>
+	        <field name="domain_force">[('file_number.client_id.client_manager_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_manager'))]"/>
+	    </record>
+
+	    <record id="case_entries_client_service_executive_outward_rule" model="ir.rule">
+	        <field name="name">Client Service Executive Outward Rule</field>
+	        <field ref="model_outward_register" name="model_id"/>
+	        <field name="domain_force">[('file_number.client_service_executive_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_executive'))]"/>
+	    </record>
+
+	   	<record id="case_entries_client_service_outward_manager" model="ir.rule">
+	        <field name="name">Client Relationship Manager Outward Rule</field>
+	        <field ref="model_outward_register" name="model_id"/>
+	        <field name="domain_force">[('file_number.client_id.client_manager_id.user_id','=',user.id)]</field>
+	        <field name="groups" eval="[(4, ref('legal_e.group_client_service_manager'))]"/>
+	    </record>
+
+
+
+
+
+
+	    <record id="group_case_sheet_operation_manager" model="res.groups">
+	        <field name="name">Case Sheet Operations</field>
+	        <field name="category_id" ref="legal_e.legale_acess_groups"/>
+	    </record>
+
+	    <record id="group_department_head" model="res.groups">
+	        <field name="name">Reporting Head</field>
+	        <field name="category_id" ref="legal_e.legale_acess_groups"/>
+	    </record>
+
+
+
+	     <record id="group_case_entries_dept_head_assignee" model="ir.rule">
+	        <field name="name">Case Entries for Department Head(Assignee)</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">['|','|',('parent_id_manager.user_id','=',user.id),
+	        ('parent_id_manager.parent_id.user_id','=',user.id),
+	        ('parent_id_manager.parent_id.parent_id.user_id','=',user.id)
+	        ]</field>
+	    	<field name="groups" eval="[(4, ref('legal_e.group_department_head'))]"/>
+	    </record>
+
+	    <record id="group_case_entries_dept_head_csm" model="ir.rule">
+	        <field name="name">Case Entries for Department Head(Client Relationship Manager)</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">['|','|',('client_service_manager_id.user_id','=',user.id),
+	        ('client_service_manager_id.parent_id.user_id','=',user.id),
+	        ('client_service_manager_id.parent_id.parent_id.user_id','=',user.id)
+	        ]</field>
+	    	<field name="groups" eval="[(4, ref('legal_e.group_department_head'))]"/>
+	    </record>
+
+
+
+
+	    <!--<record id="group_legal_e_hide_menus" model="res.groups">-->
+	        <!--<field name="name">Hide Menus</field>-->
+	        <!--<field name="category_id" ref="legal_e.legale_acess_groups"/>-->
+	        <!--<field name="menu_access" eval="[(6,0,[-->
+		        <!--ref('project_long_term.menu_project_phase'),-->
+				<!--ref('hr_loan_advance.menu_open_hr_employee_advance'),-->
+				<!--ref('project_long_term.menu_project_phase_list'),-->
+				<!--ref('hr_loan_advance.menu_open_hr_employee_loan'),-->
+				<!--ref('project_timesheet.menu_hr_timesheet_sign_in'),-->
+				<!--ref('hr_overtime.menu_open_ask_overtime'),-->
+				<!--ref('hr_loan_advance.menu_employee_transaction'),-->
+				<!--ref('hr_overtime.menu_open_ask_overtime_new'),-->
+				<!--ref('hr_evaluation.menu_eval_hr'),-->
+				<!--ref('legal_e_hr.menu_team_leave_calendar'),-->
+				<!--ref('account.menu_bank_statement_tree'),-->
+		    	<!--])]"/>-->
+		<!--</record>-->
+
+
+
+
+		<!--CSM -->
+
+
+		<record id="legal_e_csm_case_sheet" model="ir.rule">
+	        <field name="name">CSM Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('members','in',[user.id])]</field>
+	    	<field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+	    </record>
+
+	    <record id="legal_e_csm_in_case_sheet" model="ir.rule">
+	        <field name="name">CSM In Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('client_service_manager_id.user_id','=',user.id)]</field>
+	    	<field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+	    </record>
+
+	    <record id="group_case_proceedings_csm_rule" model="ir.rule">
+	        <field name="name">CSM Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.members','in',[user.id])]</field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+	    </record>
+
+		<record model="ir.rule" id="legal_e_csm_tasks">
+            <field name="name">CSM Tasks</field>
+            <field ref="project.model_project_task" name="model_id"/>
+            <field name="domain_force">[
+	            ('project_id.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_csm_inward_register">
+            <field name="name">CSM Inward Register</field>
+            <field ref="model_inward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_csm_outward_register">
+            <field name="name">CSM Outward Register</field>
+            <field ref="model_outward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+
+		<record model="ir.rule" id="legal_e_project_public_csm_rule">
+            <field name="name">CSM Projects</field>
+            <field ref="project.model_project_project" name="model_id"/>
+            <field name="domain_force">[
+            ('privacy_visibility', 'in', ['public', 'portal', 'employees']),('members','in',[user.id])
+            ]
+            </field>
+            <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+	    <record id="group_legal_e_client_service_manager" model="res.groups">
+	        <field name="name">Client Relationship Manager(CRM)</field>
+	        <field name="category_id" ref="legal_e.legale_acess_groups"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	        <field name="rule_groups" eval="[(6,0,[
+	        	ref('legal_e.group_case_proceedings_csm_rule'),
+	        	ref('legal_e.legal_e_csm_case_sheet'),
+	        	ref('legal_e.legal_e_project_public_csm_rule'),
+	        	ref('legal_e.legal_e_csm_tasks'),
+	        	ref('legal_e.legal_e_csm_inward_register'),
+	        	ref('legal_e.legal_e_csm_in_case_sheet'),
+	        	ref('legal_e.legal_e_csm_outward_register')])
+	        	]"/>
+	        <!--<field name="menu_access" eval="[(6,0,[-->
+	        	<!--ref('base.menu_reporting_dashboard'),-->
+				<!--ref('hr.menu_hr_main'),-->
+				<!--ref('legal_e.menu_case_proceeding_dashboard'),-->
+				<!--ref('legal_e.sub_menu_court_diary'),-->
+				<!--ref('project.menu_projects'),-->
+				<!--ref('legal_e_hr.menu_open_view_mydetails'),-->
+				<!--ref('hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current'),-->
+				<!--ref('project.menu_project_management'),-->
+				<!--ref('hr_timesheet.menu_hr_timesheet_employee'),-->
+				<!--ref('legal_e.menu_missing_case_proceeding_dashboard'),-->
+				<!--ref('legal_e.sub_menu_client_case_history'),-->
+				<!--ref('hr_timesheet.menu_hr_timesheet_users'),-->
+				<!--ref('hr.menu_open_view_employee_list_my'),-->
+				<!--ref('legal_e.sub_menu_bills_payment_details'),-->
+				<!--ref('legal_e.menu_casesheet_dashboard'),-->
+				<!--ref('legal_e.sub_menu_cases_bills_info'),-->
+				<!--ref('board.menu_board_my_dash'),-->
+				<!--ref('project.menu_action_view_task'),-->
+				<!--ref('hr_attendance.menu_hr_time_tracking'),-->
+				<!--ref('legal_e.sub_menu_court_proceedings'),-->
+				<!--ref('legal_e.sub_menu_work_summary'),-->
+				<!--ref('mail.mail_feeds'),-->
+				<!--ref('legal_e.sub_menu_week_timesheet'),-->
+				<!--ref('hr_timesheet.menu_hr_working_hours'),-->
+				<!--ref('hr_attendance.menu_hr_attendance'),-->
+				<!--ref('hr_holidays.menu_open_ask_holidays_new'),-->
+				<!--ref('base.sub_menu_routine_entries'),-->
+				<!--ref('legal_e.mail_mytasksfeeds'),-->
+				<!--ref('base_calendar.mail_menu_calendar'),-->
+				<!--ref('mail.mail_my_stuff'),-->
+				<!--ref('mail.mail_feeds_main'),-->
+				<!--ref('mail.mail_inboxfeeds'),-->
+				<!--ref('legal_e.sub_menu_report_case_entries'),-->
+				<!--ref('legal_e.mail_myteamtasksfeeds'),-->
+				<!--ref('mail.mail_tomefeeds'),-->
+				<!--ref('base.main_menu_routine_entries'),-->
+				<!--ref('legal_e.mail_missingdatesfeeds'),-->
+				<!--ref('mail.mail_starfeeds'),-->
+				<!--ref('mail.mail_archivesfeeds'),-->
+				<!--ref('hr_birthdays_dashboard.menu_birthdays_dashboard'),-->
+				<!--ref('hr_attendance.menu_open_view_attendance'),-->
+				<!--ref('hr_holidays.menu_open_ask_holidays'),-->
+				<!--ref('legal_e.sub_menu_out_of_office'),-->
+				<!--ref('project.menu_project_dashboard'),-->
+				<!--ref('base.menu_main_pm'),-->
+				<!--ref('hr.menu_hr_reporting'),-->
+				<!--ref('hr.menu_hr_dashboard'),-->
+				<!--ref('hr.menu_hr_root'),-->
+				<!--ref('base.menu_reporting'),-->
+				<!--ref('sub_menu_case_sheet'),-->
+				<!--ref('legal_e.sub_menu_inward_register1'),-->
+				<!--ref('legal_e.sub_menu_outward_register1'),-->
+				<!--ref('hr.menu_hr_reporting_timesheet'),-->
+				<!--ref('project_timesheet.menu_timesheet_task_user'),-->
+				<!--])]"/>-->
+		</record>
+
+
+
+		<!-- Employee Executive -->
+
+		<record id="legal_e_executive_case_sheet" model="ir.rule">
+	        <field name="name">Executive Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('members','in',[user.id])]</field>
+	    	<field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+	    </record>
+
+
+	    <record id="legal_e_executive_case_proceedings" model="ir.rule">
+	        <field name="name">Executive Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.members','in',[user.id])]</field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+	    </record>
+
+		<record model="ir.rule" id="legal_e_executive_tasks">
+            <field name="name">Executive Tasks</field>
+            <field ref="project.model_project_task" name="model_id"/>
+            <field name="domain_force">[
+	            ('project_id.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_executive_inward_register">
+            <field name="name">Executive Inward Register</field>
+            <field ref="model_inward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_executive_outward_register">
+            <field name="name">Executive Outward Register</field>
+            <field ref="model_outward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+        </record>
+
+
+		<record model="ir.rule" id="legal_e_project_public_executive_rule">
+            <field name="name">Executive Project</field>
+            <field ref="project.model_project_project" name="model_id"/>
+            <field name="domain_force">[
+            ('privacy_visibility', 'in', ['public', 'portal', 'employees']),('members','in',[user.id])
+            ]
+            </field>
+            <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+
+		<record id="group_legal_e_employee_executive" model="res.groups">
+	        <field name="name">Employee Executive</field>
+	        <field name="category_id" ref="legal_e.legale_acess_groups"/>
+	        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	        <field name="rule_groups" eval="[(6,0,[
+	        	ref('legal_e.legal_e_executive_case_sheet'),
+	        	ref('legal_e.legal_e_executive_case_proceedings'),
+	        	ref('legal_e.legal_e_project_public_executive_rule'),
+	        	ref('legal_e.legal_e_executive_outward_register'),
+	        	ref('legal_e.legal_e_executive_inward_register'),
+	        	ref('legal_e.legal_e_executive_tasks')])]"/>
+	        <!--<field name="menu_access" eval="[(6,0,[-->
+	        	<!--ref('base.menu_reporting_dashboard'),-->
+				<!--ref('hr.menu_hr_main'),-->
+				<!--ref('legal_e.menu_case_proceeding_dashboard'),-->
+				<!--ref('legal_e.sub_menu_court_diary'),-->
+				<!--ref('project.menu_projects'),-->
+				<!--ref('legal_e_hr.menu_open_view_mydetails'),-->
+				<!--ref('hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current'),-->
+				<!--ref('project.menu_project_management'),-->
+				<!--ref('hr_timesheet.menu_hr_timesheet_employee'),-->
+				<!--ref('legal_e.menu_missing_case_proceeding_dashboard'),-->
+				<!--ref('legal_e.sub_menu_client_case_history'),-->
+				<!--ref('hr_timesheet.menu_hr_timesheet_users'),-->
+				<!--ref('hr.menu_open_view_employee_list_my'),-->
+				<!--ref('legal_e.sub_menu_bills_payment_details'),-->
+				<!--ref('legal_e.menu_casesheet_dashboard'),-->
+				<!--ref('legal_e.sub_menu_cases_bills_info'),-->
+				<!--ref('board.menu_board_my_dash'),-->
+				<!--ref('project.menu_action_view_task'),-->
+				<!--ref('hr_attendance.menu_hr_time_tracking'),-->
+				<!--ref('legal_e.sub_menu_court_proceedings'),-->
+				<!--ref('legal_e.sub_menu_work_summary'),-->
+				<!--ref('mail.mail_feeds'),-->
+				<!--ref('legal_e.sub_menu_week_timesheet'),-->
+				<!--ref('hr_timesheet.menu_hr_working_hours'),-->
+				<!--ref('hr_attendance.menu_hr_attendance'),-->
+				<!--ref('hr_holidays.menu_open_ask_holidays_new'),-->
+				<!--ref('base.sub_menu_routine_entries'),-->
+				<!--ref('legal_e.mail_mytasksfeeds'),-->
+				<!--ref('base_calendar.mail_menu_calendar'),-->
+				<!--ref('mail.mail_my_stuff'),-->
+				<!--ref('mail.mail_feeds_main'),-->
+				<!--ref('mail.mail_inboxfeeds'),-->
+				<!--ref('legal_e.sub_menu_report_case_entries'),-->
+				<!--ref('legal_e.mail_myteamtasksfeeds'),-->
+				<!--ref('mail.mail_tomefeeds'),-->
+				<!--ref('base.main_menu_routine_entries'),-->
+				<!--ref('legal_e.mail_missingdatesfeeds'),-->
+				<!--ref('mail.mail_starfeeds'),-->
+				<!--ref('mail.mail_archivesfeeds'),-->
+				<!--ref('hr_birthdays_dashboard.menu_birthdays_dashboard'),-->
+				<!--ref('hr_attendance.menu_open_view_attendance'),-->
+				<!--ref('hr_holidays.menu_open_ask_holidays'),-->
+				<!--ref('legal_e.sub_menu_out_of_office'),-->
+				<!--ref('project.menu_project_dashboard'),-->
+				<!--ref('base.menu_main_pm'),-->
+				<!--ref('hr.menu_hr_reporting'),-->
+				<!--ref('hr.menu_hr_dashboard'),-->
+				<!--ref('hr.menu_hr_root'),-->
+				<!--ref('base.menu_reporting'),-->
+				<!--ref('sub_menu_case_sheet'),-->
+				<!--ref('legal_e.sub_menu_inward_register1'),-->
+				<!--ref('legal_e.sub_menu_outward_register1'),-->
+				<!--ref('hr.menu_hr_reporting_timesheet'),-->
+				<!--ref('project_timesheet.menu_timesheet_task_user'),-->
+				<!--])]"/>-->
+		</record>
+
+
+
+
+		<!-- Lawyers -->
+
+
+
+		<record id="legal_e_lawyers_case_sheet" model="ir.rule">
+	        <field name="name">Lawyers Case Entries</field>
+	        <field ref="model_case_sheet" name="model_id"/>
+	        <field name="domain_force">[('members','in',[user.id])]</field>
+	    	<field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+	    </record>
+
+	    <record id="legal_e_lawyers_case_sheet_office" model="ir.rule">
+            <field name="name">Lawyers Offcie Case Entries</field>
+            <field ref="model_case_sheet" name="model_id"/>
+            <field name="domain_force">[('ho_branch_id','in', [loc.id for loc in user.location_ids])]</field>
+            <field eval="0" name="perm_unlink"/>
+            <field eval="0" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="0" name="perm_create"/>
+        </record>
+
+
+	    <record id="legal_e_lawyers_case_proceedings" model="ir.rule">
+	        <field name="name">Executive Court Proceedings</field>
+	        <field ref="model_court_proceedings" name="model_id"/>
+	        <field name="domain_force">[('case_id.members','in',[user.id])]</field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="1" name="perm_create"/>
+	    </record>
+
+		<record model="ir.rule" id="legal_e_lawyers_tasks">
+            <field name="name">Executive Tasks</field>
+            <field ref="project.model_project_task" name="model_id"/>
+            <field name="domain_force">[
+	            ('project_id.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_lawyers_inward_register">
+            <field name="name">Executive Inward Register</field>
+            <field ref="model_inward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+        <record model="ir.rule" id="legal_e_lawyers_outward_register">
+            <field name="name">Executive Outward Register</field>
+            <field ref="model_outward_register" name="model_id"/>
+            <field name="domain_force">[
+	            ('file_number.members','in',[user.id])
+	            ]
+	            </field>
+	        <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+
+		<record model="ir.rule" id="legal_e_project_public_lawyers_rule">
+            <field name="name">Executive Project</field>
+            <field ref="project.model_project_project" name="model_id"/>
+            <field name="domain_force">[
+            ('privacy_visibility', 'in', ['public', 'portal', 'employees']),('members','in',[user.id])
+            ]
+            </field>
+            <field eval="0" name="perm_unlink"/>
+	        <field eval="1" name="perm_write"/>
+	        <field eval="1" name="perm_read"/>
+	        <field eval="0" name="perm_create"/>
+        </record>
+
+
+
+		<record id="group_legal_e_lawyers" model="res.groups">
+            <field name="name">Lawyers</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="rule_groups" eval="[(6,0,[
+                ref('legal_e.legal_e_lawyers_case_sheet'),
+                ref('legal_e.legal_e_lawyers_case_sheet_office'),
+                ref('legal_e.legal_e_lawyers_case_proceedings'),
+                ref('legal_e.legal_e_lawyers_tasks'),
+                ref('legal_e.legal_e_lawyers_inward_register'),
+                ref('legal_e.legal_e_lawyers_outward_register'),
+                ref('legal_e.legal_e_project_public_lawyers_rule'),
+                ])]"/>
+            <!--<field name="menu_access" eval="[(6,0,[-->
+                <!--ref('base.menu_reporting_dashboard'),-->
+                <!--ref('hr.menu_hr_main'),-->
+                <!--ref('legal_e.menu_case_proceeding_dashboard'),-->
+                <!--ref('legal_e.sub_menu_court_diary'),-->
+                <!--ref('project.menu_projects'),-->
+                <!--ref('legal_e_hr.menu_open_view_mydetails'),-->
+                <!--ref('hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current'),-->
+                <!--ref('project.menu_project_management'),-->
+                <!--ref('hr_timesheet.menu_hr_timesheet_employee'),-->
+                <!--ref('legal_e.menu_missing_case_proceeding_dashboard'),-->
+                <!--ref('legal_e.sub_menu_client_case_history'),-->
+                <!--ref('hr_timesheet.menu_hr_timesheet_users'),-->
+                <!--ref('hr.menu_open_view_employee_list_my'),-->
+                <!--ref('legal_e.sub_menu_bills_payment_details'),-->
+                <!--ref('legal_e.menu_casesheet_dashboard'),-->
+                <!--ref('legal_e.sub_menu_cases_bills_info'),-->
+                <!--ref('board.menu_board_my_dash'),-->
+                <!--ref('project.menu_action_view_task'),-->
+                <!--ref('hr_attendance.menu_hr_time_tracking'),-->
+                <!--ref('legal_e.sub_menu_court_proceedings'),-->
+                <!--ref('legal_e.sub_menu_work_summary'),-->
+                <!--ref('mail.mail_feeds'),-->
+                <!--ref('legal_e.sub_menu_week_timesheet'),-->
+                <!--ref('hr_timesheet.menu_hr_working_hours'),-->
+                <!--ref('hr_attendance.menu_hr_attendance'),-->
+                <!--ref('hr_holidays.menu_open_ask_holidays_new'),-->
+                <!--ref('base.sub_menu_routine_entries'),-->
+                <!--ref('legal_e.mail_mytasksfeeds'),-->
+                <!--ref('base_calendar.mail_menu_calendar'),-->
+                <!--ref('mail.mail_my_stuff'),-->
+                <!--ref('mail.mail_feeds_main'),-->
+                <!--ref('mail.mail_inboxfeeds'),-->
+                <!--ref('legal_e.sub_menu_report_case_entries'),-->
+                <!--ref('legal_e.mail_myteamtasksfeeds'),-->
+                <!--ref('mail.mail_tomefeeds'),-->
+                <!--ref('base.main_menu_routine_entries'),-->
+                <!--ref('legal_e.mail_missingdatesfeeds'),-->
+                <!--ref('mail.mail_starfeeds'),-->
+                <!--ref('mail.mail_archivesfeeds'),-->
+                <!--ref('hr_birthdays_dashboard.menu_birthdays_dashboard'),-->
+                <!--ref('hr_attendance.menu_open_view_attendance'),-->
+                <!--ref('hr_holidays.menu_open_ask_holidays'),-->
+                <!--ref('legal_e.sub_menu_out_of_office'),-->
+                <!--ref('project.menu_project_dashboard'),-->
+                <!--ref('base.menu_main_pm'),-->
+                <!--ref('hr.menu_hr_reporting'),-->
+                <!--ref('hr.menu_hr_dashboard'),-->
+                <!--ref('hr.menu_hr_root'),-->
+                <!--ref('base.menu_reporting'),-->
+                <!--ref('sub_menu_case_sheet'),-->
+                <!--])]"/>-->
+        </record>
+
+
+
+        <record id="group_legal_e_main_menus" model="res.groups">
+            <field name="name">Main Menus</field>
+            <field name="category_id" ref="legal_e.legale_acess_groups"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+
+	</data>
+</odoo>
